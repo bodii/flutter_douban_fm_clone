@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_douban_fm_clone/pages/welcome/widgets/circular_wave.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class WelcomeIndexPage extends StatelessWidget {
   const WelcomeIndexPage({super.key});
@@ -10,10 +12,7 @@ class WelcomeIndexPage extends StatelessWidget {
       children: [
         Container(
           color: Colors.white,
-          child: OverflowBox(
-            maxWidth: MediaQuery.of(context).size.width,
-            child: CustomPaint(painter: MyPainter()),
-          ),
+          child: const CircularWave(),
         ),
         Center(
           child: SizedBox(
@@ -31,7 +30,7 @@ class WelcomeIndexPage extends StatelessWidget {
           right: 10,
           child: GestureDetector(
             onTap: () {
-              debugPrint("跳过");
+              context.go('/home/no_login');
             },
             child: Container(
               width: 70,
@@ -104,22 +103,4 @@ class WelcomeIndexPage extends StatelessWidget {
       ],
     );
   }
-}
-
-class MyPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Offset href = Offset(size.width / 2, size.height / 2);
-    // left:2efab7  [46 250 183] right: # 27ebbb [39 235 187]
-    for (var i = 1; i <= 10; i++) {
-      var paint = Paint()
-        ..style = PaintingStyle.fill
-        ..color =
-            Color.fromRGBO(40, 235, (255 * i * 0.1).toInt(), 0.32 - 0.03 * i);
-      canvas.drawCircle(href, size.width / 8 + i * 45, paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
