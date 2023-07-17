@@ -1,4 +1,5 @@
 import 'package:flutter_douban_fm_clone/pages/home/views/no_login_page.dart';
+import 'package:flutter_douban_fm_clone/pages/user/views/login_prompt_page.dart';
 import 'package:flutter_douban_fm_clone/pages/welcome/views/index.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,6 +14,10 @@ class AppRoute {
       GoRoute(
         path: '/home/no_login',
         builder: (context, state) => const NoLoginPage(),
+      ),
+      GoRoute(
+        path: '/user/login/prompt',
+        builder: (context, state) => const LoginPromptPage(),
       ),
     ],
     // errorBuilder: (context, state) => ,

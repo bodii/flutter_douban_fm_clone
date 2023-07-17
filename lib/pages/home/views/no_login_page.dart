@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/configs/custom_color.dart';
+import 'package:go_router/go_router.dart';
 
 class NoLoginPage extends StatelessWidget {
   const NoLoginPage({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class NoLoginPage extends StatelessWidget {
                     spreadRadius: 20,
                   ),
                 ],
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                borderRadius: BorderRadius.circular(10),
               ),
               width: 280,
               height: 330,
@@ -42,7 +43,7 @@ class NoLoginPage extends StatelessWidget {
                       foregroundColor: CustomColors.secondary,
                     ),
                     onPressed: () {
-                      debugPrint('go login');
+                      context.go('/user/login/prompt');
                     },
                     child: const Text(
                       '立即登录',
