@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/configs/custom_color.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPromptPage extends StatelessWidget {
   const LoginPromptPage({Key? key}) : super(key: key);
@@ -76,7 +77,7 @@ class LoginPromptPage extends StatelessWidget {
                         shadowColor: Colors.white,
                       ),
                       onPressed: () {
-                        debugPrint('同意');
+                        context.go('/user/login');
                       },
                       child: const Text(
                         '同意',
