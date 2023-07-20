@@ -7,12 +7,12 @@ class CircularWave extends StatelessWidget {
   Widget build(BuildContext context) {
     return OverflowBox(
       maxWidth: MediaQuery.of(context).size.width,
-      child: CustomPaint(painter: CircularWavePainter()),
+      child: CustomPaint(painter: _CircularWavePainter()),
     );
   }
 }
 
-class CircularWavePainter extends CustomPainter {
+class _CircularWavePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Offset href = Offset(size.width / 2, size.height / 2);
