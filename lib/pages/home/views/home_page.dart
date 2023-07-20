@@ -7,10 +7,17 @@ import 'discovery_page.dart';
 import 'my_page.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({
+    super.key,
+    this.index = '0',
+  });
+
+  final String index;
 
   @override
   Widget build(BuildContext context) {
+    int indexNum = int.parse(index);
+
     const List<Tab> tabs = [
       Tab(text: '兆赫'),
       Tab(text: '发现'),
@@ -19,6 +26,7 @@ class HomePage extends StatelessWidget {
 
     return DefaultTabController(
       length: tabs.length,
+      initialIndex: indexNum,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/configs/custom_color.dart';
 
+import 'package:go_router/go_router.dart';
+
 class MyPage extends StatelessWidget {
   const MyPage({Key? key}) : super(key: key);
 
@@ -133,11 +135,13 @@ class MyPage extends StatelessWidget {
               'https://d.musicapp.migu.cn/prod/playlist-service/playListimg/ed9196b6-c663-4339-adc5-5e5a86958c1e.jpg',
               '我的红心歌曲',
               7,
+              context,
             ),
             createSongListCardItem(
               'https://d.musicapp.migu.cn/prod/playlist-service/playListimg/ed9196b6-c663-4339-adc5-5e5a86958c1e.jpg',
               '我的红心歌曲',
               7,
+              context,
             ),
           ],
         ),
@@ -149,66 +153,76 @@ class MyPage extends StatelessWidget {
     String? coverSrc,
     String name,
     int num,
+    BuildContext context,
   ) {
     String src = coverSrc ?? '';
-    return Container(
-      width: double.infinity,
-      height: 95,
+    return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 10,
       ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 120,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.network(
-                    src,
-                    fit: BoxFit.cover,
-                    width: 120,
-                    height: 95,
-                  ),
-                ),
-                Opacity(
-                  opacity: 0.25,
-                  child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
+      child: InkWell(
+        onTap: () {
+          debugPrint(name);
+          context.go('/my/song_list/detail/$name');
+        },
+        child: SizedBox(
+          width: double.infinity,
+          height: 75,
+          child: Row(
+            children: [
+              SizedBox(
+                width: 120,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    ClipRRect(
                       borderRadius: BorderRadius.circular(8),
+                      child: Image.network(
+                        src,
+                        fit: BoxFit.cover,
+                        width: 120,
+                        height: 95,
+                      ),
                     ),
-                  ),
+                    Opacity(
+                      opacity: 0.25,
+                      child: Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                    const Icon(
+                      Icons.favorite,
+                      color: CustomColors.neutral,
+                    )
+                  ],
                 ),
-                const Icon(
-                  Icons.favorite,
-                  color: CustomColors.neutral,
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 18.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 18.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text('$num首',
+                        style: const TextStyle(color: Colors.black38)),
+                  ],
                 ),
-                Text('$num首', style: const TextStyle(color: Colors.black38)),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
