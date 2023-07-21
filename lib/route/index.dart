@@ -1,5 +1,6 @@
 import 'package:flutter_douban_fm_clone/pages/home/views/home_page.dart';
-import 'package:flutter_douban_fm_clone/pages/home/views/my_song_list_detail_page.dart';
+import 'package:flutter_douban_fm_clone/pages/home/views/my_song_list_batch_operation_page.dart';
+import 'package:flutter_douban_fm_clone/pages/home/views/my_song_list_page.dart';
 import 'package:flutter_douban_fm_clone/pages/home/views/no_login_page.dart';
 import 'package:flutter_douban_fm_clone/pages/user/views/login_page.dart';
 import 'package:flutter_douban_fm_clone/pages/user/views/login_prompt_page.dart';
@@ -33,10 +34,14 @@ class AppRoute {
         ),
       ),
       GoRoute(
-        path: '/my/song_list/detail/:mySongListName',
-        builder: (context, state) => MySongListDetailPage(
+        path: '/my/songList/:mySongListName',
+        builder: (context, state) => MySongListPage(
           songListName: state.pathParameters['mySongListName'] ?? '',
         ),
+      ),
+      GoRoute(
+        path: '/my/songListOperation/BatchOperation',
+        builder: (context, state) => const MySongListBatchOperationPage(),
       ),
     ],
     // errorBuilder: (context, state) => ,

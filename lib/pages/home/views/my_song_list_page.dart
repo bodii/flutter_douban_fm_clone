@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/configs/custom_color.dart';
 import 'package:go_router/go_router.dart';
 
-class MySongListDetailPage extends StatelessWidget {
-  const MySongListDetailPage({
+class MySongListPage extends StatelessWidget {
+  const MySongListPage({
     super.key,
     required this.songListName,
   });
@@ -58,12 +58,12 @@ class MySongListDetailPage extends StatelessWidget {
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 18),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 18),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 160,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,7 +81,12 @@ class MySongListDetailPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Icon(Icons.done_all)
+                    InkWell(
+                      child: const Icon(Icons.done_all),
+                      onTap: () {
+                        debugPrint('多选');
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -116,7 +121,7 @@ class MySongListDetailPage extends StatelessWidget {
       child: InkWell(
         onTap: () {
           debugPrint(songName);
-          context.go('/my/song_list/detail/$songName');
+          context.go('/my/songListOperation/batchOperation');
         },
         child: SizedBox(
           width: double.infinity,
@@ -153,10 +158,13 @@ class MySongListDetailPage extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          const Icon(
-                            Icons.favorite,
-                            color: CustomColors.neutral,
-                            size: 18,
+                          const Padding(
+                            padding: EdgeInsets.only(left: 7.0),
+                            child: Icon(
+                              Icons.favorite,
+                              color: CustomColors.neutral,
+                              size: 17,
+                            ),
                           )
                         ],
                       ),

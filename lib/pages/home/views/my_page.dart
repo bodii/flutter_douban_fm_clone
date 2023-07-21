@@ -163,7 +163,7 @@ class MyPage extends StatelessWidget {
       child: InkWell(
         onTap: () {
           debugPrint(name);
-          context.go('/my/song_list/detail/$name');
+          context.go('/my/songList/$name');
         },
         child: SizedBox(
           width: double.infinity,
