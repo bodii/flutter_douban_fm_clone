@@ -95,8 +95,8 @@ class MySongListBatchOperationPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const Row(children: [
-                Padding(
+              Row(children: [
+                const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Text('离线',
                         style: TextStyle(
@@ -104,20 +104,23 @@ class MySongListBatchOperationPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: Colors.black26,
                         ))),
-                Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Text('删除',
+                TextButton(
+                    onPressed: () {},
+                    child: const Text('删除',
                         style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ))),
-                Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Text('添加到',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ))),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text('添加到',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      )),
+                ),
               ]),
             ],
           ),
