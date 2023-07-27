@@ -1,7 +1,9 @@
 import 'package:flutter_douban_fm_clone/pages/home/views/home_page.dart';
 import 'package:flutter_douban_fm_clone/pages/home/views/my_song_list_batch_operation_page.dart';
+import 'package:flutter_douban_fm_clone/pages/home/views/best_album_song_list_page.dart';
 import 'package:flutter_douban_fm_clone/pages/home/views/my_song_list_page.dart';
 import 'package:flutter_douban_fm_clone/pages/home/views/no_login_page.dart';
+import 'package:flutter_douban_fm_clone/pages/home/views/test.dart';
 import 'package:flutter_douban_fm_clone/pages/user/views/login_page.dart';
 import 'package:flutter_douban_fm_clone/pages/user/views/login_prompt_page.dart';
 import 'package:flutter_douban_fm_clone/pages/welcome/views/index.dart';
@@ -10,7 +12,12 @@ import 'package:go_router/go_router.dart';
 class AppRoute {
   static final GoRouter routes = GoRouter(
     initialLocation: '/home/index/0',
+    // initialLocation: '/test',
     routes: [
+      GoRoute(
+        path: '/test',
+        builder: (context, state) => TestPage(),
+      ),
       GoRoute(
         path: '/',
         builder: (context, state) => const WelcomeIndexPage(),
@@ -42,6 +49,10 @@ class AppRoute {
       GoRoute(
         path: '/my/songListOperation/BatchOperation',
         builder: (context, state) => const MySongListBatchOperationPage(),
+      ),
+      GoRoute(
+        path: '/best/album/songList',
+        builder: (context, state) => const BestAlbumSongListPage(),
       ),
     ],
     // errorBuilder: (context, state) => ,

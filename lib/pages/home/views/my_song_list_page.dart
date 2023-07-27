@@ -85,6 +85,7 @@ class MySongListPage extends StatelessWidget {
                       child: const Icon(Icons.done_all),
                       onTap: () {
                         debugPrint('多选');
+                        context.go('/my/songListOperation/batchOperation');
                       },
                     ),
                   ],
@@ -121,7 +122,6 @@ class MySongListPage extends StatelessWidget {
       child: InkWell(
         onTap: () {
           debugPrint(songName);
-          context.go('/my/songListOperation/batchOperation');
         },
         child: SizedBox(
           width: double.infinity,

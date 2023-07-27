@@ -8,4 +8,7 @@ class CustomColors {
   static const Color icon = Color(0xFF01EA97);
   static const Color black = Color(0xFF010101);
   static const Color lightBlue = Color(0xFF9cebfb);
+  static const Color lightOrange = Color(0xFFFFECC9);
+  static const Color tangerine = Color(0xFFFFE6AC);
+  static const Color darkOrange = Color(0xFFFDDD9A);
 }
