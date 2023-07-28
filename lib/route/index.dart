@@ -3,6 +3,7 @@ import 'package:flutter_douban_fm_clone/pages/home/views/my_song_list_batch_oper
 import 'package:flutter_douban_fm_clone/pages/home/views/best_album_song_list_page.dart';
 import 'package:flutter_douban_fm_clone/pages/home/views/my_song_list_page.dart';
 import 'package:flutter_douban_fm_clone/pages/home/views/no_login_page.dart';
+import 'package:flutter_douban_fm_clone/pages/home/views/singer_home_page.dart';
 import 'package:flutter_douban_fm_clone/pages/home/views/test.dart';
 import 'package:flutter_douban_fm_clone/pages/user/views/login_page.dart';
 import 'package:flutter_douban_fm_clone/pages/user/views/login_prompt_page.dart';
@@ -16,7 +17,7 @@ class AppRoute {
     routes: [
       GoRoute(
         path: '/test',
-        builder: (context, state) => TestPage(),
+        builder: (context, state) => const TestPage(),
       ),
       GoRoute(
         path: '/',
@@ -54,6 +55,10 @@ class AppRoute {
         path: '/best/album/songList',
         builder: (context, state) => const BestAlbumSongListPage(),
       ),
+      GoRoute(
+        path: '/singer/home',
+        builder: (context, state) => const SingerHomePage(),
+      )
     ],
     // errorBuilder: (context, state) => ,
     debugLogDiagnostics: true,

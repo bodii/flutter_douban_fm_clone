@@ -18,6 +18,8 @@ const List<String> title = [
 ];
 
 class TestPage extends StatefulWidget {
+  const TestPage({super.key});
+
   @override
   _TestPageState createState() => _TestPageState();
 }
@@ -110,7 +112,7 @@ class _CardScrollWidget extends StatelessWidget {
   double padding = 20.0;
   double verticalInset = 20.0;
 
-  _CardScrollWidget(this.currentPage, {super.key});
+  _CardScrollWidget(this.currentPage);
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +145,7 @@ class _CardScrollWidget extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16.0),
                   child: Container(
-                    decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                    decoration: const BoxDecoration(color: Colors.white, boxShadow: [
                       BoxShadow(
                           color: Colors.black12,
                           offset: Offset(3.0, 6.0),
@@ -163,31 +165,31 @@ class _CardScrollWidget extends StatelessWidget {
                               children: <Widget>[
                                 // 设置标题
                                 Padding(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 16, vertical: 8),
                                   child: Text(
                                     title[i],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 25,
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 // 设置ReaderLater
                                 Padding(
                                   padding:
-                                      EdgeInsets.only(left: 12, bottom: 12),
+                                      const EdgeInsets.only(left: 12, bottom: 12),
                                   child: Container(
-                                    padding: EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                         horizontal: 22.0, vertical: 6.0),
                                     decoration: BoxDecoration(
                                         color: Colors.blueAccent,
                                         borderRadius:
                                             BorderRadius.circular(20.0)),
-                                    child: Text("点击查看",
+                                    child: const Text("点击查看",
                                         style: TextStyle(color: Colors.white)),
                                   ),
                                 )

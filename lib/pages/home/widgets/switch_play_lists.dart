@@ -73,7 +73,7 @@ class _SwitchPlayListsState extends State<SwitchPlayLists> {
                 }
                 // index = images.length - 1 - index;
                 debugPrint('$index');
-                return SizedBox();
+                return const SizedBox();
               },
             ),
           ),
@@ -138,7 +138,7 @@ class CardScrollWidget extends StatelessWidget {
         textDirection: TextDirection.rtl,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
-          child: Container(
+          child: SizedBox(
             width: 220,
             height: 220,
             child: AspectRatio(

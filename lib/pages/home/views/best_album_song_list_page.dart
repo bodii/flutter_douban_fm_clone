@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/configs/custom_color.dart';
 import 'package:flutter_douban_fm_clone/pages/home/controllers/selecter.dart';
+import 'package:go_router/go_router.dart';
 
 class BestAlbumSongListPage extends StatelessWidget {
   const BestAlbumSongListPage({super.key});
@@ -172,21 +173,28 @@ class BestAlbumSongListPage extends StatelessWidget {
                           style: const TextStyle(
                               fontSize: 23, fontWeight: FontWeight.w600),
                         ),
-                        SizedBox(
-                          width: 90,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                albumData['singer'],
-                                style: const TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w300),
-                              ),
-                              const Icon(
-                                Icons.arrow_forward_ios,
-                                size: 15,
-                              )
-                            ],
+                        InkWell(
+                          onTap: () {
+                            context.go('/singer/home');
+                          },
+                          child: SizedBox(
+                            width: 90,
+                            height: 28,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  albumData['singer'],
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                                const Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 15,
+                                )
+                              ],
+                            ),
                           ),
                         ),
                         Row(
