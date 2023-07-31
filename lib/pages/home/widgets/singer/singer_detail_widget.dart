@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SongerDetailWidget extends StatelessWidget {
-  const SongerDetailWidget({super.key});
+class SingerDetailWidget extends StatelessWidget {
+  const SingerDetailWidget({super.key});
 
   Widget getGenreAndStyleWidget() {
     const List<String> genreAndStyle = ['Jazz'];
@@ -54,25 +54,7 @@ class SongerDetailWidget extends StatelessWidget {
                 '也让人欣慰.\n\n到了1998年, Frost决定单飞,并在器材都是借回来的艰难状况下,录制了首张'
                 '个人专辑. 2001年, 随着在德国,日本等地的发行,Frost的名字渐渐出现在乐评人的文章里,'
                 '并获得不俗的评价, "Who Am I"一曲更被收录在电影的原声带里. 03年起, Frost又开始了'
-                '新专辑的录制,这一次,她几乎一手包办了专辑的所有创作,终于在04年正式完成.\n\nby Tom '
-                'Demalon\nSinger/songwriter Lily Frost draws on influences of \'60s pop,'
-                ' fashion, and art to create her engaging brand of not-easily pigeonholed '
-                'music. Painfully shy, the introverted Frost spent years expressing herself'
-                ' in her diary entries, gradually setting them to music and putting years '
-                'of classical piano training to use. By 1989, she was studying jazz and '
-                'French at Concordia University in Montreal and was performing \'20s '
-                'covers in a local group called the Sheiks. To escape from the Montreal '
-                'winters, Frost took a job singing on a ship in Cairo, Egypt, performing'
-                ' standards and torch songs seven nights a week, for six months, before '
-                'returning to Vancouver in 1992 to front the Colorifics, who embraced '
-                '\'50s-style swing and attracted a following along the West Coast. The '
-                'group scored at college radio when they released one of Frost\'s '
-                'compositions, "Soda Pop," but Frost, wanting to pursue more contemporary'
-                ' sounds, released the solo effort Lunamarium, which was re-packaged and '
-                're-released when she signed with Nettwerk. Promoting the record, which '
-                'was well-received by critics, Frost had the opportunity to share the stage'
-                ' with acts that included Coldplay, Cowboy Junkies, and the Dandy Warhols. '
-                'She also continued to work concurrently with the band Mimosa.'),
+                '新专辑的录制,这一次,她几乎一手包办了专辑的所有创作,终于在04年正式完成.'),
           ),
         ],
       ),

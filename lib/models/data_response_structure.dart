@@ -1,13 +1,13 @@
-class SongerFeaturedSongs {
-  final int? code;
-  final int? curTime;
-  final dynamic data;
-  final String? msg;
-  final String? profileId;
-  final String? reqId;
-  final String? tId;
+class ResponseStruct {
+  late final int? code;
+  late final int? curTime;
+  late final Map<String, dynamic>? data;
+  late final String? msg;
+  late final String? profileId;
+  late final String? reqId;
+  late final String? tId;
 
-  SongerFeaturedSongs({
+  ResponseStruct({
     this.code,
     this.curTime,
     this.data,
@@ -17,7 +17,7 @@ class SongerFeaturedSongs {
     this.tId,
   });
 
-  SongerFeaturedSongs copyWith({
+  ResponseStruct copyWith({
     int? code,
     int? curTime,
     dynamic data,
@@ -26,7 +26,7 @@ class SongerFeaturedSongs {
     String? reqId,
     String? tId,
   }) =>
-      SongerFeaturedSongs(
+      ResponseStruct(
         code: code ?? this.code,
         curTime: curTime ?? this.curTime,
         data: data ?? this.data,
@@ -35,4 +35,42 @@ class SongerFeaturedSongs {
         reqId: reqId ?? this.reqId,
         tId: tId ?? this.tId,
       );
+
+  ResponseStruct.fromJson(Map<String, dynamic> json) {
+    if (json["code"] is int) {
+      code = json["code"];
+    }
+    if (json["curTime"] is int) {
+      curTime = json["curTime"];
+    }
+
+    if (json['data'] is Map<String, dynamic>) {
+      data = json["data"];
+    }
+
+    if (json["msg"] is String) {
+      msg = json["msg"];
+    }
+    if (json["profileId"] is String) {
+      profileId = json["profileId"];
+    }
+    if (json["reqId"] is String) {
+      reqId = json["reqId"];
+    }
+    if (json["tId"] is String) {
+      tId = json["tId"];
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> _data = {};
+    _data["code"] = code;
+    _data["curTime"] = curTime;
+    _data["data"] = data;
+    _data["msg"] = msg;
+    _data["profileId"] = profileId;
+    _data["reqId"] = reqId;
+    _data["tId"] = tId;
+    return _data;
+  }
 }

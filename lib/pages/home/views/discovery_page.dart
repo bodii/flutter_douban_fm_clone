@@ -112,7 +112,7 @@ class DiscoveryPage extends StatelessWidget {
                   'song name',
                   style: TextStyle(fontSize: 16),
                 ),
-                Text('songer',
+                Text('singer',
                     style: TextStyle(
                       fontSize: 12,
                       color: CustomColors.tertiary,

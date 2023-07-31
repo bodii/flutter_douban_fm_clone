@@ -39,6 +39,7 @@ dependencies:
   flutter_svg: ^2.0.7
   dynamic_color: ^1.6.6
   cached_network_image: ^3.2.3
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:

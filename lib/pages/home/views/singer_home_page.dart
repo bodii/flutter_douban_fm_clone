@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_douban_fm_clone/pages/home/widgets/songer/songer_detail_widget.dart';
+import 'package:flutter_douban_fm_clone/pages/home/widgets/singer/singer_similar_artist_widget.dart';
 
-import '../widgets/songer/songer_featured_songs_widget.dart';
+import '../widgets/singer/index.dart';
 
 class SingerHomePage extends StatelessWidget {
   const SingerHomePage({super.key});
@@ -161,10 +161,10 @@ class SingerHomePage extends StatelessWidget {
 
   List<Widget> getTabViews() {
     return <Widget>[
-      const SongerFeaturedSongsWidget(),
-      Text('唱片'),
-      Text('相似艺术家'),
-      const SongerDetailWidget(),
+      const SingerFeaturedSongsWidget(),
+      const SingerAlbumListWidget(),
+      const SingerSimilarArtistWidget(),
+      const SingerDetailWidget(),
     ];
   }
 
