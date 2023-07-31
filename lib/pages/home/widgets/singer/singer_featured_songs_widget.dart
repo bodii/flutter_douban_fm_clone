@@ -6,8 +6,6 @@ import 'package:flutter_douban_fm_clone/pages/home/controllers/selecter.dart';
 class SingerFeaturedSongsWidget extends StatelessWidget {
   const SingerFeaturedSongsWidget({super.key});
 
-  // http://www.kuwo.cn/api/www/search/searchMusicBykeyWord?key=Lily Frost&pn=1&rn=20&httpsStatus=1&reqId=dca187f0-2d19-11ee-b2a7-41a7244ceb03&plat=web_www&from=
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -18,7 +16,7 @@ class SingerFeaturedSongsWidget extends StatelessWidget {
     return SizedBox(
       height: height,
       child: FutureBuilder(
-          future: getSingerFeaturedSongs(),
+          future: fetchSingerFeaturedSongs(),
           builder: (context, AsyncSnapshot<SingerFeaturedSongs> snapshot) {
             if (snapshot.connectionState == ConnectionState.none &&
                 !snapshot.hasData) {

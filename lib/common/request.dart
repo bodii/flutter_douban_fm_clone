@@ -7,7 +7,7 @@ import 'package:flutter_douban_fm_clone/models/singer_album_list_model.dart';
 import 'package:flutter_douban_fm_clone/models/singer_featured_songs_model.dart';
 import 'package:http/http.dart' as http;
 
-Future<ResponseStruct> _getResponseResult(
+Future<ResponseStruct> _fetchResponseResult(
   String authority, [
   String unencodedPath = '',
   Map<String, dynamic>? queryParameters,
@@ -44,9 +44,9 @@ Future<ResponseStruct> _getResponseResult(
 }
 
 // 获取歌手推荐单曲
-Future<SingerFeaturedSongs> getSingerFeaturedSongs() async {
+Future<SingerFeaturedSongs> fetchSingerFeaturedSongs() async {
   try {
-    ResponseStruct result = await _getResponseResult(
+    ResponseStruct result = await _fetchResponseResult(
       apiHost,
       'api/www/artist/artistMusic',
       {
@@ -72,9 +72,9 @@ Future<SingerFeaturedSongs> getSingerFeaturedSongs() async {
 }
 
 // 获取歌手专辑列表
-Future<SingerAlbumList> getSingerAlbumList() async {
+Future<SingerAlbumList> fetchSingerAlbumList() async {
   try {
-    ResponseStruct result = await _getResponseResult(
+    ResponseStruct result = await _fetchResponseResult(
       apiHost,
       'api/www/artist/artistAlbum',
       {

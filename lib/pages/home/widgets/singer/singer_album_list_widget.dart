@@ -16,7 +16,7 @@ class SingerAlbumListWidget extends StatelessWidget {
     return SizedBox(
       height: height,
       child: FutureBuilder(
-        future: getSingerAlbumList(),
+        future: fetchSingerAlbumList(),
         builder: (context, AsyncSnapshot<SingerAlbumList> snapshot) {
           if (snapshot.connectionState == ConnectionState.none &&
               !snapshot.hasData) {

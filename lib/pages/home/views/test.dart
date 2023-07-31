@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_douban_fm_clone/configs/custom_color.dart';
+import 'package:flutter_douban_fm_clone/common/custom_color.dart';
 
 const List<String> images = [
   "https://img2.kuwo.cn/star/albumcover/500/1/39/533516405.jpg",
@@ -145,12 +145,14 @@ class _CardScrollWidget extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16.0),
                   child: Container(
-                    decoration: const BoxDecoration(color: Colors.white, boxShadow: [
-                      BoxShadow(
-                          color: Colors.black12,
-                          offset: Offset(3.0, 6.0),
-                          blurRadius: 10.0)
-                    ]),
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black12,
+                              offset: Offset(3.0, 6.0),
+                              blurRadius: 10.0)
+                        ]),
                     child: AspectRatio(
                       aspectRatio: 12 / 16,
                       child: Stack(
@@ -180,8 +182,8 @@ class _CardScrollWidget extends StatelessWidget {
                                 ),
                                 // 设置ReaderLater
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 12, bottom: 12),
+                                  padding: const EdgeInsets.only(
+                                      left: 12, bottom: 12),
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 22.0, vertical: 6.0),
