@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_douban_fm_clone/configs/custom_color.dart';
+import 'package:flutter_douban_fm_clone/common/custom_color.dart';
 import 'package:go_router/go_router.dart';
 
 class MySongListPage extends StatelessWidget {
