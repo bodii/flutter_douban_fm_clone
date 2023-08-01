@@ -4,7 +4,9 @@ import 'package:flutter_douban_fm_clone/models/singer_featured_songs_model.dart'
 import 'package:flutter_douban_fm_clone/pages/home/controllers/selecter.dart';
 
 class SingerFeaturedSongsWidget extends StatelessWidget {
-  const SingerFeaturedSongsWidget({super.key});
+  const SingerFeaturedSongsWidget({super.key, required this.artistId});
+
+  final int artistId;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class SingerFeaturedSongsWidget extends StatelessWidget {
     return SizedBox(
       height: height,
       child: FutureBuilder(
-          future: fetchSingerFeaturedSongs(),
+          future: fetchSingerFeaturedSongs(artistId),
           builder: (context, AsyncSnapshot<SingerFeaturedSongs> snapshot) {
             if (snapshot.connectionState == ConnectionState.none &&
                 !snapshot.hasData) {
@@ -57,7 +59,6 @@ class SingerFeaturedSongsWidget extends StatelessWidget {
             return Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 12),
-              // margin: const EdgeInsets.only(bottom: 4),
               color: selecter.isSelected ? Colors.grey.withOpacity(0.08) : null,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,7 +81,8 @@ class SingerFeaturedSongsWidget extends StatelessWidget {
                           song.name!,
                           style: const TextStyle(
                             fontSize: 17,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black87,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -88,7 +90,10 @@ class SingerFeaturedSongsWidget extends StatelessWidget {
                         Text(
                           song.artist!,
                           style: const TextStyle(
-                              fontSize: 13, fontWeight: FontWeight.w200),
+                            fontSize: 13,
+                            fontWeight: FontWeight.w200,
+                            color: Colors.black54,
+                          ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),

@@ -21,12 +21,12 @@ class SingerAlbumList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["total"] = total;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["total"] = total;
     if (albumList != null) {
-      _data["albumList"] = albumList?.map((e) => e.toJson()).toList();
+      data["albumList"] = albumList?.map((e) => e.toJson()).toList();
     }
-    return _data;
+    return data;
   }
 
   SingerAlbumList copyWith({
@@ -100,18 +100,18 @@ class Album {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["content_type"] = contentType;
-    _data["albuminfo"] = albuminfo;
-    _data["artist"] = artist;
-    _data["releaseDate"] = releaseDate;
-    _data["album"] = album;
-    _data["albumid"] = albumid;
-    _data["artistid"] = artistid;
-    _data["pic"] = pic;
-    _data["isstar"] = isstar;
-    _data["lang"] = lang;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["content_type"] = contentType;
+    data["albuminfo"] = albuminfo;
+    data["artist"] = artist;
+    data["releaseDate"] = releaseDate;
+    data["album"] = album;
+    data["albumid"] = albumid;
+    data["artistid"] = artistid;
+    data["pic"] = pic;
+    data["isstar"] = isstar;
+    data["lang"] = lang;
+    return data;
   }
 
   Album copyWith({

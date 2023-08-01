@@ -63,14 +63,14 @@ class ResponseStruct {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = {};
-    _data["code"] = code;
-    _data["curTime"] = curTime;
-    _data["data"] = data;
-    _data["msg"] = msg;
-    _data["profileId"] = profileId;
-    _data["reqId"] = reqId;
-    _data["tId"] = tId;
-    return _data;
+    final Map<String, dynamic> data = {};
+    data["code"] = code;
+    data["curTime"] = curTime;
+    data["data"] = data;
+    data["msg"] = msg;
+    data["profileId"] = profileId;
+    data["reqId"] = reqId;
+    data["tId"] = tId;
+    return data;
   }
 }

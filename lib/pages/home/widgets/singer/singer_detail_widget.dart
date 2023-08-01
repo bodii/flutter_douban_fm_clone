@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_douban_fm_clone/common/functions/html_entities_to_string.dart';
+import 'package:flutter_douban_fm_clone/common/request.dart';
+import 'package:flutter_douban_fm_clone/models/singer_detail_model.dart';
 
 class SingerDetailWidget extends StatelessWidget {
-  const SingerDetailWidget({super.key});
+  const SingerDetailWidget({super.key, required this.singerDetail});
+
+  final SingerDetail singerDetail;
 
   Widget getGenreAndStyleWidget() {
     const List<String> genreAndStyle = ['Jazz'];
@@ -22,6 +27,67 @@ class SingerDetailWidget extends StatelessWidget {
     );
   }
 
+  Widget _getBasicInfoWidget() {
+    Map<String, String?> titleAndValue = {
+      '姓名': singerDetail.name!.htmlEntitiesToString(),
+      '英文名': singerDetail.aartist!.htmlEntitiesToString(),
+      '性别': singerDetail.gener,
+      '国籍': singerDetail.country,
+      '出生地': singerDetail.birthplace,
+      '语言': singerDetail.language,
+      '生日': singerDetail.birthday,
+      '星座': singerDetail.constellation,
+      '身高': singerDetail.tall,
+      '体重': singerDetail.weight,
+    };
+
+    List<String> titles = titleAndValue.keys.toList();
+    List<String> values =
+        titleAndValue.values.map((e) => e != '' ? e! : ' - ').toList();
+
+    List<Row> cols = [];
+
+    for (var i = 0; i < titles.length / 2; i++) {
+      int index = i * 2;
+      Row col = Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 150,
+            child: Text.rich(TextSpan(children: [
+              TextSpan(
+                  text: '${titles[index]}：',
+                  style: const TextStyle(color: Colors.black38)),
+              TextSpan(
+                  text: values[index],
+                  style: const TextStyle(color: Colors.black87)),
+            ])),
+          ),
+          SizedBox(
+            width: 120,
+            child: Text.rich(TextSpan(children: [
+              TextSpan(
+                  text: '${titles[index + 1]}：',
+                  style: const TextStyle(color: Colors.black38)),
+              TextSpan(
+                  text: values[index + 1],
+                  style: const TextStyle(color: Colors.black87)),
+            ])),
+          ),
+        ],
+      );
+      cols.add(col);
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+      child: Column(
+        children: cols,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -29,13 +95,10 @@ class SingerDetailWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            '流派与风格',
+            '基本信息',
             style: TextStyle(color: Colors.black38),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: getGenreAndStyleWidget(),
-          ),
+          _getBasicInfoWidget(),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 18),
             child: Text('简介', style: TextStyle(color: Colors.black38)),
@@ -43,18 +106,12 @@ class SingerDetailWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 40.0),
             child: Text(
-                style: TextStyle(
-                    fontSize: 16, color: Colors.black.withOpacity(0.7)),
-                '来自加拿大的女歌手Lily Frost, 早在1989年便开始了她的音乐生涯,可惜这一'
-                '路并不平坦. 从加拿大的音乐重地Montreal到埃及的Cairo，再回到Vancouver,最终落'
-                '脚在Toronto的她,曾组过以翻唱老歌为主的乐队The Sheiks, 也试过在异国的油轮上以'
-                '驻场歌手为职业.直到1992年,和朋友Minstrel Jorge Diaz组成了乐队The Colorifics, '
-                'Frost才算是真正开始了她的创作历程. 之后,不但有大学电台选播The Colorifics的歌曲,'
-                '乐队还获得了大量现场演出的机会,并在演出的时候出售他们四张自资专辑,销量虽不能算巨大倒'
-                '也让人欣慰.\n\n到了1998年, Frost决定单飞,并在器材都是借回来的艰难状况下,录制了首张'
-                '个人专辑. 2001年, 随着在德国,日本等地的发行,Frost的名字渐渐出现在乐评人的文章里,'
-                '并获得不俗的评价, "Who Am I"一曲更被收录在电影的原声带里. 03年起, Frost又开始了'
-                '新专辑的录制,这一次,她几乎一手包办了专辑的所有创作,终于在04年正式完成.'),
+              singerDetail.info!
+                  .htmlEntitiesToString()
+                  .replaceAll('<br/>', '\n\n'),
+              style:
+                  TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.7)),
+            ),
           ),
         ],
       ),

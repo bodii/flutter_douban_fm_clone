@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/request.dart';
 import 'package:flutter_douban_fm_clone/models/singer_album_list_model.dart';
-import 'package:flutter_douban_fm_clone/pages/home/controllers/selecter.dart';
 
 class SingerAlbumListWidget extends StatelessWidget {
-  const SingerAlbumListWidget({super.key});
+  const SingerAlbumListWidget({super.key, required this.artistId});
+
+  final int artistId;
 
   @override
   Widget build(BuildContext context) {
@@ -13,97 +14,86 @@ class SingerAlbumListWidget extends StatelessWidget {
   }
 
   Widget _generateSongItemList(double height) {
-    return SizedBox(
-      height: height,
-      child: FutureBuilder(
-        future: fetchSingerAlbumList(),
-        builder: (context, AsyncSnapshot<SingerAlbumList> snapshot) {
-          if (snapshot.connectionState == ConnectionState.none &&
-              !snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (!snapshot.hasData) {
-            return const Center(
-              child: Text('not data!'),
-            );
-          }
-          return ListView.builder(
-            itemCount: snapshot.data!.albumList!.length,
-            itemBuilder: (context, index) =>
-                _generateItem(index + 1, snapshot.data!.albumList![index]),
-            padding: const EdgeInsets.symmetric(vertical: 5),
+    return FutureBuilder(
+      future: fetchSingerAlbumList(artistId),
+      builder: (context, AsyncSnapshot<SingerAlbumList> snapshot) {
+        if (snapshot.connectionState == ConnectionState.none &&
+            !snapshot.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (!snapshot.hasData) {
+          return const Center(
+            child: Text('not data!'),
           );
-        },
-      ),
+        }
+        return GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 5,
+            crossAxisSpacing: 15,
+            childAspectRatio: 0.7,
+          ),
+          shrinkWrap: true,
+          padding: EdgeInsets.zero,
+          itemCount: snapshot.data!.albumList!.length,
+          itemBuilder: (context, index) =>
+              _generateItem(index + 1, snapshot.data!.albumList![index]),
+          // padding: const EdgeInsets.symmetric(vertical: 5),
+        );
+      },
     );
   }
 
   Widget _generateItem(int index, Album album) {
-    BatchSelector selecter = BatchSelector();
-    return InkWell(
+    return GestureDetector(
       onTap: () {
-        if (selecter.isSelected) {
-          selecter.setNotSelect();
-        } else {
-          selecter.setSelected();
-        }
+        debugPrint('点击了唱片: ${album.albumid}');
       },
-      focusColor: Colors.grey.withOpacity(0.05),
-      hoverColor: Colors.grey.withOpacity(0.05),
-      splashColor: Colors.grey.withOpacity(0.05),
-      highlightColor: Colors.grey.withOpacity(0.08),
-      child: ListenableBuilder(
-          listenable: selecter,
-          builder: (context, widget) {
-            return Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              // margin: const EdgeInsets.only(bottom: 4),
-              color: selecter.isSelected ? Colors.grey.withOpacity(0.08) : null,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    margin: const EdgeInsets.only(right: 15),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: Image.network(album.pic!),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 260,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          album.album!,
-                          style: const TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          album.artist!,
-                          style: const TextStyle(
-                              fontSize: 13, fontWeight: FontWeight.w200),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Icon(
-                    Icons.more_horiz,
-                    color: Colors.black54,
-                  ),
-                ],
-              ),
-            );
-          }),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 170,
+            height: 170,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: Image.network(album.pic!),
+            ),
+          ),
+          const SizedBox(height: 15),
+          Text(
+            album.album!,
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+              color: Colors.black87,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            album.artist!,
+            style: const TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w400,
+              color: Colors.black54,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            album.releaseDate!,
+            style: const TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w400,
+              color: Colors.black54,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
     );
   }
 }
