@@ -61,7 +61,7 @@ class SingerAlbumListWidget extends StatelessWidget {
               child: Image.network(album.pic!),
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 10),
           Text(
             album.album!,
             style: const TextStyle(

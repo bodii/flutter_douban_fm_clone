@@ -125,31 +125,31 @@ class SingerDetail {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["birthday"] = birthday;
-    _data["country"] = country;
-    _data["artistFans"] = artistFans;
-    _data["albumNum"] = albumNum;
-    _data["gener"] = gener;
-    _data["weight"] = weight;
-    _data["language"] = language;
-    _data["mvNum"] = mvNum;
-    _data["pic"] = pic;
-    _data["upPcUrl"] = upPcUrl;
-    _data["musicNum"] = musicNum;
-    _data["pic120"] = pic120;
-    _data["isStar"] = isStar;
-    _data["birthplace"] = birthplace;
-    _data["constellation"] = constellation;
-    _data["content_type"] = contentType;
-    _data["aartist"] = aartist;
-    _data["name"] = name;
-    _data["pic70"] = pic70;
-    _data["id"] = id;
-    _data["tall"] = tall;
-    _data["pic300"] = pic300;
-    _data["info"] = info;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["birthday"] = birthday;
+    data["country"] = country;
+    data["artistFans"] = artistFans;
+    data["albumNum"] = albumNum;
+    data["gener"] = gener;
+    data["weight"] = weight;
+    data["language"] = language;
+    data["mvNum"] = mvNum;
+    data["pic"] = pic;
+    data["upPcUrl"] = upPcUrl;
+    data["musicNum"] = musicNum;
+    data["pic120"] = pic120;
+    data["isStar"] = isStar;
+    data["birthplace"] = birthplace;
+    data["constellation"] = constellation;
+    data["content_type"] = contentType;
+    data["aartist"] = aartist;
+    data["name"] = name;
+    data["pic70"] = pic70;
+    data["id"] = id;
+    data["tall"] = tall;
+    data["pic300"] = pic300;
+    data["info"] = info;
+    return data;
   }
 
   SingerDetail copyWith({

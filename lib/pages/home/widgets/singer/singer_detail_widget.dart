@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/functions/html_entities_to_string.dart';
-import 'package:flutter_douban_fm_clone/common/request.dart';
 import 'package:flutter_douban_fm_clone/models/singer_detail_model.dart';
 
 class SingerDetailWidget extends StatelessWidget {
