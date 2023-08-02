@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter_douban_fm_clone/configs/apis.dart';
+import '../configs/apis.dart';
 import 'package:flutter_douban_fm_clone/models/album_info_model.dart';
 import 'package:flutter_douban_fm_clone/models/artist_list_info_model.dart';
 import 'package:flutter_douban_fm_clone/models/bang_menu_model.dart';
