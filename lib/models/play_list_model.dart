@@ -96,26 +96,26 @@ class PlayList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["img"] = img;
-    _data["uPic"] = uPic;
-    _data["uname"] = uname;
-    _data["img700"] = img700;
-    _data["img300"] = img300;
-    _data["userName"] = userName;
-    _data["img500"] = img500;
-    _data["isOfficial"] = isOfficial;
-    _data["total"] = total;
-    _data["name"] = name;
-    _data["listencnt"] = listencnt;
-    _data["id"] = id;
-    _data["tag"] = tag;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["img"] = img;
+    data["uPic"] = uPic;
+    data["uname"] = uname;
+    data["img700"] = img700;
+    data["img300"] = img300;
+    data["userName"] = userName;
+    data["img500"] = img500;
+    data["isOfficial"] = isOfficial;
+    data["total"] = total;
+    data["name"] = name;
+    data["listencnt"] = listencnt;
+    data["id"] = id;
+    data["tag"] = tag;
     if (musicList != null) {
-      _data["musicList"] = musicList?.map((e) => e.toJson()).toList();
+      data["musicList"] = musicList?.map((e) => e.toJson()).toList();
     }
-    _data["desc"] = desc;
-    _data["info"] = info;
-    return _data;
+    data["desc"] = desc;
+    data["info"] = info;
+    return data;
   }
 
   PlayList copyWith({

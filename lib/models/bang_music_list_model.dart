@@ -32,14 +32,14 @@ class BangMusicList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["img"] = img;
-    _data["num"] = num;
-    _data["pub"] = pub;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["img"] = img;
+    data["num"] = num;
+    data["pub"] = pub;
     if (musicList != null) {
-      _data["musicList"] = musicList?.map((e) => e.toJson()).toList();
+      data["musicList"] = musicList?.map((e) => e.toJson()).toList();
     }
-    return _data;
+    return data;
   }
 
   BangMusicList copyWith({

@@ -1,7 +1,7 @@
 class Tags {
   String? img;
   String? mdigest;
-  List<Tag>? data;
+  List<Tag>? tagList;
   String? name;
   String? id;
   String? type;
@@ -10,7 +10,7 @@ class Tags {
   Tags(
       {this.img,
       this.mdigest,
-      this.data,
+      this.tagList,
       this.name,
       this.id,
       this.type,
@@ -24,7 +24,7 @@ class Tags {
       mdigest = json["mdigest"];
     }
     if (json["data"] is List) {
-      data = json["data"] == null
+      tagList = json["data"] == null
           ? null
           : (json["data"] as List).map((e) => Tag.fromJson(e)).toList();
     }
@@ -47,23 +47,21 @@ class Tags {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["img"] = img;
-    _data["mdigest"] = mdigest;
-    if (data != null) {
-      _data["data"] = data?.map((e) => e.toJson()).toList();
-    }
-    _data["name"] = name;
-    _data["id"] = id;
-    _data["type"] = type;
-    _data["img1"] = img1;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["img"] = img;
+    data["mdigest"] = mdigest;
+    data["data"] = tagList!.map((e) => e.toJson()).toList();
+    data["name"] = name;
+    data["id"] = id;
+    data["type"] = type;
+    data["img1"] = img1;
+    return data;
   }
 
   Tags copyWith({
     String? img,
     String? mdigest,
-    List<Tag>? data,
+    List<Tag>? tagList,
     String? name,
     String? id,
     String? type,
@@ -72,7 +70,7 @@ class Tags {
       Tags(
         img: img ?? this.img,
         mdigest: mdigest ?? this.mdigest,
-        data: data ?? this.data,
+        tagList: tagList ?? this.tagList,
         name: name ?? this.name,
         id: id ?? this.id,
         type: type ?? this.type,
@@ -116,14 +114,14 @@ class Tag {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["extend"] = extend;
-    _data["img"] = img;
-    _data["digest"] = digest;
-    _data["name"] = name;
-    _data["isnew"] = isnew;
-    _data["id"] = id;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["extend"] = extend;
+    data["img"] = img;
+    data["digest"] = digest;
+    data["name"] = name;
+    data["isnew"] = isnew;
+    data["id"] = id;
+    return data;
   }
 
   Tag copyWith({

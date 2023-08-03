@@ -33,7 +33,9 @@ class MyPage extends StatelessWidget {
                 ]),
                 InkWell(
                   splashColor: Colors.white,
-                  onTap: () {},
+                  onTap: () {
+                    context.push('/user/info/modify');
+                  },
                   child: Container(
                     width: 75,
                     height: 30,

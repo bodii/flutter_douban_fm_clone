@@ -58,7 +58,7 @@ class NoLoginPage extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                debugPrint('关闭');
+                context.go('/home/index/0');
               },
               icon: const Icon(Icons.close, size: 30),
             ),

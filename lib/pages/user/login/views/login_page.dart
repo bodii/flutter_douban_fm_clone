@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -43,7 +44,7 @@ class LoginPage extends StatelessWidget {
                     size: 30,
                   ),
                   onPressed: () {
-                    debugPrint('退出');
+                    context.pop(false);
                   },
                 ),
                 const SizedBox(height: 55),

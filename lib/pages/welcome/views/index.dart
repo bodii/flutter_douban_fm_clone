@@ -30,7 +30,7 @@ class WelcomeIndexPage extends StatelessWidget {
           right: 10,
           child: GestureDetector(
             onTap: () {
-              context.go('/home/no_login');
+              context.go('/user/login/no_login');
             },
             child: Container(
               width: 70,

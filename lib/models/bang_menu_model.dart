@@ -20,12 +20,12 @@ class BangMenu {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["name"] = name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["name"] = name;
     if (list != null) {
-      _data["list"] = list?.map((e) => e.toJson()).toList();
+      data["list"] = list?.map((e) => e.toJson()).toList();
     }
-    return _data;
+    return data;
   }
 
   BangMenu copyWith({
@@ -85,15 +85,15 @@ class BangList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["sourceid"] = sourceid;
-    _data["intro"] = intro;
-    _data["name"] = name;
-    _data["id"] = id;
-    _data["source"] = source;
-    _data["pic"] = pic;
-    _data["pub"] = pub;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["sourceid"] = sourceid;
+    data["intro"] = intro;
+    data["name"] = name;
+    data["id"] = id;
+    data["source"] = source;
+    data["pic"] = pic;
+    data["pub"] = pub;
+    return data;
   }
 
   BangList copyWith({

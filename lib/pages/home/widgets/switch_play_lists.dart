@@ -20,7 +20,7 @@ class SwitchPlayLists extends StatefulWidget {
   const SwitchPlayLists({super.key});
 
   @override
-  _SwitchPlayListsState createState() => _SwitchPlayListsState();
+  State createState() => _SwitchPlayListsState();
 }
 
 class _SwitchPlayListsState extends State<SwitchPlayLists> {

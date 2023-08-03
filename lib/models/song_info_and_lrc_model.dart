@@ -1,5 +1,5 @@
 class SongInfoAndLrcData {
-  SongInfoAndLrc? data;
+  SongInfoAndLrc? info;
   String? msg;
   dynamic msgs;
   String? profileid;
@@ -7,7 +7,7 @@ class SongInfoAndLrcData {
   int? status;
 
   SongInfoAndLrcData(
-      {this.data,
+      {this.info,
       this.msg,
       this.msgs,
       this.profileid,
@@ -16,7 +16,7 @@ class SongInfoAndLrcData {
 
   SongInfoAndLrcData.fromJson(Map<String, dynamic> json) {
     if (json["data"] is Map) {
-      data =
+      info =
           json["data"] == null ? null : SongInfoAndLrc.fromJson(json["data"]);
     }
     if (json["msg"] is String) {
@@ -39,20 +39,18 @@ class SongInfoAndLrcData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    if (data != null) {
-      _data["data"] = data?.toJson();
-    }
-    _data["msg"] = msg;
-    _data["msgs"] = msgs;
-    _data["profileid"] = profileid;
-    _data["reqid"] = reqid;
-    _data["status"] = status;
-    return _data;
+    final Map<String, dynamic> data = {};
+    data["data"] = info!.toJson();
+    data["msg"] = msg;
+    data["msgs"] = msgs;
+    data["profileid"] = profileid;
+    data["reqid"] = reqid;
+    data["status"] = status;
+    return data;
   }
 
   SongInfoAndLrcData copyWith({
-    SongInfoAndLrc? data,
+    SongInfoAndLrc? info,
     String? msg,
     dynamic msgs,
     String? profileid,
@@ -60,7 +58,7 @@ class SongInfoAndLrcData {
     int? status,
   }) =>
       SongInfoAndLrcData(
-        data: data ?? this.data,
+        info: info ?? this.info,
         msg: msg ?? this.msg,
         msgs: msgs ?? this.msgs,
         profileid: profileid ?? this.profileid,
@@ -96,17 +94,17 @@ class SongInfoAndLrc {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (lrclist != null) {
-      _data["lrclist"] = lrclist?.map((e) => e.toJson()).toList();
+      data["lrclist"] = lrclist?.map((e) => e.toJson()).toList();
     }
     if (simpl != null) {
-      _data["simpl"] = simpl?.toJson();
+      data["simpl"] = simpl?.toJson();
     }
     if (songinfo != null) {
-      _data["songinfo"] = songinfo?.toJson();
+      data["songinfo"] = songinfo?.toJson();
     }
-    return _data;
+    return data;
   }
 
   SongInfoAndLrc copyWith({
@@ -351,58 +349,58 @@ class Songinfo {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["album"] = album;
-    _data["albumId"] = albumId;
-    _data["artist"] = artist;
-    _data["artistId"] = artistId;
-    _data["contentType"] = contentType;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["album"] = album;
+    data["albumId"] = albumId;
+    data["artist"] = artist;
+    data["artistId"] = artistId;
+    data["contentType"] = contentType;
     if (coopFormats != null) {
-      _data["coopFormats"] = coopFormats;
+      data["coopFormats"] = coopFormats;
     }
-    _data["copyRight"] = copyRight;
-    _data["duration"] = duration;
-    _data["formats"] = formats;
-    _data["hasEcho"] = hasEcho;
-    _data["hasMv"] = hasMv;
-    _data["id"] = id;
-    _data["isExt"] = isExt;
-    _data["isNew"] = isNew;
-    _data["isPoint"] = isPoint;
-    _data["isbatch"] = isbatch;
-    _data["isdownload"] = isdownload;
-    _data["isstar"] = isstar;
-    _data["mkvNsig1"] = mkvNsig1;
-    _data["mkvNsig2"] = mkvNsig2;
-    _data["mkvRid"] = mkvRid;
-    _data["mp3Nsig1"] = mp3Nsig1;
-    _data["mp3Nsig2"] = mp3Nsig2;
-    _data["mp3Rid"] = mp3Rid;
-    _data["mp3Size"] = mp3Size;
-    _data["mp4sig1"] = mp4Sig1;
-    _data["mp4sig2"] = mp4Sig2;
-    _data["musicrId"] = musicrId;
-    _data["mutiVer"] = mutiVer;
-    _data["mvpayinfo"] = mvpayinfo;
-    _data["mvpic"] = mvpic;
-    _data["nsig1"] = nsig1;
-    _data["nsig2"] = nsig2;
-    _data["online"] = online;
-    _data["params"] = params;
-    _data["pay"] = pay;
-    _data["pic"] = pic;
-    _data["playCnt"] = playCnt;
-    _data["rankChange"] = rankChange;
-    _data["reason"] = reason;
-    _data["score"] = score;
-    _data["score100"] = score100;
-    _data["songName"] = songName;
-    _data["songTimeMinutes"] = songTimeMinutes;
-    _data["tpay"] = tpay;
-    _data["trend"] = trend;
-    _data["upTime"] = upTime;
-    _data["uploader"] = uploader;
-    return _data;
+    data["copyRight"] = copyRight;
+    data["duration"] = duration;
+    data["formats"] = formats;
+    data["hasEcho"] = hasEcho;
+    data["hasMv"] = hasMv;
+    data["id"] = id;
+    data["isExt"] = isExt;
+    data["isNew"] = isNew;
+    data["isPoint"] = isPoint;
+    data["isbatch"] = isbatch;
+    data["isdownload"] = isdownload;
+    data["isstar"] = isstar;
+    data["mkvNsig1"] = mkvNsig1;
+    data["mkvNsig2"] = mkvNsig2;
+    data["mkvRid"] = mkvRid;
+    data["mp3Nsig1"] = mp3Nsig1;
+    data["mp3Nsig2"] = mp3Nsig2;
+    data["mp3Rid"] = mp3Rid;
+    data["mp3Size"] = mp3Size;
+    data["mp4sig1"] = mp4Sig1;
+    data["mp4sig2"] = mp4Sig2;
+    data["musicrId"] = musicrId;
+    data["mutiVer"] = mutiVer;
+    data["mvpayinfo"] = mvpayinfo;
+    data["mvpic"] = mvpic;
+    data["nsig1"] = nsig1;
+    data["nsig2"] = nsig2;
+    data["online"] = online;
+    data["params"] = params;
+    data["pay"] = pay;
+    data["pic"] = pic;
+    data["playCnt"] = playCnt;
+    data["rankChange"] = rankChange;
+    data["reason"] = reason;
+    data["score"] = score;
+    data["score100"] = score100;
+    data["songName"] = songName;
+    data["songTimeMinutes"] = songTimeMinutes;
+    data["tpay"] = tpay;
+    data["trend"] = trend;
+    data["upTime"] = upTime;
+    data["uploader"] = uploader;
+    return data;
   }
 
   Songinfo copyWith({
@@ -531,14 +529,14 @@ class Simpl {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (musiclist != null) {
-      _data["musiclist"] = musiclist;
+      data["musiclist"] = musiclist;
     }
     if (playlist != null) {
-      _data["playlist"] = playlist?.map((e) => e.toJson()).toList();
+      data["playlist"] = playlist?.map((e) => e.toJson()).toList();
     }
-    return _data;
+    return data;
   }
 
   Simpl copyWith({
@@ -628,21 +626,21 @@ class Playlist {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["digest"] = digest;
-    _data["disname"] = disname;
-    _data["extend"] = extend;
-    _data["info"] = info;
-    _data["isnew"] = isnew;
-    _data["name"] = name;
-    _data["newcount"] = newcount;
-    _data["nodeid"] = nodeid;
-    _data["pic"] = pic;
-    _data["playcnt"] = playcnt;
-    _data["source"] = source;
-    _data["sourceid"] = sourceid;
-    _data["tag"] = tag;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["digest"] = digest;
+    data["disname"] = disname;
+    data["extend"] = extend;
+    data["info"] = info;
+    data["isnew"] = isnew;
+    data["name"] = name;
+    data["newcount"] = newcount;
+    data["nodeid"] = nodeid;
+    data["pic"] = pic;
+    data["playcnt"] = playcnt;
+    data["source"] = source;
+    data["sourceid"] = sourceid;
+    data["tag"] = tag;
+    return data;
   }
 
   Playlist copyWith({
@@ -697,10 +695,10 @@ class LrcInfo {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["lineLyric"] = lineLyric;
-    _data["time"] = time;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["lineLyric"] = lineLyric;
+    data["time"] = time;
+    return data;
   }
 
   LrcInfo copyWith({

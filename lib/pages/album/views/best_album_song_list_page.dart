@@ -76,7 +76,7 @@ class BestAlbumSongListPage extends StatelessWidget {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      debugPrint('<');
+                                      context.go('/home/index/0');
                                     },
                                     child: const Icon(Icons.arrow_back_ios),
                                   ),

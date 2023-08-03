@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
 import 'package:flutter_douban_fm_clone/common/controllers/selecter.dart';
+import 'package:go_router/go_router.dart';
 
 class MySongListBatchOperationPage extends StatelessWidget {
   const MySongListBatchOperationPage({super.key});
@@ -17,7 +18,7 @@ class MySongListBatchOperationPage extends StatelessWidget {
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
-            // Navigator.pop(context);
+            context.pop();
           },
           child: const Icon(
             Icons.close_outlined,

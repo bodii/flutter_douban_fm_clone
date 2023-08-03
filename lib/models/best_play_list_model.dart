@@ -2,18 +2,18 @@ import 'play_list_model.dart';
 
 class BestPlayList {
   int? total;
-  List<PlayList>? data;
+  List<PlayList>? playList;
   int? rn;
   int? pn;
 
-  BestPlayList({this.total, this.data, this.rn, this.pn});
+  BestPlayList({this.total, this.playList, this.rn, this.pn});
 
   BestPlayList.fromJson(Map<String, dynamic> json) {
     if (json["total"] is int) {
       total = json["total"];
     }
     if (json["data"] is List) {
-      data = json["data"] == null
+      playList = json["data"] == null
           ? null
           : (json["data"] as List).map((e) => PlayList.fromJson(e)).toList();
     }
@@ -30,25 +30,23 @@ class BestPlayList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["total"] = total;
-    if (data != null) {
-      _data["data"] = data?.map((e) => e.toJson()).toList();
-    }
-    _data["rn"] = rn;
-    _data["pn"] = pn;
-    return _data;
+    final Map<String, dynamic> data = {};
+    data["total"] = total;
+    data["data"] = playList?.map((e) => e.toJson()).toList();
+    data["rn"] = rn;
+    data["pn"] = pn;
+    return data;
   }
 
   BestPlayList copyWith({
     int? total,
-    List<PlayList>? data,
+    List<PlayList>? playList,
     int? rn,
     int? pn,
   }) =>
       BestPlayList(
         total: total ?? this.total,
-        data: data ?? this.data,
+        playList: playList ?? this.playList,
         rn: rn ?? this.rn,
         pn: pn ?? this.pn,
       );

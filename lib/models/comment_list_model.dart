@@ -47,17 +47,17 @@ class CommentList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["comment_tpye"] = commentTpye;
-    _data["currentPage"] = currentPage;
-    _data["pageSize"] = pageSize;
-    _data["result"] = result;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["comment_tpye"] = commentTpye;
+    data["currentPage"] = currentPage;
+    data["pageSize"] = pageSize;
+    data["result"] = result;
     if (rows != null) {
-      _data["rows"] = rows?.map((e) => e.toJson()).toList();
+      data["rows"] = rows?.map((e) => e.toJson()).toList();
     }
-    _data["total"] = total;
-    _data["totalPage"] = totalPage;
-    return _data;
+    data["total"] = total;
+    data["totalPage"] = totalPage;
+    return data;
   }
 
   CommentList copyWith({
@@ -287,47 +287,47 @@ class Comment {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["bpic"] = bpic;
-    _data["broadcaster"] = broadcaster;
-    _data["color"] = color;
-    _data["commentTalent"] = commentTalent;
-    _data["commentTalentType"] = commentTalentType;
-    _data["id"] = id;
-    _data["identity_icon"] = identityIcon;
-    _data["isYear"] = isYear;
-    _data["is_like"] = isLike;
-    _data["kuwoMusician"] = kuwoMusician;
-    _data["like_num"] = likeNum;
-    _data["medalImg"] = medalImg;
-    _data["medalLevel"] = medalLevel;
-    _data["medalName"] = medalName;
-    _data["medalUrl"] = medalUrl;
-    _data["menuTalent"] = menuTalent;
-    _data["menuTalentType"] = menuTalentType;
-    _data["mpic"] = mpic;
-    _data["msg"] = msg;
-    _data["nameplateImg"] = nameplateImg;
-    _data["rankImg"] = rankImg;
-    _data["rankUrl"] = rankUrl;
-    _data["rankVal"] = rankVal;
-    _data["singTalent"] = singTalent;
-    _data["singTalentType"] = singTalentType;
-    _data["state"] = state;
-    _data["svip"] = svip;
-    _data["time"] = time;
-    _data["typeface"] = typeface;
-    _data["u_hangerid"] = uHangerid;
-    _data["u_headframe"] = uHeadframe;
-    _data["u_id"] = uId;
-    _data["u_name"] = uName;
-    _data["u_pic"] = uPic;
-    _data["videoTalentType"] = videoTalentType;
-    _data["vip"] = vip;
-    _data["vip2"] = vip2;
-    _data["vip3"] = vip3;
-    _data["vipIcon"] = vipIcon;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["bpic"] = bpic;
+    data["broadcaster"] = broadcaster;
+    data["color"] = color;
+    data["commentTalent"] = commentTalent;
+    data["commentTalentType"] = commentTalentType;
+    data["id"] = id;
+    data["identity_icon"] = identityIcon;
+    data["isYear"] = isYear;
+    data["is_like"] = isLike;
+    data["kuwoMusician"] = kuwoMusician;
+    data["like_num"] = likeNum;
+    data["medalImg"] = medalImg;
+    data["medalLevel"] = medalLevel;
+    data["medalName"] = medalName;
+    data["medalUrl"] = medalUrl;
+    data["menuTalent"] = menuTalent;
+    data["menuTalentType"] = menuTalentType;
+    data["mpic"] = mpic;
+    data["msg"] = msg;
+    data["nameplateImg"] = nameplateImg;
+    data["rankImg"] = rankImg;
+    data["rankUrl"] = rankUrl;
+    data["rankVal"] = rankVal;
+    data["singTalent"] = singTalent;
+    data["singTalentType"] = singTalentType;
+    data["state"] = state;
+    data["svip"] = svip;
+    data["time"] = time;
+    data["typeface"] = typeface;
+    data["u_hangerid"] = uHangerid;
+    data["u_headframe"] = uHeadframe;
+    data["u_id"] = uId;
+    data["u_name"] = uName;
+    data["u_pic"] = uPic;
+    data["videoTalentType"] = videoTalentType;
+    data["vip"] = vip;
+    data["vip2"] = vip2;
+    data["vip3"] = vip3;
+    data["vipIcon"] = vipIcon;
+    return data;
   }
 
   Comment copyWith({

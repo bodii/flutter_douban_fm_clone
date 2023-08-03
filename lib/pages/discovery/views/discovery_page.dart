@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
-import 'package:flutter_douban_fm_clone/pages/play/widgets/play_song_float_win.dart';
 
 class DiscoveryPage extends StatelessWidget {
   const DiscoveryPage({Key? key}) : super(key: key);

@@ -18,11 +18,11 @@ class RecommendedPlayList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (list != null) {
-      _data["list"] = list?.map((e) => e.toJson()).toList();
+      data["list"] = list?.map((e) => e.toJson()).toList();
     }
-    return _data;
+    return data;
   }
 
   RecommendedPlayList copyWith({

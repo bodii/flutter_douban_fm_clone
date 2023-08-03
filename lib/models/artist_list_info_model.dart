@@ -22,12 +22,12 @@ class ArtistList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["total"] = total;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["total"] = total;
     if (artistList != null) {
-      _data["artistList"] = artistList?.map((e) => e.toJson()).toList();
+      data["artistList"] = artistList?.map((e) => e.toJson()).toList();
     }
-    return _data;
+    return data;
   }
 
   ArtistList copyWith({
@@ -117,21 +117,21 @@ class Artist {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["artistFans"] = artistFans;
-    _data["albumNum"] = albumNum;
-    _data["mvNum"] = mvNum;
-    _data["pic"] = pic;
-    _data["musicNum"] = musicNum;
-    _data["pic120"] = pic120;
-    _data["isStar"] = isStar;
-    _data["content_type"] = contentType;
-    _data["aartist"] = aartist;
-    _data["name"] = name;
-    _data["pic70"] = pic70;
-    _data["id"] = id;
-    _data["pic300"] = pic300;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["artistFans"] = artistFans;
+    data["albumNum"] = albumNum;
+    data["mvNum"] = mvNum;
+    data["pic"] = pic;
+    data["musicNum"] = musicNum;
+    data["pic120"] = pic120;
+    data["isStar"] = isStar;
+    data["content_type"] = contentType;
+    data["aartist"] = aartist;
+    data["name"] = name;
+    data["pic70"] = pic70;
+    data["id"] = id;
+    data["pic300"] = pic300;
+    return data;
   }
 
   Artist copyWith({

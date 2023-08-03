@@ -77,7 +77,7 @@ class LoginPromptPage extends StatelessWidget {
                         shadowColor: Colors.white,
                       ),
                       onPressed: () {
-                        context.go('/user/login');
+                        context.push('/user/login/home');
                       },
                       child: const Text(
                         '同意',
@@ -88,7 +88,7 @@ class LoginPromptPage extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    debugPrint('不同意');
+                    context.go('/user/login/no_login');
                   },
                   child: const Text(
                     '不同意并退出应用',
