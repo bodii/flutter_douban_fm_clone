@@ -12,9 +12,9 @@ import 'package:flutter_douban_fm_clone/models/data_response_structure.dart';
 import 'package:flutter_douban_fm_clone/models/music_info_model.dart';
 import 'package:flutter_douban_fm_clone/models/music_play_url_model.dart';
 import 'package:flutter_douban_fm_clone/models/recommended_play_list_model.dart';
-import 'package:flutter_douban_fm_clone/models/singer_album_list_model.dart';
-import 'package:flutter_douban_fm_clone/models/singer_detail_model.dart';
-import 'package:flutter_douban_fm_clone/models/singer_featured_songs_model.dart';
+import 'package:flutter_douban_fm_clone/models/artist_album_list_model.dart';
+import 'package:flutter_douban_fm_clone/models/artist_detail_model.dart';
+import 'package:flutter_douban_fm_clone/models/artist_featured_songs_model.dart';
 import 'package:flutter_douban_fm_clone/models/song_info_and_lrc_model.dart';
 import 'package:flutter_douban_fm_clone/models/tag_list_model.dart';
 import 'package:http/http.dart' as http;
@@ -55,8 +55,8 @@ Future<ResponseStruct> _fetchResponseResult(
   }
 }
 
-/// 获取歌手推荐单曲
-Future<SingerFeaturedSongs> fetchSingerFeaturedSongs([
+/// 获取歌手（艺术家）推荐单曲
+Future<ArtistFeaturedSongs> fetchArtistFeaturedSongs([
   int artistId = 79436,
   int pageNum = 1,
   int pageSize = 20,
@@ -69,26 +69,24 @@ Future<SingerFeaturedSongs> fetchSingerFeaturedSongs([
         'artistid': '$artistId',
         'pn': '$pageNum',
         'rn': '$pageSize',
-        'reqId': 'feff7ac0-2f4c-11ee-a85e-73c05e626604',
-        'plat': 'web_www',
+        'reqId': queryReqId,
+        'plat': queryPlat,
       },
       {
-        'Referer': 'http://$apiHost/singer_detail/$artistId',
-        'Secret':
-            '1b2e4f2d9cf6b470cd589f74d0b6dfa770cd8abfdcde79ef360574b4d0e8216a054c306b',
-        'Cookie':
-            'pgv_pvid=8777607306; fqm_pvqid=95884ba2-a4f0-4a39-a7cc-bd23f84a8079; Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727=Er5AfrYyscr4tPFZMxs7a3EdNyxetQ6Q; fqm_sessionid=f6f7e35b-ce61-4118-a01d-9b159787fe7f',
+        'Referer': headerReferer,
+        'Secret': headerSecret,
+        'Cookie': headerCookie,
       },
     );
 
-    return SingerFeaturedSongs.fromJson(result.data!);
+    return ArtistFeaturedSongs.fromJson(result.data!);
   } on Exception {
     rethrow;
   }
 }
 
-/// 获取歌手专辑列表
-Future<SingerAlbumList> fetchSingerAlbumList([
+/// 获取歌手（艺术家）专辑列表
+Future<ArtistAlbumList> fetchArtistAlbumList([
   int artistId = 79436,
   int pageNum = 1,
   int pageSize = 20,
@@ -101,12 +99,12 @@ Future<SingerAlbumList> fetchSingerAlbumList([
         'artistid': '$artistId',
         'pn': '$pageNum',
         'rn': '$pageSize',
-        'reqId': 'feff7ac0-2f4c-11ee-a85e-73c05e626604',
-        'plat': 'web_www',
+        'reqId': queryReqId,
+        'plat': queryPlat,
       },
     );
 
-    return SingerAlbumList.fromJson(result.data!);
+    return ArtistAlbumList.fromJson(result.data!);
   } on Exception {
     rethrow;
   }
@@ -127,15 +125,13 @@ Future<AlbumInfo> fetchAlbumInfo([
         'albumId': '$albumId',
         'pn': '$pageNum',
         'rn': '$pageSize',
-        'reqId': 'feff7ac0-2f4c-11ee-a85e-73c05e626604',
-        'plat': 'web_www',
+        'reqId': queryReqId,
+        'plat': queryPlat,
       },
       {
-        'Referer': 'http://$apiHost/singer_detail/$artistId/album',
-        'Secret':
-            '1b2e4f2d9cf6b470cd589f74d0b6dfa770cd8abfdcde79ef360574b4d0e8216a054c306b',
-        'Cookie':
-            'pgv_pvid=8777607306; fqm_pvqid=95884ba2-a4f0-4a39-a7cc-bd23f84a8079; Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727=Er5AfrYyscr4tPFZMxs7a3EdNyxetQ6Q; fqm_sessionid=f6f7e35b-ce61-4118-a01d-9b159787fe7f',
+        'Referer': headerReferer,
+        'Secret': headerSecret,
+        'Cookie': headerCookie,
       },
     );
 
@@ -145,28 +141,26 @@ Future<AlbumInfo> fetchAlbumInfo([
   }
 }
 
-/// 获取歌手详情
-Future<SingerDetail> fetchSingerDetail([int artistId = 195793]) async {
+/// 获取歌手（艺术家）详情
+Future<ArtistDetail> fetchArtistDetail([int artistId = 195793]) async {
   try {
     ResponseStruct result = await _fetchResponseResult(
       apiHost,
       '/api/www/artist/artist',
       {
         'artistid': '$artistId',
-        'reqId': 'feff7ac0-2f4c-11ee-a85e-73c05e626604',
-        'plat': 'web_www',
-        'httpsStatus': '1',
+        'reqId': queryReqId,
+        'plat': queryPlat,
+        'httpsStatus': queryHttpsStatus,
       },
       {
-        'Referer': 'http://$apiHost/singers',
-        'Secret':
-            '1b2e4f2d9cf6b470cd589f74d0b6dfa770cd8abfdcde79ef360574b4d0e8216a054c306b',
-        'Cookie':
-            'pgv_pvid=8777607306; fqm_pvqid=95884ba2-a4f0-4a39-a7cc-bd23f84a8079; Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727=Er5AfrYyscr4tPFZMxs7a3EdNyxetQ6Q; fqm_sessionid=f6f7e35b-ce61-4118-a01d-9b159787fe7f',
+        'Referer': headerReferer,
+        'Secret': headerSecret,
+        'Cookie': headerCookie,
       },
     );
 
-    return SingerDetail.fromJson(result.data!);
+    return ArtistDetail.fromJson(result.data!);
   } on Exception {
     rethrow;
   }
@@ -180,16 +174,9 @@ Future<MusicInfo> fetchMusicInfo([int musicId = 279292599]) async {
       '/api/www/music/musicInfo',
       {
         'mid': '$musicId',
-        'reqId': 'feff7ac0-2f4c-11ee-a85e-73c05e626604',
-        'plat': 'web_www',
-        'httpsStatus': '1',
-      },
-      {
-        // 'Referer': 'http://$apiHost/singers',
-        // 'Secret':
-        //     '1b2e4f2d9cf6b470cd589f74d0b6dfa770cd8abfdcde79ef360574b4d0e8216a054c306b',
-        // 'Cookie':
-        //     'pgv_pvid=8777607306; fqm_pvqid=95884ba2-a4f0-4a39-a7cc-bd23f84a8079; Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727=Er5AfrYyscr4tPFZMxs7a3EdNyxetQ6Q; fqm_sessionid=f6f7e35b-ce61-4118-a01d-9b159787fe7f',
+        'reqId': queryReqId,
+        'plat': queryPlat,
+        'httpsStatus': queryHttpsStatus,
       },
     );
 
@@ -208,16 +195,14 @@ Future<MusicPlayUrl> fetchMusicPayUrl([int musicId = 279292599]) async {
       {
         'mid': '$musicId',
         'type': 'music',
-        'reqId': 'feff7ac0-2f4c-11ee-a85e-73c05e626604',
-        'plat': 'web_www',
-        'httpsStatus': '1',
+        'reqId': queryReqId,
+        'plat': queryPlat,
+        'httpsStatus': queryHttpsStatus,
       },
       {
-        'Referer': 'http://$apiHost/singers',
-        'Secret':
-            '1b2e4f2d9cf6b470cd589f74d0b6dfa770cd8abfdcde79ef360574b4d0e8216a054c306b',
-        'Cookie':
-            'pgv_pvid=8777607306; fqm_pvqid=95884ba2-a4f0-4a39-a7cc-bd23f84a8079; Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727=Er5AfrYyscr4tPFZMxs7a3EdNyxetQ6Q; fqm_sessionid=f6f7e35b-ce61-4118-a01d-9b159787fe7f',
+        'Referer': headerReferer,
+        'Secret': headerSecret,
+        'Cookie': headerCookie,
       },
     );
 
@@ -240,16 +225,14 @@ Future<RecommendedPlayList> fetchRecommendedPlayList([
         'id': 'rcm',
         'pn': '$pageNum',
         'rn': '$pageSize',
-        'reqId': 'feff7ac0-2f4c-11ee-a85e-73c05e626604',
-        'plat': 'web_www',
-        'httpsStatus': '1',
+        'reqId': queryReqId,
+        'plat': queryPlat,
+        'httpsStatus': queryHttpsStatus,
       },
       {
-        'Referer': 'http://$apiHost',
-        'Secret':
-            '1b2e4f2d9cf6b470cd589f74d0b6dfa770cd8abfdcde79ef360574b4d0e8216a054c306b',
-        'Cookie':
-            'pgv_pvid=8777607306; fqm_pvqid=95884ba2-a4f0-4a39-a7cc-bd23f84a8079; Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727=Er5AfrYyscr4tPFZMxs7a3EdNyxetQ6Q; fqm_sessionid=f6f7e35b-ce61-4118-a01d-9b159787fe7f',
+        'Referer': headerReferer,
+        'Secret': headerSecret,
+        'Cookie': headerCookie,
       },
     );
 
@@ -273,16 +256,14 @@ Future<BestPlayList> fetchBestPlayList([
         'pn': '$pageNum',
         'rn': '$pageSize',
         'order': order,
-        'reqId': 'feff7ac0-2f4c-11ee-a85e-73c05e626604',
-        'plat': 'web_www',
-        'httpsStatus': '1',
+        'reqId': queryReqId,
+        'plat': queryPlat,
+        'httpsStatus': queryHttpsStatus,
       },
       {
-        'Referer': 'http://$apiHost/playlists',
-        'Secret':
-            '1b2e4f2d9cf6b470cd589f74d0b6dfa770cd8abfdcde79ef360574b4d0e8216a054c306b',
-        'Cookie':
-            'pgv_pvid=8777607306; fqm_pvqid=95884ba2-a4f0-4a39-a7cc-bd23f84a8079; Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727=Er5AfrYyscr4tPFZMxs7a3EdNyxetQ6Q; fqm_sessionid=f6f7e35b-ce61-4118-a01d-9b159787fe7f',
+        'Referer': headerReferer,
+        'Secret': headerSecret,
+        'Cookie': headerCookie,
       },
     );
 
@@ -330,16 +311,14 @@ Future<BestPlayList> fetchTagPlayList([
         'id': '$tagId',
         'pn': '$pageNum',
         'rn': '$pageSize',
-        'reqId': 'feff7ac0-2f4c-11ee-a85e-73c05e626604',
-        'plat': 'web_www',
-        'httpsStatus': '1',
+        'reqId': queryReqId,
+        'plat': queryPlat,
+        'httpsStatus': queryHttpsStatus,
       },
       {
-        'Referer': 'http://$apiHost',
-        'Secret':
-            '1b2e4f2d9cf6b470cd589f74d0b6dfa770cd8abfdcde79ef360574b4d0e8216a054c306b',
-        'Cookie':
-            'pgv_pvid=8777607306; fqm_pvqid=95884ba2-a4f0-4a39-a7cc-bd23f84a8079; Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727=Er5AfrYyscr4tPFZMxs7a3EdNyxetQ6Q; fqm_sessionid=f6f7e35b-ce61-4118-a01d-9b159787fe7f',
+        'Referer': headerReferer,
+        'Secret': headerSecret,
+        'Cookie': headerCookie,
       },
     );
 
@@ -356,16 +335,14 @@ Future<List<Tags>> fetchTagsList() async {
       apiHost,
       '/api/www/playlist/getTagList',
       {
-        'reqId': 'feff7ac0-2f4c-11ee-a85e-73c05e626604',
-        'plat': 'web_www',
-        'httpsStatus': '1',
+        'reqId': queryReqId,
+        'plat': queryPlat,
+        'httpsStatus': queryHttpsStatus,
       },
       {
-        'Referer': 'http://$apiHost',
-        'Secret':
-            '1b2e4f2d9cf6b470cd589f74d0b6dfa770cd8abfdcde79ef360574b4d0e8216a054c306b',
-        'Cookie':
-            'pgv_pvid=8777607306; fqm_pvqid=95884ba2-a4f0-4a39-a7cc-bd23f84a8079; Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727=Er5AfrYyscr4tPFZMxs7a3EdNyxetQ6Q; fqm_sessionid=f6f7e35b-ce61-4118-a01d-9b159787fe7f',
+        'Referer': headerReferer,
+        'Secret': headerSecret,
+        'Cookie': headerCookie,
       },
     );
 
@@ -441,16 +418,14 @@ Future<ArtistList> fetchArtistList([
         'prefix': prefix,
         'pn': '$pageNum',
         'rn': '$pageSize',
-        'reqId': 'feff7ac0-2f4c-11ee-a85e-73c05e626604',
-        'plat': 'web_www',
-        'httpsStatus': '1',
+        'reqId': queryReqId,
+        'plat': queryPlat,
+        'httpsStatus': queryHttpsStatus,
       },
       {
-        'Referer': 'http://$apiHost',
-        'Secret':
-            '1b2e4f2d9cf6b470cd589f74d0b6dfa770cd8abfdcde79ef360574b4d0e8216a054c306b',
-        'Cookie':
-            'pgv_pvid=8777607306; fqm_pvqid=95884ba2-a4f0-4a39-a7cc-bd23f84a8079; Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727=Er5AfrYyscr4tPFZMxs7a3EdNyxetQ6Q; fqm_sessionid=f6f7e35b-ce61-4118-a01d-9b159787fe7f',
+        'Referer': headerReferer,
+        'Secret': headerSecret,
+        'Cookie': headerCookie,
       },
     );
 
@@ -467,16 +442,14 @@ Future<List<BangMenu>> fetchBangMenu() async {
       apiHost,
       '/api/www/bang/bang/bangMenu',
       {
-        'reqId': 'feff7ac0-2f4c-11ee-a85e-73c05e626604',
-        'plat': 'web_www',
-        'httpsStatus': '1',
+        'reqId': queryReqId,
+        'plat': queryPlat,
+        'httpsStatus': queryHttpsStatus,
       },
       {
-        'Referer': 'http://$apiHost',
-        'Secret':
-            '1b2e4f2d9cf6b470cd589f74d0b6dfa770cd8abfdcde79ef360574b4d0e8216a054c306b',
-        'Cookie':
-            'pgv_pvid=8777607306; fqm_pvqid=95884ba2-a4f0-4a39-a7cc-bd23f84a8079; Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727=Er5AfrYyscr4tPFZMxs7a3EdNyxetQ6Q; fqm_sessionid=f6f7e35b-ce61-4118-a01d-9b159787fe7f',
+        'Referer': headerReferer,
+        'Secret': headerSecret,
+        'Cookie': headerCookie,
       },
     );
 

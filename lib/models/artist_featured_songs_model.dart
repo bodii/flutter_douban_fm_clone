@@ -1,10 +1,10 @@
-class SingerFeaturedSongs {
+class ArtistFeaturedSongs {
   late int? total;
   late List<Song>? list;
 
-  SingerFeaturedSongs({this.total, this.list});
+  ArtistFeaturedSongs({this.total, this.list});
 
-  SingerFeaturedSongs.fromJson(Map<String, dynamic> json) {
+  ArtistFeaturedSongs.fromJson(Map<String, dynamic> json) {
     if (json["total"] is int) {
       total = json["total"];
     }
@@ -24,11 +24,11 @@ class SingerFeaturedSongs {
     return data;
   }
 
-  SingerFeaturedSongs copyWith({
+  ArtistFeaturedSongs copyWith({
     int? total,
     List<Song>? list,
   }) =>
-      SingerFeaturedSongs(
+      ArtistFeaturedSongs(
         total: total ?? this.total,
         list: list ?? this.list,
       );

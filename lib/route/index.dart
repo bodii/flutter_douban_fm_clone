@@ -2,9 +2,8 @@ import 'package:flutter_douban_fm_clone/pages/home/views/home_page.dart';
 import 'package:flutter_douban_fm_clone/pages/home/views/my_song_list_batch_operation_page.dart';
 import 'package:flutter_douban_fm_clone/pages/home/views/best_album_song_list_page.dart';
 import 'package:flutter_douban_fm_clone/pages/home/views/my_song_list_page.dart';
-import 'package:flutter_douban_fm_clone/pages/home/views/no_login_page.dart';
-import 'package:flutter_douban_fm_clone/pages/home/views/singer_home_page.dart';
-import 'package:flutter_douban_fm_clone/pages/home/views/test.dart';
+import 'package:flutter_douban_fm_clone/pages/user/views/no_login_page.dart';
+import 'package:flutter_douban_fm_clone/pages/artist/views/artist_home_page.dart';
 import 'package:flutter_douban_fm_clone/pages/user/views/login_page.dart';
 import 'package:flutter_douban_fm_clone/pages/user/views/login_prompt_page.dart';
 import 'package:flutter_douban_fm_clone/pages/welcome/views/index.dart';
@@ -13,12 +12,7 @@ import 'package:go_router/go_router.dart';
 class AppRoute {
   static final GoRouter routes = GoRouter(
     initialLocation: '/home/index/0',
-    // initialLocation: '/test',
     routes: [
-      GoRoute(
-        path: '/test',
-        builder: (context, state) => const TestPage(),
-      ),
       GoRoute(
         path: '/',
         builder: (context, state) => const WelcomeIndexPage(),
@@ -56,8 +50,8 @@ class AppRoute {
         builder: (context, state) => const BestAlbumSongListPage(),
       ),
       GoRoute(
-        path: '/singer/home',
-        builder: (context, state) => const SingerHomePage(),
+        path: '/artist/home',
+        builder: (context, state) => const ArtistHomePage(),
       )
     ],
     // errorBuilder: (context, state) => ,

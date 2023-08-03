@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/request.dart';
-import 'package:flutter_douban_fm_clone/models/singer_album_list_model.dart';
+import 'package:flutter_douban_fm_clone/models/artist_album_list_model.dart';
 
-class SingerAlbumListWidget extends StatelessWidget {
-  const SingerAlbumListWidget({super.key, required this.artistId});
+class ArtistAlbumListWidget extends StatelessWidget {
+  const ArtistAlbumListWidget({super.key, required this.artistId});
 
   final int artistId;
 
@@ -15,13 +15,13 @@ class SingerAlbumListWidget extends StatelessWidget {
 
   Widget _generateSongItemList(double height) {
     return FutureBuilder(
-      future: fetchSingerAlbumList(artistId),
-      builder: (context, AsyncSnapshot<SingerAlbumList> snapshot) {
-        if (snapshot.connectionState == ConnectionState.none &&
+      future: fetchArtistAlbumList(artistId),
+      builder: (context, AsyncSnapshot<ArtistAlbumList> snapshot) {
+        if (snapshot.connectionState == ConnectionState.none ||
             !snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
         }
-        if (!snapshot.hasData) {
+        if (snapshot.hasError) {
           return const Center(
             child: Text('not data!'),
           );

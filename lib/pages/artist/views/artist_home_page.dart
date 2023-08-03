@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/functions/html_entities_to_string.dart';
 import 'package:flutter_douban_fm_clone/common/request.dart';
-import 'package:flutter_douban_fm_clone/models/singer_detail_model.dart';
-import 'package:flutter_douban_fm_clone/pages/home/widgets/singer/singer_similar_artist_widget.dart';
+import 'package:flutter_douban_fm_clone/models/artist_detail_model.dart';
 
-import '../widgets/singer/index.dart';
+import '../widgets/index.dart';
 
-class SingerHomePage extends StatelessWidget {
-  const SingerHomePage({super.key});
+class ArtistHomePage extends StatelessWidget {
+  const ArtistHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,19 +14,19 @@ class SingerHomePage extends StatelessWidget {
 
     return Scaffold(
       body: FutureBuilder(
-          future: fetchSingerDetail(79436),
-          builder: (context, AsyncSnapshot<SingerDetail> snapshot) {
-            if (snapshot.connectionState == ConnectionState.none &&
+          future: fetchArtistDetail(79436),
+          builder: (context, AsyncSnapshot<ArtistDetail> snapshot) {
+            if (snapshot.connectionState == ConnectionState.none ||
                 !snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             }
-            if (!snapshot.hasData) {
+            if (snapshot.hasError) {
               return const Center(
                 child: Text('not data!'),
               );
             }
 
-            SingerDetail singerDetail = snapshot.data!;
+            ArtistDetail artistDetail = snapshot.data!;
 
             return Stack(
               children: [
@@ -50,7 +49,7 @@ class SingerHomePage extends StatelessWidget {
                     },
                     blendMode: BlendMode.dstATop,
                     child: Image.network(
-                      singerDetail.pic300!,
+                      artistDetail.pic300!,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -94,7 +93,7 @@ class SingerHomePage extends StatelessWidget {
                                       child: CircleAvatar(
                                         radius: 85,
                                         backgroundImage: NetworkImage(
-                                          singerDetail.pic300!,
+                                          artistDetail.pic300!,
                                         ),
                                       ),
                                     ),
@@ -102,7 +101,7 @@ class SingerHomePage extends StatelessWidget {
                                       padding: const EdgeInsets.only(
                                           left: 20.0, right: 10.0),
                                       child: Text(
-                                        singerDetail.name!
+                                        artistDetail.name!
                                             .htmlEntitiesToString(),
                                         style: const TextStyle(
                                           fontSize: 22,
@@ -164,7 +163,7 @@ class SingerHomePage extends StatelessWidget {
                                   height: size.height * 0.66,
                                   margin: const EdgeInsets.only(top: 20),
                                   child: TabBarView(
-                                    children: getTabViews(singerDetail),
+                                    children: getTabViews(artistDetail),
                                   ),
                                 ),
                               ],
@@ -181,12 +180,12 @@ class SingerHomePage extends StatelessWidget {
     );
   }
 
-  List<Widget> getTabViews(SingerDetail singerData) {
+  List<Widget> getTabViews(ArtistDetail artistData) {
     return <Widget>[
-      SingerFeaturedSongsWidget(artistId: singerData.id!),
-      SingerAlbumListWidget(artistId: singerData.id!),
-      const SingerSimilarArtistWidget(),
-      SingerDetailWidget(singerDetail: singerData),
+      ArtistFeaturedSongsWidget(artistId: artistData.id!),
+      ArtistAlbumListWidget(artistId: artistData.id!),
+      const ArtistSimilarArtistWidget(),
+      ArtistDetailWidget(artistDetail: artistData),
     ];
   }
 

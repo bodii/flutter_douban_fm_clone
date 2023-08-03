@@ -1,4 +1,4 @@
-class SingerDetail {
+class ArtistDetail {
   late String? birthday;
   late String? country;
   late int? artistFans;
@@ -23,7 +23,7 @@ class SingerDetail {
   late String? pic300;
   late String? info;
 
-  SingerDetail(
+  ArtistDetail(
       {this.birthday,
       this.country,
       this.artistFans,
@@ -48,7 +48,7 @@ class SingerDetail {
       this.pic300,
       this.info});
 
-  SingerDetail.fromJson(Map<String, dynamic> json) {
+  ArtistDetail.fromJson(Map<String, dynamic> json) {
     if (json["birthday"] is String) {
       birthday = json["birthday"];
     }
@@ -120,8 +120,8 @@ class SingerDetail {
     }
   }
 
-  static List<SingerDetail> fromList(List<Map<String, dynamic>> list) {
-    return list.map((map) => SingerDetail.fromJson(map)).toList();
+  static List<ArtistDetail> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => ArtistDetail.fromJson(map)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -152,7 +152,7 @@ class SingerDetail {
     return data;
   }
 
-  SingerDetail copyWith({
+  ArtistDetail copyWith({
     String? birthday,
     String? country,
     int? artistFans,
@@ -177,7 +177,7 @@ class SingerDetail {
     String? pic300,
     String? info,
   }) =>
-      SingerDetail(
+      ArtistDetail(
         birthday: birthday ?? this.birthday,
         country: country ?? this.country,
         artistFans: artistFans ?? this.artistFans,

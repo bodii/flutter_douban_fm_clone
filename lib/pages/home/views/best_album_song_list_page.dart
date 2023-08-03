@@ -3,7 +3,7 @@ import 'package:flutter_douban_fm_clone/common/custom_color.dart';
 import 'package:flutter_douban_fm_clone/common/request.dart';
 import 'package:flutter_douban_fm_clone/models/album_info_model.dart';
 import 'package:flutter_douban_fm_clone/models/music_info_model.dart';
-import 'package:flutter_douban_fm_clone/pages/home/controllers/selecter.dart';
+import 'package:flutter_douban_fm_clone/common/controllers/selecter.dart';
 import 'package:go_router/go_router.dart';
 
 class BestAlbumSongListPage extends StatelessWidget {
@@ -16,11 +16,11 @@ class BestAlbumSongListPage extends StatelessWidget {
       body: FutureBuilder(
         future: fetchAlbumInfo(130087),
         builder: (context, AsyncSnapshot<AlbumInfo> snapshot) {
-          if (snapshot.connectionState == ConnectionState.none &&
+          if (snapshot.connectionState == ConnectionState.none ||
               !snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
-          if (!snapshot.hasData) {
+          if (snapshot.hasError) {
             return const Center(
               child: Text('not data!'),
             );
@@ -114,7 +114,7 @@ class BestAlbumSongListPage extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                context.go('/singer/home');
+                                context.go('/artist/home');
                               },
                               child: SizedBox(
                                 width: 90,

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/functions/html_entities_to_string.dart';
-import 'package:flutter_douban_fm_clone/models/singer_detail_model.dart';
+import 'package:flutter_douban_fm_clone/models/artist_detail_model.dart';
 
-class SingerDetailWidget extends StatelessWidget {
-  const SingerDetailWidget({super.key, required this.singerDetail});
+class ArtistDetailWidget extends StatelessWidget {
+  const ArtistDetailWidget({super.key, required this.artistDetail});
 
-  final SingerDetail singerDetail;
+  final ArtistDetail artistDetail;
 
   Widget getGenreAndStyleWidget() {
     const List<String> genreAndStyle = ['Jazz'];
@@ -28,16 +28,16 @@ class SingerDetailWidget extends StatelessWidget {
 
   Widget _getBasicInfoWidget() {
     Map<String, String?> titleAndValue = {
-      '姓名': singerDetail.name!.htmlEntitiesToString(),
-      '英文名': singerDetail.aartist!.htmlEntitiesToString(),
-      '性别': singerDetail.gener,
-      '国籍': singerDetail.country,
-      '出生地': singerDetail.birthplace,
-      '语言': singerDetail.language,
-      '生日': singerDetail.birthday,
-      '星座': singerDetail.constellation,
-      '身高': singerDetail.tall,
-      '体重': singerDetail.weight,
+      '姓名': artistDetail.name!.htmlEntitiesToString(),
+      '英文名': artistDetail.aartist!.htmlEntitiesToString(),
+      '性别': artistDetail.gener,
+      '国籍': artistDetail.country,
+      '出生地': artistDetail.birthplace,
+      '语言': artistDetail.language,
+      '生日': artistDetail.birthday,
+      '星座': artistDetail.constellation,
+      '身高': artistDetail.tall,
+      '体重': artistDetail.weight,
     };
 
     List<String> titles = titleAndValue.keys.toList();
@@ -105,7 +105,7 @@ class SingerDetailWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 40.0),
             child: Text(
-              singerDetail.info!
+              artistDetail.info!
                   .htmlEntitiesToString()
                   .replaceAll('<br/>', '\n\n'),
               style:

@@ -1,15 +1,15 @@
 import 'package:flutter_douban_fm_clone/common/functions/html_entities_to_string.dart';
 
-class SingerAlbumList {
+class ArtistAlbumList {
   late String? total;
   late List<Album>? albumList;
 
-  SingerAlbumList({
+  ArtistAlbumList({
     this.total,
     this.albumList,
   });
 
-  SingerAlbumList.fromJson(Map<String, dynamic> json) {
+  ArtistAlbumList.fromJson(Map<String, dynamic> json) {
     if (json["total"] is String) {
       total = json["total"];
     }
@@ -29,11 +29,11 @@ class SingerAlbumList {
     return data;
   }
 
-  SingerAlbumList copyWith({
+  ArtistAlbumList copyWith({
     String? total,
     List<Album>? albumList,
   }) =>
-      SingerAlbumList(
+      ArtistAlbumList(
         total: total ?? this.total,
         albumList: albumList ?? this.albumList,
       );

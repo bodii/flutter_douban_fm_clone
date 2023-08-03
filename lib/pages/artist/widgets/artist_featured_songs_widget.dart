@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/request.dart';
-import 'package:flutter_douban_fm_clone/models/singer_featured_songs_model.dart';
-import 'package:flutter_douban_fm_clone/pages/home/controllers/selecter.dart';
+import 'package:flutter_douban_fm_clone/models/artist_featured_songs_model.dart';
+import 'package:flutter_douban_fm_clone/common/controllers/selecter.dart';
 
-class SingerFeaturedSongsWidget extends StatelessWidget {
-  const SingerFeaturedSongsWidget({super.key, required this.artistId});
+class ArtistFeaturedSongsWidget extends StatelessWidget {
+  const ArtistFeaturedSongsWidget({super.key, required this.artistId});
 
   final int artistId;
 
@@ -18,13 +18,13 @@ class SingerFeaturedSongsWidget extends StatelessWidget {
     return SizedBox(
       height: height,
       child: FutureBuilder(
-          future: fetchSingerFeaturedSongs(artistId),
-          builder: (context, AsyncSnapshot<SingerFeaturedSongs> snapshot) {
-            if (snapshot.connectionState == ConnectionState.none &&
+          future: fetchArtistFeaturedSongs(artistId),
+          builder: (context, AsyncSnapshot<ArtistFeaturedSongs> snapshot) {
+            if (snapshot.connectionState == ConnectionState.none ||
                 !snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             }
-            if (!snapshot.hasData) {
+            if (snapshot.hasError) {
               return const Center(
                 child: Text('not data!'),
               );

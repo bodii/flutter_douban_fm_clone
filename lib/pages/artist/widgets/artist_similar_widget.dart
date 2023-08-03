@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SingerSimilarArtistWidget extends StatelessWidget {
-  const SingerSimilarArtistWidget({super.key});
+class ArtistSimilarArtistWidget extends StatelessWidget {
+  const ArtistSimilarArtistWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

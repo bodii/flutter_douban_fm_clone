@@ -111,7 +111,7 @@ class MySongListPage extends StatelessWidget {
   Widget createSongListCardItem(
     String? coverSrc,
     String songName,
-    String singer,
+    String artist,
     BuildContext context,
   ) {
     String src = coverSrc ?? '';
@@ -169,7 +169,7 @@ class MySongListPage extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        singer,
+                        artist,
                         style: const TextStyle(
                           color: Colors.black38,
                           overflow: TextOverflow.ellipsis,

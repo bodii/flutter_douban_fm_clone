@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
-import 'package:flutter_douban_fm_clone/pages/home/controllers/selecter.dart';
+import 'package:flutter_douban_fm_clone/common/controllers/selecter.dart';
 
 class MySongListBatchOperationPage extends StatelessWidget {
   const MySongListBatchOperationPage({super.key});
@@ -132,7 +132,7 @@ class MySongListBatchOperationPage extends StatelessWidget {
   Widget createSongListCardItem(
       String? coverSrc,
       String songName,
-      String singer,
+      String artist,
       BuildContext context,
       BatchSelector selector,
       AllSelector allSelector,
@@ -201,7 +201,7 @@ class MySongListBatchOperationPage extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        singer,
+                        artist,
                         style: const TextStyle(
                           color: Colors.black38,
                           overflow: TextOverflow.ellipsis,

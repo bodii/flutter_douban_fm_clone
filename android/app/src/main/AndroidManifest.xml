@@ -30,4 +30,21 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+
+    <!-- 互联网权限 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 唤醒锁定权限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 请求录制音频的权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <!-- 文件读写权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 只有当你的应用程序需要访问其他应用程序创建的图片文件时才需要 -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <!-- 只有当你的应用程序需要访问其他应用程序创建的视频时才需要 -->
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <!-- 只有当你的应用程序需要访问其他应用程序创建的音频文件时才需要 -->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+
 </manifest>
