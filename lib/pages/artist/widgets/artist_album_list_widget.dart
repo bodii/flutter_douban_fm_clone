@@ -26,6 +26,7 @@ class ArtistAlbumListWidget extends StatelessWidget {
             child: Text('not data!'),
           );
         }
+        List<Album> albumList = snapshot.data!.albumList!;
         return GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -35,9 +36,9 @@ class ArtistAlbumListWidget extends StatelessWidget {
           ),
           shrinkWrap: true,
           padding: EdgeInsets.zero,
-          itemCount: snapshot.data!.albumList!.length,
+          itemCount: albumList.length,
           itemBuilder: (context, index) =>
-              _generateItem(index + 1, snapshot.data!.albumList![index]),
+              _generateItem(index + 1, albumList[index]),
           // padding: const EdgeInsets.symmetric(vertical: 5),
         );
       },

@@ -1,3 +1,5 @@
+import 'package:flutter_douban_fm_clone/pages/discovery/views/discovery_detail_page.dart';
+import 'package:flutter_douban_fm_clone/pages/discovery/views/discovery_page.dart';
 import 'package:flutter_douban_fm_clone/pages/error/views/error_page.dart';
 import 'package:flutter_douban_fm_clone/pages/home/views/home_page.dart';
 import 'package:flutter_douban_fm_clone/pages/my/song_list/views/my_song_list_batch_operation_page.dart';
@@ -58,7 +60,17 @@ class AppRoute {
       GoRoute(
         path: '/artist/home',
         builder: (context, state) => const ArtistHomePage(),
-      )
+      ),
+      GoRoute(
+        path: '/home/index/discovery/home',
+        builder: (context, state) => const DiscoveryPage(),
+      ),
+      GoRoute(
+        path: '/home/index/discovery/detail/:playListId',
+        builder: (context, state) => DiscoveryDetailPage(
+          playListId: state.pathParameters['playListId'] ?? '1',
+        ),
+      ),
     ],
     errorBuilder: (context, state) => ErrorPage(state.error!),
     debugLogDiagnostics: true,

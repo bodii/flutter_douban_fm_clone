@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter_douban_fm_clone/models/play_list_model.dart';
+
 import '../configs/apis.dart';
 import 'package:flutter_douban_fm_clone/models/album_info_model.dart';
 import 'package:flutter_douban_fm_clone/models/artist_list_info_model.dart';
@@ -323,6 +325,37 @@ Future<BestPlayList> fetchTagPlayList([
     );
 
     return BestPlayList.fromJson(result.data!);
+  } on Exception {
+    rethrow;
+  }
+}
+
+/// 获取歌单详情内容（含musicList）
+Future<PlayList> fetchPlayListInfo([
+  int playListId = 1082685104,
+  int pageNum = 1,
+  int pageSize = 20,
+]) async {
+  try {
+    ResponseStruct result = await _fetchResponseResult(
+      apiHost,
+      '/api/www/playlist/playListInfo',
+      {
+        'pid': '$playListId',
+        'pn': '$pageNum',
+        'rn': '$pageSize',
+        'reqId': queryReqId,
+        'plat': queryPlat,
+        'httpsStatus': queryHttpsStatus,
+      },
+      {
+        'Referer': headerReferer,
+        'Secret': headerSecret,
+        'Cookie': headerCookie,
+      },
+    );
+
+    return PlayList.fromJson(result.data!);
   } on Exception {
     rethrow;
   }
