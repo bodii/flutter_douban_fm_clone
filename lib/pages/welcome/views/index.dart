@@ -1,10 +1,50 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/pages/welcome/widgets/circular_wave.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-class WelcomeIndexPage extends StatelessWidget {
+class WelcomeIndexPage extends StatefulWidget {
   const WelcomeIndexPage({super.key});
+
+  @override
+  State<WelcomeIndexPage> createState() => _WelcomeIndexPageState();
+}
+
+class _WelcomeIndexPageState extends State<WelcomeIndexPage> {
+  late Timer _timer;
+  final int max = 3;
+  late int current;
+  final String redirectUrl = '/home/index/0';
+
+  @override
+  void initState() {
+    current = max;
+    start();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+
+    super.dispose();
+  }
+
+  start() {
+    _timer = Timer.periodic(Duration(seconds: max), (timer) {
+      current--;
+
+      if (current == 0) {
+        timer.cancel();
+        context.go(redirectUrl);
+      }
+
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +70,7 @@ class WelcomeIndexPage extends StatelessWidget {
           right: 10,
           child: GestureDetector(
             onTap: () {
-              context.go('/user/login/no_login');
+              context.go(redirectUrl);
             },
             child: Container(
               width: 70,
@@ -41,7 +81,7 @@ class WelcomeIndexPage extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Text(
-                '跳过1',
+                '跳过 $current',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey.shade400,

@@ -2,6 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_douban_fm_clone/models/play_list_model.dart';
+import 'package:flutter_douban_fm_clone/models/search_album_model.dart';
+import 'package:flutter_douban_fm_clone/models/search_artist_model.dart';
+import 'package:flutter_douban_fm_clone/models/search_music_model.dart';
+import 'package:flutter_douban_fm_clone/models/search_mv_model.dart';
+import 'package:flutter_douban_fm_clone/models/search_play_list_model.dart';
+import 'package:flutter_douban_fm_clone/models/search_suggestion_model.dart';
 
 import '../configs/apis.dart';
 import 'package:flutter_douban_fm_clone/models/album_info_model.dart';
@@ -608,6 +614,188 @@ Future<SongInfoAndLrcData> fetchSongInfoAndLrc([
     ResponseStruct result = ResponseStruct.fromJson(jsonDecode(body));
 
     return SongInfoAndLrcData.fromJson(result.data!);
+  } on Exception {
+    rethrow;
+  }
+}
+
+/// 获取搜索建议列表
+Future<SearchSuggestion> fetchSearchSuggestion([
+  String key = '',
+]) async {
+  try {
+    ResponseStruct result = await _fetchResponseResult(
+      apiHost,
+      '/api/www/search/searchKey',
+      {
+        'key': key,
+        'reqId': queryReqId,
+        'plat': queryPlat,
+        'httpsStatus': queryHttpsStatus,
+      },
+      {
+        'Referer': headerReferer,
+        'Secret': headerSecret,
+        'Cookie': headerCookie,
+      },
+    );
+
+    return SearchSuggestion.fromJson(result.data! as List<String>);
+  } on Exception {
+    rethrow;
+  }
+}
+
+/// 搜索歌曲结果
+Future<SearchMusicResult> searchMusicResult([
+  String key = '',
+  int pageNum = 1,
+  int pageSize = 20,
+]) async {
+  try {
+    ResponseStruct result = await _fetchResponseResult(
+      apiHost,
+      '/api/www/search/searchMusicBykeyWord',
+      {
+        'key': key,
+        'pn': '$pageNum',
+        'rn': '$pageSize',
+        'reqId': queryReqId,
+        'plat': queryPlat,
+        'httpsStatus': queryHttpsStatus,
+      },
+      {
+        'Referer': headerReferer,
+        'Secret': headerSecret,
+        'Cookie': headerCookie,
+      },
+    );
+
+    return SearchMusicResult.fromJson(result.data!);
+  } on Exception {
+    rethrow;
+  }
+}
+
+/// 搜索专辑结果
+Future<SearchAlbumResult> searchAlbumResult([
+  String key = '',
+  int pageNum = 1,
+  int pageSize = 20,
+]) async {
+  try {
+    ResponseStruct result = await _fetchResponseResult(
+      apiHost,
+      '/api/www/search/searchAlbumBykeyWord',
+      {
+        'key': key,
+        'pn': '$pageNum',
+        'rn': '$pageSize',
+        'reqId': queryReqId,
+        'plat': queryPlat,
+        'httpsStatus': queryHttpsStatus,
+      },
+      {
+        'Referer': headerReferer,
+        'Secret': headerSecret,
+        'Cookie': headerCookie,
+      },
+    );
+
+    return SearchAlbumResult.fromJson(result.data!);
+  } on Exception {
+    rethrow;
+  }
+}
+
+/// 搜索mv结果
+Future<SearchMVResult> searchMVResult([
+  String key = '',
+  int pageNum = 1,
+  int pageSize = 20,
+]) async {
+  try {
+    ResponseStruct result = await _fetchResponseResult(
+      apiHost,
+      '/api/www/search/searchMvBykeyWord',
+      {
+        'key': key,
+        'pn': '$pageNum',
+        'rn': '$pageSize',
+        'reqId': queryReqId,
+        'plat': queryPlat,
+        'httpsStatus': queryHttpsStatus,
+      },
+      {
+        'Referer': headerReferer,
+        'Secret': headerSecret,
+        'Cookie': headerCookie,
+      },
+    );
+
+    return SearchMVResult.fromJson(result.data!);
+  } on Exception {
+    rethrow;
+  }
+}
+
+/// 搜索歌单结果
+Future<SearchPlayListResult> searchPlayListResult([
+  String key = '',
+  int pageNum = 1,
+  int pageSize = 20,
+]) async {
+  try {
+    ResponseStruct result = await _fetchResponseResult(
+      apiHost,
+      '/api/www/search/searchPlayListBykeyWord',
+      {
+        'key': key,
+        'pn': '$pageNum',
+        'rn': '$pageSize',
+        'reqId': queryReqId,
+        'plat': queryPlat,
+        'httpsStatus': queryHttpsStatus,
+      },
+      {
+        'Referer': headerReferer,
+        'Secret': headerSecret,
+        'Cookie': headerCookie,
+      },
+    );
+
+    return SearchPlayListResult.fromJson(result.data!);
+  } on Exception {
+    rethrow;
+  }
+}
+
+/// 搜艺术家结果
+Future<SearchArtistResult> searchArtistResult([
+  String key = '',
+  int pageNum = 1,
+  int pageSize = 30,
+]) async {
+  try {
+    ResponseStruct result = await _fetchResponseResult(
+      apiHost,
+      '/api/www/search/searchArtistBykeyWord',
+      {
+        'key': key,
+        'pn': '$pageNum',
+        'rn': '$pageSize',
+        'reqId': queryReqId,
+        'plat': queryPlat,
+        'httpsStatus': queryHttpsStatus,
+      },
+      {
+        'Referer': headerReferer,
+        'Secret': headerSecret,
+        'Cookie': headerCookie,
+      },
+    );
+
+    return SearchArtistResult.fromJson(result.data!);
   } on Exception {
     rethrow;
   }

@@ -29,10 +29,23 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 25.0),
+            child: IconButton(
+              icon: const Icon(
+                Icons.search,
+                size: 27,
+                color: Colors.black54,
+              ),
+              onPressed: () {
+                debugPrint('check search');
+              },
+            ),
+          ),
           title: Row(
             children: [
               SizedBox(
-                width: 350,
+                width: 250,
                 child: Center(
                   child: TabBar(
                     tabs: tabs,
@@ -63,17 +76,22 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(
-                child: const Icon(
+            ],
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: IconButton(
+                onPressed: () {
+                  debugPrint('...');
+                },
+                icon: const Icon(
                   Icons.more_horiz,
                   color: Colors.black54,
                 ),
-                onTap: () {
-                  debugPrint('...');
-                },
               ),
-            ],
-          ),
+            )
+          ],
         ),
         body: const TabBarView(
           children: [

@@ -32,6 +32,9 @@ class AppRoute {
       GoRoute(
         path: '/user/login/home',
         builder: (context, state) => const LoginPage(),
+        // redirect: (context, state) {
+
+        // },
       ),
       GoRoute(
         path: '/user/info/modify',
