@@ -16,6 +16,7 @@ class MySongListBatchOperationPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         leading: InkWell(
           onTap: () {
             context.pop();
@@ -26,12 +27,10 @@ class MySongListBatchOperationPage extends StatelessWidget {
             color: Colors.black87,
           ),
         ),
-        title: const Center(
-          child: Text(
-            '批量操作',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+        title: const Text(
+          '批量操作',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),

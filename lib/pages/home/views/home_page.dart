@@ -28,6 +28,7 @@ class HomePage extends StatelessWidget {
       initialIndex: indexNum,
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           backgroundColor: Colors.white,
           leading: Padding(
             padding: const EdgeInsets.only(left: 25.0),

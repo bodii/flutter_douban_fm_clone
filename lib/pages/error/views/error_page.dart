@@ -9,7 +9,7 @@ class ErrorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('错误页')),
+      appBar: AppBar(centerTitle: true, title: const Text('错误页')),
       body: Center(
         child: Column(
           children: [

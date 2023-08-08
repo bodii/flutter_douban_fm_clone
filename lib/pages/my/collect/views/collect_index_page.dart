@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_douban_fm_clone/common/custom_color.dart';
-import 'package:flutter_douban_fm_clone/pages/home/widgets/tab_indicator.dart';
 import 'package:flutter_douban_fm_clone/pages/my/collect/widgets/collect_album_page.dart';
 import 'package:flutter_douban_fm_clone/pages/my/collect/widgets/collect_artist_page.dart';
 import 'package:flutter_douban_fm_clone/pages/my/collect/widgets/collect_edit_page.dart';
@@ -28,6 +26,7 @@ class CollectIndexPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -36,11 +35,9 @@ class CollectIndexPage extends StatelessWidget {
             context.pop();
           },
         ),
-        title: const Center(
-          child: Text(
-            '收藏',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-          ),
+        title: const Text(
+          '收藏',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
         ),
       ),
       body: DefaultTabController(

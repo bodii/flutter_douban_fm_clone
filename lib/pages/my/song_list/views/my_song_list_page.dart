@@ -14,18 +14,17 @@ class MySongListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             context.go('/home/index/2');
           },
         ),
-        title: Center(
-          child: Text(
-            songListName,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+        title: Text(
+          songListName,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
