@@ -20,12 +20,12 @@ class SearchMVResult {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["total"] = total;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["total"] = total;
     if (mvlist != null) {
-      _data["mvlist"] = mvlist?.map((e) => e.toJson()).toList();
+      data["mvlist"] = mvlist?.map((e) => e.toJson()).toList();
     }
-    return _data;
+    return data;
   }
 
   SearchMVResult copyWith({
@@ -95,17 +95,17 @@ class MV {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["duration"] = duration;
-    _data["artist"] = artist;
-    _data["mvPlayCnt"] = mvPlayCnt;
-    _data["name"] = name;
-    _data["online"] = online;
-    _data["artistid"] = artistid;
-    _data["songTimeMinutes"] = songTimeMinutes;
-    _data["id"] = id;
-    _data["pic"] = pic;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["duration"] = duration;
+    data["artist"] = artist;
+    data["mvPlayCnt"] = mvPlayCnt;
+    data["name"] = name;
+    data["online"] = online;
+    data["artistid"] = artistid;
+    data["songTimeMinutes"] = songTimeMinutes;
+    data["id"] = id;
+    data["pic"] = pic;
+    return data;
   }
 
   MV copyWith({

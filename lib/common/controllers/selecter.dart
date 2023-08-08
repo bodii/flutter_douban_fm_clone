@@ -28,11 +28,15 @@ class BatchSelector extends ChangeNotifier {
 }
 
 class AllSelector extends ChangeNotifier {
-  add(List<BatchSelector> selecterList) {
+  addAll(List<BatchSelector> selecterList) {
     _selecterList = selecterList;
   }
 
-  late List<BatchSelector> _selecterList;
+  add(BatchSelector selecter) {
+    _selecterList.add(selecter);
+  }
+
+  List<BatchSelector> _selecterList = [];
 
   bool _allSelected = false;
 

@@ -35,17 +35,17 @@ class SearchArtistResult {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["total"] = total;
-    _data["rn"] = rn;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["total"] = total;
+    data["rn"] = rn;
     if (list != null) {
-      _data["list"] = list?.map((e) => e.toJson()).toList();
+      data["list"] = list?.map((e) => e.toJson()).toList();
     }
     if (artistList != null) {
-      _data["artistList"] = artistList?.map((e) => e.toJson()).toList();
+      data["artistList"] = artistList?.map((e) => e.toJson()).toList();
     }
-    _data["pn"] = pn;
-    return _data;
+    data["pn"] = pn;
+    return data;
   }
 
   SearchArtistResult copyWith({

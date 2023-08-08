@@ -2,6 +2,9 @@ import 'package:flutter_douban_fm_clone/pages/discovery/views/discovery_detail_p
 import 'package:flutter_douban_fm_clone/pages/discovery/views/discovery_page.dart';
 import 'package:flutter_douban_fm_clone/pages/error/views/error_page.dart';
 import 'package:flutter_douban_fm_clone/pages/home/views/home_page.dart';
+import 'package:flutter_douban_fm_clone/pages/megacycle/views/megacycle_play_detail_page.dart';
+import 'package:flutter_douban_fm_clone/pages/megacycle/views/megacycle_play_page.dart';
+import 'package:flutter_douban_fm_clone/pages/my/collect/views/collect_index_page.dart';
 import 'package:flutter_douban_fm_clone/pages/my/song_list/views/my_song_list_batch_operation_page.dart';
 import 'package:flutter_douban_fm_clone/pages/album/views/best_album_song_list_page.dart';
 import 'package:flutter_douban_fm_clone/pages/my/song_list/views/my_song_list_page.dart';
@@ -72,6 +75,24 @@ class AppRoute {
         path: '/home/index/discovery/detail/:playListId',
         builder: (context, state) => DiscoveryDetailPage(
           playListId: state.pathParameters['playListId'] ?? '1',
+        ),
+      ),
+      GoRoute(
+        path: '/megacycle/playList/:playListId',
+        builder: (context, state) => MegacyclePlayPage(
+          playListId: state.pathParameters['playListId'] ?? '1',
+        ),
+      ),
+      GoRoute(
+        path: '/megacycle/play/detail/:musicId',
+        builder: (context, state) => MegacyclePlayDetailPage(
+          musicId: state.pathParameters['musicId'] ?? '1',
+        ),
+      ),
+      GoRoute(
+        path: '/my/collect/index/:index',
+        builder: (context, state) => CollectIndexPage(
+          index: state.pathParameters['index'] ?? '0',
         ),
       ),
     ],

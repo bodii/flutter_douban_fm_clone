@@ -40,7 +40,9 @@ class SongInfoAndLrcData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data["data"] = info!.toJson();
+    if (info != null) {
+      data["data"] = info!.toJson();
+    }
     data["msg"] = msg;
     data["msgs"] = msgs;
     data["profileid"] = profileid;

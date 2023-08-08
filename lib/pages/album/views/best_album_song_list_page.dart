@@ -28,6 +28,8 @@ class BestAlbumSongListPage extends StatelessWidget {
 
           AlbumInfo albumInfo = snapshot.data!;
 
+          AllSelector allSelector = AllSelector();
+
           return Stack(
             children: [
               SizedBox(
@@ -185,24 +187,29 @@ class BestAlbumSongListPage extends StatelessWidget {
                                         Text('${albumInfo.total} 首'),
                                       ]),
                                 ),
-                                const SizedBox(
+                                SizedBox(
                                   width: 140,
                                   height: 40,
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Icon(
+                                        const Icon(
                                           Icons.favorite_border,
                                           color: CustomColors.neutral,
                                           size: 28,
                                         ),
-                                        Icon(
+                                        const Icon(
                                           Icons.download_rounded,
                                           color: Colors.black12,
                                           size: 28,
                                         ),
-                                        Icon(Icons.done_all),
+                                        IconButton(
+                                          icon: const Icon(Icons.done_all),
+                                          onPressed: () {
+                                            allSelector.toggle();
+                                          },
+                                        ),
                                       ]),
                                 ),
                               ],
@@ -210,8 +217,8 @@ class BestAlbumSongListPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      _generateSongItemList(
-                          albumInfo.musicList!, size.height * 0.53),
+                      _generateSongItemList(albumInfo.musicList!,
+                          size.height * 0.53, allSelector),
                     ],
                   ),
                 ),
@@ -223,84 +230,72 @@ class BestAlbumSongListPage extends StatelessWidget {
     );
   }
 
-  Widget _generateSongItemList(List<MusicInfo> musicList, double height) {
+  Widget _generateSongItemList(
+      List<MusicInfo> musicList, double height, AllSelector allSelector) {
     return SizedBox(
       height: height,
       child: ListView.builder(
         itemCount: musicList.length,
         itemBuilder: (context, index) =>
-            _generateSongItem(index + 1, musicList[index]),
+            _generateSongItem(index + 1, musicList[index], allSelector),
         padding: const EdgeInsets.symmetric(vertical: 5),
       ),
     );
   }
 
-  Widget _generateSongItem(int index, MusicInfo music) {
+  Widget _generateSongItem(
+      int index, MusicInfo music, AllSelector allSelector) {
     BatchSelector selecter = BatchSelector();
-    return InkWell(
-      onTap: () {
-        if (selecter.isSelected) {
-          selecter.setNotSelect();
-        } else {
-          selecter.setSelected();
-        }
-      },
-      focusColor: Colors.grey.withOpacity(0.05),
-      hoverColor: Colors.grey.withOpacity(0.05),
-      splashColor: Colors.grey.withOpacity(0.05),
-      highlightColor: Colors.grey.withOpacity(0.08),
-      child: ListenableBuilder(
-          listenable: selecter,
-          builder: (context, widget) {
-            return Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              // margin: const EdgeInsets.only(bottom: 4),
-              color: selecter.isSelected ? Colors.grey.withOpacity(0.08) : null,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 40,
-                    alignment: Alignment.center,
-                    child: selecter.isSelected
-                        ? const RotatedBox(
-                            quarterTurns: 3, child: Icon(Icons.sort))
-                        : Text(
-                            '$index',
-                            style: const TextStyle(
-                              color: Colors.black12,
-                              fontSize: 16,
-                            ),
-                            maxLines: 1,
-                          ),
-                  ),
-                  SizedBox(
-                    width: 300,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(music.name!,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            )),
-                        Text(
-                          music.artist!,
-                          style: const TextStyle(
-                              fontSize: 13, fontWeight: FontWeight.w200),
-                        ),
-                      ],
+    allSelector.add(selecter);
+
+    return ListenableBuilder(
+        listenable: selecter,
+        builder: (context, child) {
+          return ListTile(
+            onTap: () {
+              if (selecter.isSelected) {
+                selecter.setNotSelect();
+              } else {
+                selecter.setSelected();
+              }
+            },
+            // focusColor: Colors.grey.withOpacity(0.05),
+            // hoverColor: Colors.grey.withOpacity(0.05),
+            selectedColor: Colors.black54,
+            selected: selecter.isSelected,
+            selectedTileColor: Colors.grey.shade100,
+            leading: Container(
+              width: 40,
+              alignment: Alignment.center,
+              child: selecter.isSelected
+                  ? const RotatedBox(quarterTurns: 3, child: Icon(Icons.sort))
+                  : Text(
+                      '$index',
+                      style: const TextStyle(
+                        color: Colors.black12,
+                        fontSize: 16,
+                      ),
+                      maxLines: 1,
                     ),
-                  ),
-                  const Icon(
-                    Icons.more_horiz,
-                    color: Colors.black54,
-                  ),
-                ],
+            ),
+            title: Text(
+              music.name!,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
               ),
-            );
-          }),
-    );
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: Text(
+              music.artist!,
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w200),
+              overflow: TextOverflow.ellipsis,
+            ),
+            trailing: const Icon(
+              Icons.more_horiz,
+              color: Colors.black54,
+            ),
+          );
+        });
   }
 }

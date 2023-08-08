@@ -12,7 +12,7 @@ class MySongListBatchOperationPage extends StatelessWidget {
     BatchSelector selector2 = BatchSelector();
 
     AllSelector allSelect = AllSelector();
-    allSelect.add([selector1, selector2]);
+    allSelect.addAll([selector1, selector2]);
 
     return Scaffold(
       appBar: AppBar(

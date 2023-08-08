@@ -22,12 +22,12 @@ class SearchPlayListResult {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["total"] = total;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["total"] = total;
     if (list != null) {
-      _data["list"] = list?.map((e) => e.toJson()).toList();
+      data["list"] = list?.map((e) => e.toJson()).toList();
     }
-    return _data;
+    return data;
   }
 
   SearchPlayListResult copyWith({

@@ -12,6 +12,12 @@ class ArtistHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
+    const List<Tab> tabs = [
+      Tab(text: '精选歌曲'),
+      Tab(text: '唱片'),
+      Tab(text: '相似艺术家'),
+      Tab(text: '详情'),
+    ];
 
     return Scaffold(
       body: FutureBuilder(
@@ -138,36 +144,41 @@ class ArtistHomePage extends StatelessWidget {
                               ],
                             ),
                           ),
-                          DefaultTabController(
-                            length: 4,
-                            child: Column(
-                              children: [
-                                TabBar(
-                                  tabs: getTabBar(),
-                                  indicator: BoxDecoration(
-                                    // color: Colors.black,
-                                    border: Border.all(),
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Colors.transparent,
+                          Expanded(
+                            child: DefaultTabController(
+                              length: 4,
+                              child: Column(
+                                children: [
+                                  TabBar(
+                                    tabs: tabs,
+                                    indicator: BoxDecoration(
+                                      // color: Colors.black,
+                                      border: Border.all(),
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.transparent,
+                                    ),
+                                    labelColor: Colors.black,
+                                    unselectedLabelColor: Colors.black38,
+                                    indicatorPadding:
+                                        const EdgeInsets.symmetric(
+                                            vertical: 6, horizontal: -20),
+                                    labelPadding: const EdgeInsets.all(0),
+                                    indicatorSize: TabBarIndicatorSize.label,
+                                    overlayColor:
+                                        const MaterialStatePropertyAll(
+                                            Colors.transparent),
+                                    dividerColor: Colors.transparent,
                                   ),
-                                  labelColor: Colors.black,
-                                  unselectedLabelColor: Colors.black38,
-                                  indicatorPadding: const EdgeInsets.all(0),
-                                  labelPadding: const EdgeInsets.all(0),
-                                  indicatorSize: TabBarIndicatorSize.label,
-                                  overlayColor: const MaterialStatePropertyAll(
-                                      Colors.transparent),
-                                  dividerColor: Colors.transparent,
-                                ),
-                                Container(
-                                  width: double.infinity,
-                                  height: size.height * 0.66,
-                                  margin: const EdgeInsets.only(top: 20),
-                                  child: TabBarView(
-                                    children: getTabViews(artistDetail),
+                                  Container(
+                                    width: double.infinity,
+                                    height: size.height * 0.6,
+                                    margin: const EdgeInsets.only(top: 20),
+                                    child: TabBarView(
+                                      children: getTabViews(artistDetail),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -188,34 +199,5 @@ class ArtistHomePage extends StatelessWidget {
       const ArtistSimilarArtistWidget(),
       ArtistDetailWidget(artistDetail: artistData),
     ];
-  }
-
-  Widget getTab(String tabName, double tabWidth) {
-    return Container(
-      width: tabWidth,
-      height: 30,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 5,
-        vertical: 3,
-      ),
-      alignment: Alignment.center,
-      child: Text(tabName),
-    );
-  }
-
-  List<Widget> getTabBar() {
-    Map<String, double> tabsNameAndWidget = {
-      '精选歌曲': 120,
-      '唱片': 120,
-      '相似艺术家': 210,
-      '详情': 120,
-    };
-
-    List<Widget> tabs = [];
-
-    tabsNameAndWidget.forEach((key, value) {
-      tabs.add(getTab(key, value));
-    });
-    return tabs;
   }
 }

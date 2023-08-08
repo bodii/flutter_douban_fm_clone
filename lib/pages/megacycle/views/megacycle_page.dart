@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_douban_fm_clone/pages/home/widgets/switch_play_lists.dart';
+import 'package:flutter_douban_fm_clone/pages/megacycle/widgets/switch_play_lists.dart';
 
 class MegacyclePage extends StatelessWidget {
   const MegacyclePage({Key? key}) : super(key: key);

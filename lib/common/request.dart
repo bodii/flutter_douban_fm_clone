@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_douban_fm_clone/models/play_list_model.dart';
 import 'package:flutter_douban_fm_clone/models/search_album_model.dart';
 import 'package:flutter_douban_fm_clone/models/search_artist_model.dart';
@@ -34,6 +35,8 @@ Future<ResponseStruct> _fetchResponseResult(
   Map<String, String>? addHeaders,
   bool hasToUtf8 = false,
 ]) async {
+  debugPrint('start http query');
+
   try {
     var url = Uri.https(authority, unencodedPath, queryParameters);
 
@@ -584,7 +587,7 @@ Future<CommentList> fetchCommentList([
 /// 获取歌曲和歌词信息
 ///
 /// [musicId] : 歌曲id;
-Future<SongInfoAndLrcData> fetchSongInfoAndLrc([
+Future<SongInfoAndLrc> fetchSongInfoAndLrc([
   String musicId = '279292599',
 ]) async {
   const String authority = mApihost;
@@ -600,7 +603,7 @@ Future<SongInfoAndLrcData> fetchSongInfoAndLrc([
     var url = Uri.http(authority, unencodedPath, queryParameters);
 
     final Map<String, String> headers = {
-      'Content-Type': 'application/json; charset=UTF-8',
+      // 'Content-Type': 'application/json; charset=UTF-8',
       'Referer': headerReferer,
     };
 
@@ -611,9 +614,9 @@ Future<SongInfoAndLrcData> fetchSongInfoAndLrc([
 
     String body = response.body;
 
-    ResponseStruct result = ResponseStruct.fromJson(jsonDecode(body));
+    SongInfoAndLrcData result = SongInfoAndLrcData.fromJson(jsonDecode(body));
 
-    return SongInfoAndLrcData.fromJson(result.data!);
+    return result.info!;
   } on Exception {
     rethrow;
   }

@@ -55,49 +55,54 @@ class MyPage extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
-              width: double.infinity,
-              height: 110,
-              margin: const EdgeInsets.symmetric(vertical: 30.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.1),
-                    offset: const Offset(0.0, 5.0),
-                    blurRadius: 8.0,
-                    spreadRadius: 0.1,
-                  ),
-                ],
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(20),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 35.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.star_border_purple500_outlined,
-                          size: 32,
-                        ),
-                        Text(
-                          '我的收藏',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+            GestureDetector(
+              onTap: () {
+                context.push('/my/collect/index/0');
+              },
+              child: Container(
+                width: double.infinity,
+                height: 110,
+                margin: const EdgeInsets.symmetric(vertical: 30.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.1),
+                      offset: const Offset(0.0, 5.0),
+                      blurRadius: 8.0,
+                      spreadRadius: 0.1,
                     ),
+                  ],
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(20),
                   ),
-                  Image.asset('./assets/icons/decoration01.jpeg'),
-                ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 35.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.star_border_purple500_outlined,
+                            size: 32,
+                          ),
+                          Text(
+                            '我的收藏',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Image.asset('./assets/icons/decoration01.jpeg'),
+                  ],
+                ),
               ),
             ),
             Row(

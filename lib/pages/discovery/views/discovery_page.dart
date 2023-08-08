@@ -105,7 +105,8 @@ class DiscoveryPage extends StatelessWidget {
           );
         }
 
-        final List<PlayList> playLists = snapshot.data!.list!;
+        List<PlayList> playLists = snapshot.data!.list!;
+        playLists = playLists.sublist(1);
 
         return SingleChildScrollView(
           child: SizedBox(
