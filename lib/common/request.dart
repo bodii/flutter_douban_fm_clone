@@ -39,7 +39,7 @@ Future<ResponseStruct> _fetchResponseResult(
   debugPrint('start http query');
 
   try {
-    var url = Uri.http(authority, unencodedPath, queryParameters);
+    var url = Uri.https(authority, unencodedPath, queryParameters);
 
     Map<String, String> headers = {
       'Content-Type': 'application/json; charset=UTF-8',
@@ -61,6 +61,9 @@ Future<ResponseStruct> _fetchResponseResult(
 
     dynamic jsonBody = jsonDecode(body);
     if (jsonBody['success'] != null && !jsonBody['success']) {
+      var responsed = await http.get(Uri.http(apiHost));
+      print(responsed.headers);
+      print(responsed.request);
       throw Exception('header params failure!');
     }
 

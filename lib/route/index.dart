@@ -22,8 +22,8 @@ import 'package:go_router/go_router.dart';
 
 class AppRoute {
   static final GoRouter routes = GoRouter(
-    initialLocation: '/',
-    // initialLocation: '/home/index/2',
+    // initialLocation: '/',
+    initialLocation: '/megacycle/play/detail/239411',
     routes: [
       GoRoute(
         path: '/',
