@@ -17,7 +17,7 @@ class MySongListBatchOperationPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             context.pop();
           },
@@ -68,7 +68,7 @@ class MySongListBatchOperationPage extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              InkWell(
+              GestureDetector(
                 onTap: () {
                   allSelect.toggle();
                 },
@@ -138,7 +138,7 @@ class MySongListBatchOperationPage extends StatelessWidget {
       AllSelector allSelector,
       {bool isCheck = false}) {
     String src = coverSrc ?? '';
-    return InkWell(
+    return GestureDetector(
       onTap: () => selector.toggle(allSelector),
       child: Padding(
         padding: const EdgeInsets.symmetric(

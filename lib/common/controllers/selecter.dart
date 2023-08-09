@@ -8,8 +8,6 @@ class BatchSelector extends ChangeNotifier {
     notifyListeners();
 
     allSelector.sync();
-
-    debugPrint('all: ${allSelector.isAllSelected}');
   }
 
   void setSelected() {

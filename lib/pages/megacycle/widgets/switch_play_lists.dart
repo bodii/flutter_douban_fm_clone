@@ -53,7 +53,7 @@ class _SwitchPlayListsState extends State<SwitchPlayLists> {
           RecommendedPlayList rePlayList = snapshot.data!;
           PlayList playList = rePlayList.list![2];
 
-          return InkWell(
+          return GestureDetector(
             onTap: () {
               // context.go('/best/album/songList');
               context.push('/megacycle/playList/${playList.id}');
@@ -72,28 +72,11 @@ class _SwitchPlayListsState extends State<SwitchPlayLists> {
                     reverse: false,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (context, index) {
-                      debugPrint('index: $index, current: $currentPage');
                       double dd = (index - currentPage).abs();
                       if (dd > 1.0 && dd < 0.51) {
                         return background();
                       }
-                      // index = images.length - 1 - index;
-                      debugPrint('$index');
-                      // debugPrint(recommendedPlayList!.list!.first.name);
-                      // return FutureBuilder(
-                      //     future: fetchPlayListInfo(playList.id!),
-                      //     builder: (context, snapshot) {
-                      //       if (snapshot.connectionState == ConnectionState.none ||
-                      //           !snapshot.hasData) {
-                      //         return const Center(child: CircularProgressIndicator());
-                      //       }
-                      //       if (snapshot.hasError) {
-                      //         return const Center(
-                      //           child: Text('not data!'),
-                      //         );
-                      //       }
 
-                      //       PlayList playList = snapshot.data!;
                       return SizedBox(
                         width: 100,
                         height: 250,

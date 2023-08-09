@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
 import 'package:flutter_douban_fm_clone/pages/home/widgets/tab_indicator.dart';
 import 'package:flutter_douban_fm_clone/pages/discovery/views/discovery_page.dart';
-import 'package:flutter_douban_fm_clone/pages/user/login/views/my_page.dart';
+import 'package:flutter_douban_fm_clone/pages/my/my_page.dart';
 import 'package:flutter_douban_fm_clone/pages/megacycle/views/megacycle_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -29,10 +29,10 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          backgroundColor: Colors.white,
           leading: Padding(
             padding: const EdgeInsets.only(left: 25.0),
             child: IconButton(
+              color: Colors.white,
               icon: const Icon(
                 Icons.search,
                 size: 27,

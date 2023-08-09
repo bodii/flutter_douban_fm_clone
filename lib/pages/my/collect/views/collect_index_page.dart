@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_douban_fm_clone/pages/my/collect/widgets/collect_album_page.dart';
-import 'package:flutter_douban_fm_clone/pages/my/collect/widgets/collect_artist_page.dart';
-import 'package:flutter_douban_fm_clone/pages/my/collect/widgets/collect_edit_page.dart';
-import 'package:flutter_douban_fm_clone/pages/my/collect/widgets/collect_play_list_page.dart';
+import 'package:flutter_douban_fm_clone/pages/my/collect/widgets/collect_album_widget.dart';
+import 'package:flutter_douban_fm_clone/pages/my/collect/widgets/collect_artist_widget.dart';
+import 'package:flutter_douban_fm_clone/pages/my/collect/widgets/collect_edit_widget.dart';
+import 'package:flutter_douban_fm_clone/pages/my/collect/widgets/collect_play_list_widget.dart';
 import 'package:go_router/go_router.dart';
 
 class CollectIndexPage extends StatelessWidget {
@@ -72,10 +72,10 @@ class CollectIndexPage extends StatelessWidget {
               const Expanded(
                 child: TabBarView(
                   children: [
-                    CollectPlayListPage(),
-                    CollectArtistPage(),
-                    CollectAlbumPage(),
-                    CollectEditPage(),
+                    CollectPlayListWidget(),
+                    CollectArtistWidget(),
+                    CollectAlbumWidget(),
+                    CollectEditWidget(),
                   ],
                 ),
               ),

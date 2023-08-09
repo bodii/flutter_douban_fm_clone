@@ -41,14 +41,12 @@ class MegacyclePlayDetailPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '${songInfoAndLrc.songinfo!.album} MHz  ▾',
-                  style: const TextStyle(
+                const Text(
+                  '私人精选 MHz ▾',
+                  style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: Colors.black54),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 30),
                 Text(

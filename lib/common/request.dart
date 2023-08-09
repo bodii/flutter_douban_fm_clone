@@ -9,6 +9,7 @@ import 'package:flutter_douban_fm_clone/models/search_music_model.dart';
 import 'package:flutter_douban_fm_clone/models/search_mv_model.dart';
 import 'package:flutter_douban_fm_clone/models/search_play_list_model.dart';
 import 'package:flutter_douban_fm_clone/models/search_suggestion_model.dart';
+import 'package:go_router/go_router.dart';
 
 import '../configs/apis.dart';
 import 'package:flutter_douban_fm_clone/models/album_info_model.dart';
@@ -38,7 +39,7 @@ Future<ResponseStruct> _fetchResponseResult(
   debugPrint('start http query');
 
   try {
-    var url = Uri.https(authority, unencodedPath, queryParameters);
+    var url = Uri.http(authority, unencodedPath, queryParameters);
 
     Map<String, String> headers = {
       'Content-Type': 'application/json; charset=UTF-8',
@@ -58,10 +59,16 @@ Future<ResponseStruct> _fetchResponseResult(
       body = utf8.decode(body.runes.toList());
     }
 
-    ResponseStruct result = ResponseStruct.fromJson(jsonDecode(body));
+    dynamic jsonBody = jsonDecode(body);
+    if (jsonBody['success'] != null && !jsonBody['success']) {
+      throw Exception('header params failure!');
+    }
+
+    ResponseStruct result = ResponseStruct.fromJson(jsonBody);
 
     return result;
-  } on Exception {
+  } catch (e) {
+    debugPrint(e.toString());
     rethrow;
   }
 }
@@ -147,7 +154,8 @@ Future<AlbumInfo> fetchAlbumInfo([
     );
 
     return AlbumInfo.fromJson(result.data!);
-  } on Exception {
+  } catch (e) {
+    GoError(e.toString());
     rethrow;
   }
 }
@@ -248,7 +256,8 @@ Future<RecommendedPlayList> fetchRecommendedPlayList([
     );
 
     return RecommendedPlayList.fromJson(result.data!);
-  } on Exception {
+  } catch (e) {
+    debugPrint(e.toString());
     rethrow;
   }
 }
@@ -365,7 +374,8 @@ Future<PlayList> fetchPlayListInfo([
     );
 
     return PlayList.fromJson(result.data!);
-  } on Exception {
+  } catch (e) {
+    debugPrint(e.toString());
     rethrow;
   }
 }

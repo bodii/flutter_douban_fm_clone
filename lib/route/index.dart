@@ -5,6 +5,10 @@ import 'package:flutter_douban_fm_clone/pages/home/views/home_page.dart';
 import 'package:flutter_douban_fm_clone/pages/megacycle/views/megacycle_play_detail_page.dart';
 import 'package:flutter_douban_fm_clone/pages/megacycle/views/megacycle_play_page.dart';
 import 'package:flutter_douban_fm_clone/pages/my/collect/views/collect_index_page.dart';
+import 'package:flutter_douban_fm_clone/pages/my/history/history_page.dart';
+import 'package:flutter_douban_fm_clone/pages/my/local_download/local_download_page.dart';
+import 'package:flutter_douban_fm_clone/pages/my/my_page.dart';
+import 'package:flutter_douban_fm_clone/pages/my/settings/settings_pages.dart';
 import 'package:flutter_douban_fm_clone/pages/my/song_list/views/my_song_list_batch_operation_page.dart';
 import 'package:flutter_douban_fm_clone/pages/album/views/best_album_song_list_page.dart';
 import 'package:flutter_douban_fm_clone/pages/my/song_list/views/my_song_list_page.dart';
@@ -19,6 +23,7 @@ import 'package:go_router/go_router.dart';
 class AppRoute {
   static final GoRouter routes = GoRouter(
     initialLocation: '/',
+    // initialLocation: '/home/index/2',
     routes: [
       GoRoute(
         path: '/',
@@ -48,16 +53,6 @@ class AppRoute {
         builder: (context, state) => HomePage(
           index: state.pathParameters['index'] ?? '0',
         ),
-      ),
-      GoRoute(
-        path: '/my/songList/:mySongListName',
-        builder: (context, state) => MySongListPage(
-          songListName: state.pathParameters['mySongListName'] ?? '',
-        ),
-      ),
-      GoRoute(
-        path: '/my/songListOperation/BatchOperation',
-        builder: (context, state) => const MySongListBatchOperationPage(),
       ),
       GoRoute(
         path: '/best/album/songList',
@@ -90,10 +85,38 @@ class AppRoute {
         ),
       ),
       GoRoute(
-        path: '/my/collect/index/:index',
-        builder: (context, state) => CollectIndexPage(
-          index: state.pathParameters['index'] ?? '0',
-        ),
+        path: '/my',
+        builder: (context, state) => const MyPage(),
+        routes: [
+          GoRoute(
+            path: 'collect/index/:index',
+            builder: (context, state) => CollectIndexPage(
+              index: state.pathParameters['index'] ?? '0',
+            ),
+          ),
+          GoRoute(
+            path: 'local/download',
+            builder: (context, state) => const LocalDownloadPage(),
+          ),
+          GoRoute(
+            path: 'history',
+            builder: (context, state) => const HistoryPage(),
+          ),
+          GoRoute(
+            path: 'settings',
+            builder: (context, state) => const SettingsPage(),
+          ),
+          GoRoute(
+            path: 'songList/:mySongListName',
+            builder: (context, state) => MySongListPage(
+              songListName: state.pathParameters['mySongListName'] ?? '',
+            ),
+          ),
+          GoRoute(
+            path: 'songListOperation/BatchOperation',
+            builder: (context, state) => const MySongListBatchOperationPage(),
+          ),
+        ],
       ),
     ],
     errorBuilder: (context, state) => ErrorPage(state.error!),

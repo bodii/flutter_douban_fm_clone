@@ -114,7 +114,7 @@ class BestAlbumSongListPage extends StatelessWidget {
                               style: const TextStyle(
                                   fontSize: 23, fontWeight: FontWeight.w600),
                             ),
-                            InkWell(
+                            GestureDetector(
                               onTap: () {
                                 context.go('/artist/home');
                               },

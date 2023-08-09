@@ -106,14 +106,12 @@ class MegacyclePlayPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              '${snapshot.data!.name!.substring(0, 6)} MHz ▾',
-                              style: const TextStyle(
+                            const Text(
+                              '私人精选 MHz ▾',
+                              style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black87),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
                             ),
                             const SizedBox(height: 10),
                             Text(

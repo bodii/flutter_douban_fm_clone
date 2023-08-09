@@ -80,7 +80,7 @@ class MySongListPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    InkWell(
+                    GestureDetector(
                       child: const Icon(Icons.done_all),
                       onTap: () {
                         debugPrint('多选');
@@ -118,7 +118,7 @@ class MySongListPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
         vertical: 10,
       ),
-      child: InkWell(
+      child: GestureDetector(
         onTap: () {
           debugPrint(songName);
         },
@@ -178,7 +178,7 @@ class MySongListPage extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(
+              GestureDetector(
                 child: const Icon(
                   Icons.more_horiz,
                   color: Colors.black54,
