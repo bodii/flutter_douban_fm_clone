@@ -64,6 +64,7 @@ Future<ResponseStruct> _fetchResponseResult(
       var responsed = await http.get(Uri.http(apiHost));
       print(responsed.headers);
       print(responsed.request);
+      print(body);
       throw Exception('header params failure!');
     }
 
@@ -222,7 +223,7 @@ Future<MusicPlayUrl> fetchMusicPayUrl([int musicId = 279292599]) async {
         'httpsStatus': queryHttpsStatus,
       },
       {
-        'Referer': headerReferer,
+        'Referer': '$headerReferer/play_detail/$musicId',
         'Secret': headerSecret,
         'Cookie': headerCookie,
       },
