@@ -1,9 +1,4 @@
 final class StringDuration {
-  static final RegExp _parseFormat =
-      RegExp(r'^([+-]?\d{4,6})-?(\d\d)-?(\d\d)' // Day part.
-          r'(?:[ T](\d\d)(?::?(\d\d)(?::?(\d\d)(?:[.,](\d+))?)?)?' // Time part.
-          r'( ?[zZ]| ?([-+])(\d\d)(?::?(\d\d))?)?)?$'); // Timezone part.
-
   static int parseMilliAndMicroseconds(String? matched) {
     if (matched == null) return 0;
     int length = matched.length;
@@ -48,6 +43,8 @@ final class StringDuration {
     return Duration(milliseconds: milliSeconds, microseconds: microSeconds);
   }
 
+  /// parse time to duration
+  ///
   static Duration parseTimeToDuration(String timeAndmilliAndMicrose) {
     List<String> t = timeAndmilliAndMicrose.split('.');
     int milliAndMicroseconds = int.parse(t[1]);
@@ -68,9 +65,6 @@ final class StringDuration {
       time -= minute * Duration.secondsPerMinute;
     }
     int second = time;
-
-    // print('hour: $hour, minu: $minute, seconds: $second, '
-    //     'milli: $millisecond, micro: $microsecond');
 
     return Duration(
         hours: hour,

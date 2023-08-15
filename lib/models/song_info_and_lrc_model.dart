@@ -72,9 +72,9 @@ class SongInfoAndLrcData {
 class SongInfoAndLrc {
   List<LrcInfo>? lrclist;
   Simpl? simpl;
-  Songinfo? songinfo;
+  SongInfo? songInfo;
 
-  SongInfoAndLrc({this.lrclist, this.simpl, this.songinfo});
+  SongInfoAndLrc({this.lrclist, this.simpl, this.songInfo});
 
   SongInfoAndLrc.fromJson(Map<String, dynamic> json) {
     if (json["lrclist"] is List) {
@@ -86,8 +86,8 @@ class SongInfoAndLrc {
       simpl = json["simpl"] == null ? null : Simpl.fromJson(json["simpl"]);
     }
     if (json["songinfo"] is Map) {
-      songinfo =
-          json["songinfo"] == null ? null : Songinfo.fromJson(json["songinfo"]);
+      songInfo =
+          json["songinfo"] == null ? null : SongInfo.fromJson(json["songinfo"]);
     }
   }
 
@@ -103,8 +103,8 @@ class SongInfoAndLrc {
     if (simpl != null) {
       data["simpl"] = simpl?.toJson();
     }
-    if (songinfo != null) {
-      data["songinfo"] = songinfo?.toJson();
+    if (songInfo != null) {
+      data["songinfo"] = songInfo?.toJson();
     }
     return data;
   }
@@ -112,16 +112,16 @@ class SongInfoAndLrc {
   SongInfoAndLrc copyWith({
     List<LrcInfo>? lrclist,
     Simpl? simpl,
-    Songinfo? songinfo,
+    SongInfo? songInfo,
   }) =>
       SongInfoAndLrc(
         lrclist: lrclist ?? this.lrclist,
         simpl: simpl ?? this.simpl,
-        songinfo: songinfo ?? this.songinfo,
+        songInfo: songInfo ?? this.songInfo,
       );
 }
 
-class Songinfo {
+class SongInfo {
   String? album;
   String? albumId;
   String? artist;
@@ -171,7 +171,7 @@ class Songinfo {
   String? upTime;
   String? uploader;
 
-  Songinfo(
+  SongInfo(
       {this.album,
       this.albumId,
       this.artist,
@@ -221,7 +221,7 @@ class Songinfo {
       this.upTime,
       this.uploader});
 
-  Songinfo.fromJson(Map<String, dynamic> json) {
+  SongInfo.fromJson(Map<String, dynamic> json) {
     if (json["album"] is String) {
       album = json["album"];
     }
@@ -346,8 +346,8 @@ class Songinfo {
     }
   }
 
-  static List<Songinfo> fromList(List<Map<String, dynamic>> list) {
-    return list.map((map) => Songinfo.fromJson(map)).toList();
+  static List<SongInfo> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => SongInfo.fromJson(map)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -405,7 +405,7 @@ class Songinfo {
     return data;
   }
 
-  Songinfo copyWith({
+  SongInfo copyWith({
     String? album,
     String? albumId,
     String? artist,
@@ -455,7 +455,7 @@ class Songinfo {
     String? upTime,
     String? uploader,
   }) =>
-      Songinfo(
+      SongInfo(
         album: album ?? this.album,
         albumId: albumId ?? this.albumId,
         artist: artist ?? this.artist,
