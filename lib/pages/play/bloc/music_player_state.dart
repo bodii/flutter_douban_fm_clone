@@ -1,10 +1,12 @@
 part of 'music_player_bloc.dart';
 
-enum MusicPlayStatus { play, pause, stop }
+enum MusicPlayStatus { loading, loaded, playing, pauseing, stop }
 
 extension MusicPlayStatusX on MusicPlayStatus {
-  bool get isPlay => this == MusicPlayStatus.play;
-  bool get isPause => this == MusicPlayStatus.pause;
+  bool get isLoading => this == MusicPlayStatus.loading;
+  bool get isLoaded => this == MusicPlayStatus.loaded;
+  bool get isPlay => this == MusicPlayStatus.playing;
+  bool get isPause => this == MusicPlayStatus.pauseing;
   bool get isStop => this == MusicPlayStatus.stop;
 }
 

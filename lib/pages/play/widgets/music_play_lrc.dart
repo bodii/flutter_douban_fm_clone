@@ -4,23 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_douban_fm_clone/common/functions/string_duration.dart';
 import 'package:flutter_douban_fm_clone/models/song_info_and_lrc_model.dart';
-import 'package:flutter_douban_fm_clone/pages/megacycle/bloc/music_player_bloc.dart';
+import 'package:flutter_douban_fm_clone/pages/play/bloc/music_player_bloc.dart';
 
-class PlayDetailLrcWidget extends StatefulWidget {
-  const PlayDetailLrcWidget({super.key, required this.lrcList});
+class MusicPlayLrc extends StatefulWidget {
+  const MusicPlayLrc({super.key, required this.lrcList});
 
   final List<LrcInfo> lrcList;
 
   @override
-  State<PlayDetailLrcWidget> createState() => _PlayDetailLrcState();
+  State<MusicPlayLrc> createState() => _MusicPlayLrc();
 }
 
-class _PlayDetailLrcState extends State<PlayDetailLrcWidget> {
+class _MusicPlayLrc extends State<MusicPlayLrc> {
   late ScrollController _controller;
-  late Timer _timer;
+  Timer? _timer;
   Timer? _timerItem;
 
-  int index = 0;
+  late int index;
   late Duration time;
   List<Duration> totalTimeList = [];
   late Duration totalTime;
@@ -36,6 +36,7 @@ class _PlayDetailLrcState extends State<PlayDetailLrcWidget> {
   @override
   void initState() {
     super.initState();
+    index = 0;
 
     _controller = ScrollController();
 
@@ -119,14 +120,17 @@ class _PlayDetailLrcState extends State<PlayDetailLrcWidget> {
 
   @override
   void dispose() {
+    _timer?.cancel();
     _controller.dispose();
-    _timer.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final List<LrcInfo> lrcList = widget.lrcList;
+    if (lrcList.isEmpty) {
+      return const Text('暂无歌词');
+    }
 
     return SizedBox(
       width: double.infinity,
@@ -158,7 +162,7 @@ class _PlayDetailLrcState extends State<PlayDetailLrcWidget> {
                 lrcList[i].lineLyric!,
                 maxLines: 1,
                 style: const TextStyle(
-                  fontSize: 12,
+                  fontSize: 13,
                   height: 1.5,
                   // color: CustomColors.paimary.withOpacity(0.6),
                 ),

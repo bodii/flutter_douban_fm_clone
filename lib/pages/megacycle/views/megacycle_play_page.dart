@@ -39,13 +39,31 @@ class MegacyclePlayPage extends StatelessWidget {
               }
 
               List<MusicInfo> musicList = snapshot.data!.musicList!;
+              late MusicInfo musicInfo;
+              bool hasExisit = false;
+              for (; index < musicList.length; index++) {
+                if (musicList[index].isListenFee!) {
+                  continue;
+                }
+
+                musicInfo = musicList[index];
+                hasExisit = true;
+                break;
+              }
+
+              if (!hasExisit) {
+                // context.pop(false);
+                return const Center(
+                  child: Text('不可播放'),
+                );
+              }
+              print('totalNum: ${musicList.length}, index: $index');
 
               return Row(
                 children: [
                   GestureDetector(
                     onTap: () {
-                      context.push(
-                          '/megacycle/play/detail/${musicList[index].rid}');
+                      context.push('/play/music/${musicInfo.rid}');
                     },
                     onVerticalDragCancel: () {
                       // ignore: avoid_print
@@ -88,7 +106,7 @@ class MegacyclePlayPage extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
                           child: Image.network(
-                            musicList[index].pic!,
+                            musicInfo.pic!,
                             fit: BoxFit.cover,
                             width: 180,
                             height: 180,
@@ -115,14 +133,14 @@ class MegacyclePlayPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              musicList[index].name!,
+                              musicInfo.name!,
                               style: const TextStyle(
                                   fontSize: 22, fontWeight: FontWeight.w600),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
-                              musicList[index].artist!,
+                              musicInfo.artist!,
                               style: const TextStyle(color: Colors.black38),
                             ),
                             const SizedBox(height: 70),
@@ -134,7 +152,7 @@ class MegacyclePlayPage extends StatelessWidget {
                                   width: 200,
                                   height: 2.5,
                                   child: LinearProgressIndicator(
-                                    value: 44 / musicList[index].duration!,
+                                    value: 44 / musicInfo.duration!,
                                     valueColor:
                                         const AlwaysStoppedAnimation<Color>(
                                             CustomColors.secondary),

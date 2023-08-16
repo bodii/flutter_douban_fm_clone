@@ -4,6 +4,16 @@ sealed class MusicPlayerEvent {
   const MusicPlayerEvent();
 }
 
+final class MusicPlayerLoading extends MusicPlayerEvent {
+  const MusicPlayerLoading({required this.musicId});
+
+  final String musicId;
+}
+
+final class MusicPlayerLoaded extends MusicPlayerEvent {
+  const MusicPlayerLoaded();
+}
+
 final class MusicPlayerStarted extends MusicPlayerEvent {
   const MusicPlayerStarted();
 }
@@ -16,9 +26,13 @@ final class MusicPlayerResumed extends MusicPlayerEvent {
   const MusicPlayerResumed();
 }
 
-final class MusicPlayerReset extends MusicPlayerEvent {
-  const MusicPlayerReset({required this.duration});
+final class MusicPlayerSeeked extends MusicPlayerEvent {
+  const MusicPlayerSeeked({required this.duration});
   final int duration;
+}
+
+final class MusicPlayerStoped extends MusicPlayerEvent {
+  const MusicPlayerStoped();
 }
 
 final class MusicPlayerToggle extends MusicPlayerEvent {

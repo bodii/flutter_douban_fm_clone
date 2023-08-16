@@ -7,12 +7,12 @@ class MusicInfo {
   late String? pic;
   late int? isstar;
   late int? rid;
-  late String? upPcStr;
+  String? upPcStr;
   late int? duration;
   late String? score100;
   late String? adSubtype;
   late String? contentType;
-  late int? mvPlayCnt;
+  int? mvPlayCnt;
   late int? track;
   late bool? hasLossless;
   late int? hasmv;
@@ -25,9 +25,9 @@ class MusicInfo {
   late int? originalsongtype;
   late String? songTimeMinutes;
   late bool? isListenFee;
-  late String? mvUpPcStr;
+  String? mvUpPcStr;
   late String? pic120;
-  late String? albuminfo;
+  String? albuminfo;
   late String? name;
   late int? online;
   late PayInfo? payInfo;
@@ -95,7 +95,7 @@ class MusicInfo {
     if (json["rid"] is int) {
       rid = json["rid"];
     }
-    if (json["upPcStr"] is String) {
+    if (json['upPcStr'] != null && json["upPcStr"] is String) {
       upPcStr = json["upPcStr"];
     }
     if (json["duration"] is int) {
@@ -551,7 +551,7 @@ class Paytagindex {
 }
 
 class FeeType {
-  late String? song;
+  String? song;
   late String? vip;
 
   FeeType({this.song, this.vip});

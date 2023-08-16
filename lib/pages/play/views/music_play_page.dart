@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
+import 'package:flutter_douban_fm_clone/common/functions/string_duration.dart';
 import 'package:flutter_douban_fm_clone/common/request.dart';
 import 'package:flutter_douban_fm_clone/models/song_info_and_lrc_model.dart';
-import 'package:flutter_douban_fm_clone/pages/megacycle/bloc/music_player_bloc.dart';
-import 'package:flutter_douban_fm_clone/pages/megacycle/bloc/ticker.dart';
-import 'package:flutter_douban_fm_clone/pages/megacycle/widgets/play_detail_lrc.dart';
+import 'package:flutter_douban_fm_clone/pages/play/bloc/music_player_bloc.dart';
+import 'package:flutter_douban_fm_clone/common/functions/stream_ticker.dart';
+import 'package:flutter_douban_fm_clone/pages/play/widgets/music_play_lrc.dart';
 import 'package:go_router/go_router.dart';
 
-class MegacyclePlayDetailPage extends StatelessWidget {
-  const MegacyclePlayDetailPage({
+class MusicPlayPage extends StatelessWidget {
+  const MusicPlayPage({
     super.key,
     required this.musicId,
   });
@@ -48,7 +49,12 @@ class MegacyclePlayDetailPage extends StatelessWidget {
           }
 
           SongInfo songInfo = songInfoAndLrc.songInfo!;
-          List<LrcInfo> lrcList = songInfoAndLrc.lrclist!;
+          List<LrcInfo> lrcList;
+          if (songInfoAndLrc.lrclist == null) {
+            lrcList = [];
+          } else {
+            lrcList = songInfoAndLrc.lrclist!;
+          }
 
           // Player player = Player(totalSeconds: int.parse(songInfo.duration!));
           // debugPrint(songInfo.id!);
@@ -75,12 +81,16 @@ class MegacyclePlayDatail extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => MusicPlayerBloc(
         int.parse(songInfo.duration!),
-        ticker: const Ticker(),
-      ),
+        ticker: const StreamTicker(),
+      )..add(MusicPlayerLoading(musicId: songInfo.id!)),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
         child: BlocBuilder<MusicPlayerBloc, MusicPlayerState>(
           builder: (context, state) {
+            if (state.status.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -106,23 +116,8 @@ class MegacyclePlayDatail extends StatelessWidget {
                 const SizedBox(height: 40),
                 SizedBox(
                   height: 400,
-                  child: PlayDetailLrcWidget(
-                    lrcList: lrcList,
-                  ),
-                  // ListView.builder(
-                  //   itemCount: lrcList.length,
-                  //   itemBuilder: (context, index) {
-                  //     return Text(
-                  //       lrcList[index].lineLyric!,
-                  //       style: const TextStyle(
-                  //           color: Colors.black38,
-                  //           fontSize: 15,
-                  //           height: 2.5),
-                  //     );
-                  //   },
-                  // ),
+                  child: MusicPlayLrc(lrcList: lrcList),
                 ),
-                // const MegacyclePlayPlay(),
                 const SizedBox(height: 15),
                 SliderTheme(
                   data: SliderTheme.of(context).copyWith(
@@ -152,24 +147,18 @@ class MegacyclePlayDatail extends StatelessWidget {
                       if (value <= state.totalDuration) {
                         context
                             .read<MusicPlayerBloc>()
-                            .add(MusicPlayerReset(duration: value.floor()));
+                            .add(MusicPlayerSeeked(duration: value.round()));
                       }
                     },
                   ),
                 ),
-                // LinearProgressIndicator(
-                //   value: player.playRatio,
-                //   valueColor: const AlwaysStoppedAnimation<Color>(
-                //       CustomColors.paimary),
-                //   backgroundColor: CustomColors.paimary.withOpacity(0.1),
-                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(_durationTransform(state.duration),
+                    Text(StringDuration.durationTransform(state.duration),
                         style: const TextStyle(
                             fontSize: 12, color: Colors.black38)),
-                    Text(_durationTransform(state.totalDuration),
+                    Text(StringDuration.durationTransform(state.totalDuration),
                         style: const TextStyle(
                             fontSize: 12, color: Colors.black38)),
                   ],
@@ -251,10 +240,5 @@ class MegacyclePlayDatail extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _durationTransform(int seconds) {
-    final d = Duration(seconds: seconds);
-    return d.toString().substring(2, 7);
   }
 }

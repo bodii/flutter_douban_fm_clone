@@ -51,11 +51,10 @@ class _SwitchPlayListsState extends State<SwitchPlayLists> {
           }
 
           RecommendedPlayList rePlayList = snapshot.data!;
-          PlayList playList = rePlayList.list![2];
+          PlayList playList = rePlayList.list![1];
 
           return GestureDetector(
             onTap: () {
-              // context.go('/best/album/songList');
               context.push('/megacycle/playList/${playList.id}');
             },
             child: Stack(

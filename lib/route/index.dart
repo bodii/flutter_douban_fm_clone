@@ -2,7 +2,7 @@ import 'package:flutter_douban_fm_clone/pages/discovery/views/discovery_detail_p
 import 'package:flutter_douban_fm_clone/pages/discovery/views/discovery_page.dart';
 import 'package:flutter_douban_fm_clone/pages/error/views/error_page.dart';
 import 'package:flutter_douban_fm_clone/pages/home/views/home_page.dart';
-import 'package:flutter_douban_fm_clone/pages/megacycle/views/megacycle_play_detail_page.dart';
+import 'package:flutter_douban_fm_clone/pages/play/views/music_play_page.dart';
 import 'package:flutter_douban_fm_clone/pages/megacycle/views/megacycle_play_page.dart';
 import 'package:flutter_douban_fm_clone/pages/my/collect/views/collect_index_page.dart';
 import 'package:flutter_douban_fm_clone/pages/my/history/history_page.dart';
@@ -22,8 +22,8 @@ import 'package:go_router/go_router.dart';
 
 class AppRoute {
   static final GoRouter routes = GoRouter(
-    // initialLocation: '/',
-    initialLocation: '/megacycle/play/detail/293336158',
+    initialLocation: '/',
+    // initialLocation: '/play/music/145770043', // 293336158
     routes: [
       GoRoute(
         path: '/',
@@ -79,8 +79,8 @@ class AppRoute {
         ),
       ),
       GoRoute(
-        path: '/megacycle/play/detail/:musicId',
-        builder: (context, state) => MegacyclePlayDetailPage(
+        path: '/play/music/:musicId',
+        builder: (context, state) => MusicPlayPage(
           musicId: state.pathParameters['musicId'] ?? '1',
         ),
       ),

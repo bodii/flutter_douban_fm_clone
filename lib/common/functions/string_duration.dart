@@ -73,4 +73,9 @@ final class StringDuration {
         milliseconds: millisecond,
         microseconds: microsecond);
   }
+
+  static String durationTransform(int seconds) {
+    final d = Duration(seconds: seconds);
+    return d.toString().substring(2, 7);
+  }
 }
