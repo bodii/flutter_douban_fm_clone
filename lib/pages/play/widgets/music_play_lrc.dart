@@ -22,12 +22,9 @@ class _MusicPlayLrc extends State<MusicPlayLrc> {
 
   late int index;
   late Duration time;
-  List<Duration> totalTimeList = [];
-  late Duration totalTime;
+  late List<Duration> totalTimeList = [];
 
   late double totalHeight;
-
-  List<double> totalOffsetList = [];
 
   bool isPlay = false;
 
@@ -44,7 +41,27 @@ class _MusicPlayLrc extends State<MusicPlayLrc> {
       // totalOffsetList.add(_controller.offset);
       // print('totalOffsetList: $totalOffsetList');
     });
+
+    _getTotalTimeList();
+
     totalHeight = widget.lrcList.length * itemHeight;
+  }
+
+  void _getTotalTimeList() {
+    for (var lrc in widget.lrcList) {
+      Duration time = StringDuration.parseTimeToDuration(lrc.time!);
+      totalTimeList.add(time);
+    }
+  }
+
+  /// find current seconds to index
+  int _findOneTimeToIndex(int seconds) {
+    Duration duration = Duration(seconds: seconds);
+    int newIndex = totalTimeList.indexWhere(
+      (t) => t.compareTo(duration) != -1,
+    );
+
+    return newIndex - 1;
   }
 
   void _changeCurrentTime(int index) {
@@ -60,7 +77,6 @@ class _MusicPlayLrc extends State<MusicPlayLrc> {
     Duration t2sDur = StringDuration.parseTimeToDuration(t2);
 
     time = t1sDur - t2sDur;
-    totalTimeList.add(time);
   }
 
   void _jumpProgress() {
@@ -118,6 +134,14 @@ class _MusicPlayLrc extends State<MusicPlayLrc> {
     index = 0;
   }
 
+  void _listenerSeek(int duration) {
+    int newIndex = _findOneTimeToIndex(duration);
+    if ((newIndex - index).abs() > 2 && newIndex > 0) {
+      index = newIndex;
+    }
+    // print('index: $index, newIndex: $newIndex, duration: $duration');
+  }
+
   @override
   void dispose() {
     _timer?.cancel();
@@ -144,6 +168,8 @@ class _MusicPlayLrc extends State<MusicPlayLrc> {
           } else if (state.status.isStop) {
             _stop();
           }
+
+          _listenerSeek(state.duration);
         },
         child: ListWheelScrollView(
           controller: _controller,
