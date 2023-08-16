@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_douban_fm_clone/common/functions/string_duration.dart';
@@ -167,9 +168,9 @@ class _MusicPlayLrc extends State<MusicPlayLrc> {
             _pause();
           } else if (state.status.isStop) {
             _stop();
+          } else if (state.status.isSeeking) {
+            _listenerSeek(state.duration);
           }
-
-          _listenerSeek(state.duration);
         },
         child: ListWheelScrollView(
           controller: _controller,
@@ -183,7 +184,7 @@ class _MusicPlayLrc extends State<MusicPlayLrc> {
             return Container(
               width: double.infinity,
               // padding: const EdgeInsets.only(left: 10),
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.topLeft,
               child: Text(
                 lrcList[i].lineLyric!,
                 maxLines: 1,

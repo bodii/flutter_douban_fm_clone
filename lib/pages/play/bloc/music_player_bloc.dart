@@ -112,7 +112,7 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
 
   void _onSeeked(MusicPlayerSeeked event, Emitter<MusicPlayerState> emit) {
     emit(state.copyWith(
-        duration: event.duration, status: MusicPlayStatus.playing));
+        duration: event.duration, status: MusicPlayStatus.seeking));
     _tickerSubscription?.cancel();
     _tickerSubscription = _ticker
         .tick(ticks: event.duration, total: totalDuration - state.duration)
@@ -122,6 +122,8 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
 
     // music file seek
     _player?.seek(Duration(seconds: event.duration));
+
+    emit(state.copyWith(status: MusicPlayStatus.playing));
   }
 
   void _onToggle(MusicPlayerToggle event, Emitter<MusicPlayerState> emit) {
