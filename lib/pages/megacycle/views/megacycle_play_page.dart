@@ -60,6 +60,7 @@ class MegacyclePlayPage extends StatelessWidget {
               print('totalNum: ${musicList.length}, index: $index');
 
               return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
                     onTap: () {

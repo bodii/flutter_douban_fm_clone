@@ -49,26 +49,17 @@ class MusicPlayPage extends StatelessWidget {
           }
 
           SongInfo songInfo = songInfoAndLrc.songInfo!;
-          List<LrcInfo> lrcList;
-          if (songInfoAndLrc.lrclist == null) {
-            lrcList = [];
-          } else {
-            lrcList = songInfoAndLrc.lrclist!;
-          }
+          List<LrcInfo> lrcList = songInfoAndLrc.lrclist ?? [];
 
-          // Player player = Player(totalSeconds: int.parse(songInfo.duration!));
-          // debugPrint(songInfo.id!);
-
-          return MegacyclePlayDatail(songInfo: songInfo, lrcList: lrcList);
+          return _MegacyclePlayDatail(songInfo: songInfo, lrcList: lrcList);
         },
       ),
     );
   }
 }
 
-class MegacyclePlayDatail extends StatelessWidget {
-  const MegacyclePlayDatail({
-    super.key,
+class _MegacyclePlayDatail extends StatelessWidget {
+  const _MegacyclePlayDatail({
     required this.songInfo,
     required this.lrcList,
   });
