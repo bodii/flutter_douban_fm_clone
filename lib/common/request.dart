@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/widgets.dart';
@@ -12,7 +13,7 @@ import 'package:flutter_douban_fm_clone/models/search_suggestion_model.dart';
 import 'package:go_router/go_router.dart';
 
 import '../configs/apis.dart';
-import 'package:flutter_douban_fm_clone/models/album_info_model.dart';
+import 'package:flutter_douban_fm_clone/models/album_model.dart';
 import 'package:flutter_douban_fm_clone/models/artist_list_info_model.dart';
 import 'package:flutter_douban_fm_clone/models/bang_menu_model.dart';
 import 'package:flutter_douban_fm_clone/models/bang_music_list_model.dart';
@@ -23,7 +24,7 @@ import 'package:flutter_douban_fm_clone/models/music_info_model.dart';
 import 'package:flutter_douban_fm_clone/models/music_play_url_model.dart';
 import 'package:flutter_douban_fm_clone/models/recommended_play_list_model.dart';
 import 'package:flutter_douban_fm_clone/models/artist_album_list_model.dart';
-import 'package:flutter_douban_fm_clone/models/artist_detail_model.dart';
+import 'package:flutter_douban_fm_clone/models/artist_model.dart';
 import 'package:flutter_douban_fm_clone/models/artist_featured_songs_model.dart';
 import 'package:flutter_douban_fm_clone/models/song_info_and_lrc_model.dart';
 import 'package:flutter_douban_fm_clone/models/tag_list_model.dart';
@@ -133,7 +134,7 @@ Future<ArtistAlbumList> fetchArtistAlbumList([
 }
 
 /// 获取专辑详细信息
-Future<AlbumInfo> fetchAlbumInfo([
+Future<Album> fetchAlbumInfo([
   int albumId = 130087,
   int artistId = 79436,
   int pageNum = 1,
@@ -157,7 +158,7 @@ Future<AlbumInfo> fetchAlbumInfo([
       },
     );
 
-    return AlbumInfo.fromJson(result.data!);
+    return Album.fromJson(result.data!);
   } catch (e) {
     GoError(e.toString());
     rethrow;
@@ -165,7 +166,7 @@ Future<AlbumInfo> fetchAlbumInfo([
 }
 
 /// 获取歌手（艺术家）详情
-Future<ArtistDetail> fetchArtistDetail([int artistId = 195793]) async {
+Future<Artist> fetchArtistDetail([int artistId = 195793]) async {
   try {
     ResponseStruct result = await _fetchResponseResult(
       apiHost,
@@ -183,7 +184,7 @@ Future<ArtistDetail> fetchArtistDetail([int artistId = 195793]) async {
       },
     );
 
-    return ArtistDetail.fromJson(result.data!);
+    return Artist.fromJson(result.data!);
   } on Exception {
     rethrow;
   }
@@ -356,7 +357,7 @@ Future<BestPlayList> fetchTagPlayList([
 Future<PlayList> fetchPlayListInfo([
   int playListId = 1082685104,
   int pageNum = 1,
-  int pageSize = 20,
+  int pageSize = 10,
 ]) async {
   try {
     ResponseStruct result = await _fetchResponseResult(
@@ -376,6 +377,7 @@ Future<PlayList> fetchPlayListInfo([
         'Cookie': headerCookie,
       },
     );
+    // log(result.data!.toString(), name: 'playlist');
 
     return PlayList.fromJson(result.data!);
   } catch (e) {

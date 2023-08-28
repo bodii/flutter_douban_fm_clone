@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/request.dart';
+import 'package:flutter_douban_fm_clone/models/album_model.dart';
 import 'package:flutter_douban_fm_clone/models/artist_album_list_model.dart';
 
 class ArtistAlbumListWidget extends StatelessWidget {

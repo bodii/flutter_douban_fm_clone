@@ -95,8 +95,7 @@ class DiscoveryPage extends StatelessWidget {
     return FutureBuilder(
       future: fetchRecommendedPlayList(),
       builder: (context, AsyncSnapshot<RecommendedPlayList> snapshot) {
-        if (snapshot.connectionState == ConnectionState.none ||
-            !snapshot.hasData) {
+        if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
         }
         if (snapshot.hasError) {
@@ -107,6 +106,9 @@ class DiscoveryPage extends StatelessWidget {
 
         List<PlayList> playLists = snapshot.data!.list!;
         playLists = playLists.sublist(1);
+        // for (var element in playLists) {
+        //   print(element.toJson());
+        // }
 
         return SingleChildScrollView(
           child: SizedBox(
@@ -245,20 +247,26 @@ class DiscoveryPage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              IconButton(
-                                onPressed: () {
-                                  debugPrint(
-                                      'favorite -> playlist id: ${playList.id}');
-                                },
-                                icon: Container(
-                                  width: 38,
-                                  height: 38,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(38),
-                                    color: Colors.white,
-                                  ),
-                                  child: const Icon(
+                              Container(
+                                width: 38,
+                                height: 38,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(38),
+                                  color: Colors.white,
+                                ),
+                                child: IconButton(
+                                  onPressed: () {
+                                    debugPrint(
+                                        'favorite -> playlist id: ${playList.id}');
+                                  },
+                                  isSelected: false,
+                                  icon: const Icon(
                                     Icons.favorite_border_outlined,
+                                    color: CustomColors.neutral,
+                                    size: 28,
+                                  ),
+                                  selectedIcon: const Icon(
+                                    Icons.favorite,
                                     color: CustomColors.neutral,
                                     size: 28,
                                   ),

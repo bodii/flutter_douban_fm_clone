@@ -1,19 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
 import 'package:flutter_douban_fm_clone/common/request.dart';
+import 'package:flutter_douban_fm_clone/database/play_list/play_list_db.dart';
 import 'package:flutter_douban_fm_clone/models/music_info_model.dart';
 import 'package:flutter_douban_fm_clone/models/play_list_model.dart';
 import 'package:go_router/go_router.dart';
 
-class DiscoveryDetailPage extends StatelessWidget {
+class DiscoveryDetailPage extends StatefulWidget {
   const DiscoveryDetailPage({super.key, required this.playListId});
 
   final String playListId;
 
   @override
+  State<DiscoveryDetailPage> createState() => _DiscoveryDetailPageState();
+}
+
+class _DiscoveryDetailPageState extends State<DiscoveryDetailPage> {
+  late PlayListDb playListDb;
+  bool isFavorite = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    playListDb = PlayListDb();
+
+    checkFavorite(widget.playListId);
+  }
+
+  Future<void> checkFavorite(String playListId) async {
+    PlayList? data = await playListDb.queryOne(playListId);
+
+    isFavorite = data != null;
+  }
+
+  Future<bool> addDbFavorite(PlayList playList) async {
+    int row = await playListDb
+        .insert(data: playList.toJson(), excludeColums: ['musicList']);
+    return row > 0;
+  }
+
+  Future<bool> cancelFavorite(int playListId) async {
+    int row = await playListDb.delete(where: 'id = ?', whereArgs: [playListId]);
+    return row > 0;
+  }
+
+  Future<void> toggleFavorite(PlayList playList) async {
+    if (!isFavorite) {
+      bool success = await addDbFavorite(playList);
+      if (success) {
+        setState(() {
+          isFavorite = true;
+        });
+      }
+    } else {
+      bool success = await cancelFavorite(playList.id!);
+      if (success) {
+        setState(() {
+          isFavorite = false;
+        });
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: fetchPlayListInfo(int.parse(playListId)),
+        future: fetchPlayListInfo(int.parse(widget.playListId)),
         builder: (context, AsyncSnapshot<PlayList> snapshot) {
           if (snapshot.connectionState == ConnectionState.none ||
               !snapshot.hasData) {
@@ -153,8 +206,16 @@ class DiscoveryDetailPage extends StatelessWidget {
                                   ),
                                 ),
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    await toggleFavorite(playList);
+                                  },
+                                  isSelected: isFavorite,
                                   icon: const Icon(
+                                    Icons.favorite_border,
+                                    color: CustomColors.neutral,
+                                    size: 23,
+                                  ),
+                                  selectedIcon: const Icon(
                                     Icons.favorite,
                                     color: CustomColors.neutral,
                                     size: 23,

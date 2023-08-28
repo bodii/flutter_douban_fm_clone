@@ -24,11 +24,22 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+            
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <provider
+            android:name="vn.hunghd.flutterdownloader.DownloadedFileProvider"
+            android:authorities="${applicationId}.flutter_downloader.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
     </application>
 
     <!-- 互联网权限 -->
@@ -46,5 +57,9 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <!-- 只有当你的应用程序需要访问其他应用程序创建的音频文件时才需要 -->
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <!-- Install .apk files  -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+
 
 </manifest>

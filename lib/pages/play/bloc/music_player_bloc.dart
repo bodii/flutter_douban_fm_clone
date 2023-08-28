@@ -5,9 +5,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_douban_fm_clone/common/functions/stream_ticker.dart';
+import 'package:flutter_douban_fm_clone/common/handler/file_download.dart';
 import 'package:flutter_douban_fm_clone/common/request.dart';
 import 'package:flutter_douban_fm_clone/models/music_play_url_model.dart';
-import 'package:flutter_douban_fm_clone/pages/play/widgets/music_play_in_background.dart';
+import 'package:flutter_douban_fm_clone/common/handler/music_background_play.dart';
 import 'package:just_audio/just_audio.dart';
 
 part 'music_player_event.dart';
@@ -19,8 +20,7 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
 
   StreamSubscription<int>? _tickerSubscription;
 
-  MusicPlayInBackground? _backgroundMusic;
-  AudioPlayer? _player;
+  MusicBackgroundPlay? _backgroundMusic;
 
   MusicPlayerBloc(this.totalDuration, {required StreamTicker ticker})
       : _ticker = ticker,
@@ -28,7 +28,6 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
             totalDuration: totalDuration, status: MusicPlayStatus.loading)) {
     on<MusicPlayerLoading>(_onLoading);
     on<MusicPlayerLoaded>(_onLoaded);
-    // on<MusicPlayerBuffered>(_onBuffered);
     on<MusicPlayerStarted>(_onStarted);
     on<MusicPlayerPaused>(_onPaused);
     on<MusicPlayerResumed>(_onResumed);
@@ -36,6 +35,7 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
     on<MusicPlayerToggle>(_onToggle);
     on<MusicPlayerStoped>(_onStoped);
     on<_MusicPlayerTicked>(_onTicked);
+    on<MusicFileDownloading>(_onDownloading);
   }
 
   @override
@@ -50,13 +50,26 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
       MusicPlayerLoading event, Emitter<MusicPlayerState> emit) async {
     MusicPlayUrl musicPlayUrl =
         await fetchMusicPayUrl(int.parse(event.musicId));
-    print('url: ${musicPlayUrl.url}');
+    log('music url: ${musicPlayUrl.url}');
+
+    // add url path
+    if (musicPlayUrl.url!.isNotEmpty) {
+      emit(state.copyWith(musicUrl: musicPlayUrl.url));
+    }
+
     // create background play object
-    _backgroundMusic = MusicPlayInBackground(sourceAddr: musicPlayUrl.url!);
+    _backgroundMusic = MusicBackgroundPlay(sourceAddr: musicPlayUrl.url!);
     // load audio file
-    await _backgroundMusic?.load();
+    bool? success = await _backgroundMusic?.load();
+    // music play in background is loaded failure
+    if (!success!) {
+      _backgroundMusic?.cancel();
+      emit(state.copyWith(status: MusicPlayStatus.loaded));
+      return;
+    }
+    // music play in background is loaded success
     // listen status
-    _backgroundMusic?.withBackground().listen((PlayerState playerState) {
+    _backgroundMusic?.useBackgroundListener().listen((PlayerState playerState) {
       final processingState = playerState.processingState;
       if (processingState == ProcessingState.idle ||
           processingState == ProcessingState.loading) {
@@ -69,8 +82,6 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
         add(const MusicPlayerStoped());
       }
     });
-
-    _player = _backgroundMusic?.player;
   }
 
   void _onLoaded(MusicPlayerLoaded event, Emitter<MusicPlayerState> emit) {
@@ -86,7 +97,7 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
         .listen((duration) => add(_MusicPlayerTicked(duration: duration)));
 
     // music file play
-    _player?.play();
+    _backgroundMusic?.play();
   }
 
   void _onPaused(MusicPlayerPaused event, Emitter<MusicPlayerState> emit) {
@@ -97,7 +108,7 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
     _tickerSubscription?.pause();
     emit(state.copyWith(status: MusicPlayStatus.pauseing));
     // music file pause
-    _player?.pause();
+    _backgroundMusic?.pause();
   }
 
   void _onResumed(MusicPlayerResumed event, Emitter<MusicPlayerState> emit) {
@@ -107,7 +118,7 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
     }
 
     // music file resum
-    _player?.play();
+    _backgroundMusic?.play();
   }
 
   void _onSeeked(MusicPlayerSeeked event, Emitter<MusicPlayerState> emit) {
@@ -121,7 +132,7 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
     });
 
     // music file seek
-    _player?.seek(Duration(seconds: event.duration));
+    _backgroundMusic?.seek(Duration(seconds: event.duration));
 
     emit(state.copyWith(status: MusicPlayStatus.playing));
   }
@@ -140,9 +151,8 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
   void _onStoped(MusicPlayerStoped event, Emitter<MusicPlayerState> emit) {
     emit(state.copyWith(status: MusicPlayStatus.stop));
 
-    // music file pause
-    _player?.seek(Duration.zero);
-    _player?.pause();
+    // music file stop
+    _backgroundMusic?.stop();
   }
 
   void _onTicked(_MusicPlayerTicked event, Emitter<MusicPlayerState> emit) {
@@ -153,4 +163,24 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
               duration: event.duration, status: MusicPlayStatus.playing),
     );
   }
+
+  void _onDownloading(
+      MusicFileDownloading event, Emitter<MusicPlayerState> emit) async {
+    log('music url: ${state.musicUrl}');
+    log('save name: ${event.saveName}');
+    try {
+      FileDownlaod downloader = FileDownlaod(
+        downloadUrl: state.musicUrl,
+        saveFileName: event.saveName,
+      );
+
+      await downloader.init();
+      await downloader.request();
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  void _onDownloaded(
+      MusicFileDownloading event, Emitter<MusicPlayerState> emit) {}
 }

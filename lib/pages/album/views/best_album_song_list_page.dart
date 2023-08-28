@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
 import 'package:flutter_douban_fm_clone/common/request.dart';
-import 'package:flutter_douban_fm_clone/models/album_info_model.dart';
+import 'package:flutter_douban_fm_clone/models/album_model.dart';
 import 'package:flutter_douban_fm_clone/models/music_info_model.dart';
 import 'package:flutter_douban_fm_clone/common/controllers/selecter.dart';
 import 'package:go_router/go_router.dart';
@@ -15,7 +15,7 @@ class BestAlbumSongListPage extends StatelessWidget {
     return Scaffold(
       body: FutureBuilder(
         future: fetchAlbumInfo(130087),
-        builder: (context, AsyncSnapshot<AlbumInfo> snapshot) {
+        builder: (context, AsyncSnapshot<Album> snapshot) {
           if (snapshot.connectionState == ConnectionState.none ||
               !snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -26,7 +26,7 @@ class BestAlbumSongListPage extends StatelessWidget {
             );
           }
 
-          AlbumInfo albumInfo = snapshot.data!;
+          Album albumInfo = snapshot.data!;
 
           AllSelector allSelector = AllSelector();
 

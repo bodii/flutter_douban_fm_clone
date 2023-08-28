@@ -159,7 +159,10 @@ class _MegacyclePlayDatail extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.read<MusicPlayerBloc>().add(
+                            MusicFileDownloading(saveName: songInfo.songName!));
+                      },
                       icon: const Icon(Icons.delete_outline, size: 30),
                       selectedIcon: const Icon(Icons.delete_forever, size: 30),
                     ),

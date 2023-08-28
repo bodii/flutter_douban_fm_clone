@@ -1,3 +1,6 @@
+import 'package:flutter_douban_fm_clone/common/controllers/login.dart';
+import 'package:flutter_douban_fm_clone/database/user/login_account_db.dart';
+import 'package:flutter_douban_fm_clone/models/user_model.dart';
 import 'package:flutter_douban_fm_clone/pages/discovery/views/discovery_detail_page.dart';
 import 'package:flutter_douban_fm_clone/pages/discovery/views/discovery_page.dart';
 import 'package:flutter_douban_fm_clone/pages/error/views/error_page.dart';
@@ -13,36 +16,52 @@ import 'package:flutter_douban_fm_clone/pages/my/song_list/views/my_song_list_ba
 import 'package:flutter_douban_fm_clone/pages/album/views/best_album_song_list_page.dart';
 import 'package:flutter_douban_fm_clone/pages/my/song_list/views/my_song_list_page.dart';
 import 'package:flutter_douban_fm_clone/pages/user/info/views/modify_user_info.dart';
-import 'package:flutter_douban_fm_clone/pages/user/login/views/no_login_page.dart';
+import 'package:flutter_douban_fm_clone/pages/user/login/views/forgot_password_page.dart';
+import 'package:flutter_douban_fm_clone/pages/user/login/views/no_sign_in_page.dart';
 import 'package:flutter_douban_fm_clone/pages/artist/views/artist_home_page.dart';
-import 'package:flutter_douban_fm_clone/pages/user/login/views/login_page.dart';
-import 'package:flutter_douban_fm_clone/pages/user/login/views/login_prompt_page.dart';
+import 'package:flutter_douban_fm_clone/pages/user/login/views/protection_policy_page.dart';
+import 'package:flutter_douban_fm_clone/pages/user/login/views/sign_in_page.dart';
+import 'package:flutter_douban_fm_clone/pages/user/login/views/sign_in_prompt_page.dart';
+import 'package:flutter_douban_fm_clone/pages/user/login/views/sign_up_page.dart';
+import 'package:flutter_douban_fm_clone/pages/user/login/views/usage_agreement_page.dart';
 import 'package:flutter_douban_fm_clone/pages/welcome/views/index.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRoute {
   static final GoRouter routes = GoRouter(
     initialLocation: '/',
-    // initialLocation: '/play/music/145770043', // 293336158
     routes: [
       GoRoute(
         path: '/',
         builder: (context, state) => const WelcomeIndexPage(),
       ),
       GoRoute(
-        path: '/user/login/no_login',
-        builder: (context, state) => const NoLoginPage(),
+        path: '/user/sign_in',
+        builder: (context, state) => const SignInPage(),
       ),
       GoRoute(
-        path: '/user/login/prompt',
-        builder: (context, state) => const LoginPromptPage(),
+        path: '/user/sign_in/no',
+        builder: (context, state) => const NoSignInPage(),
       ),
       GoRoute(
-        path: '/user/login/home',
-        builder: (context, state) => const LoginPage(),
-        // redirect: (context, state) {
-
-        // },
+        path: '/user/sign_in/prompt',
+        builder: (context, state) => const SignInPromptPage(),
+      ),
+      GoRoute(
+        path: '/user/sign_up',
+        builder: (context, state) => const SignUpPage(),
+      ),
+      GoRoute(
+        path: '/user/forgot_password',
+        builder: (context, state) => const ForgotPasswordPage(),
+      ),
+      GoRoute(
+        path: '/user/usage_agreement',
+        builder: (context, state) => const UsageAgreementPage(),
+      ),
+      GoRoute(
+        path: '/user/protection_policy',
+        builder: (context, state) => const ProtectionPolicyPage(),
       ),
       GoRoute(
         path: '/user/info/modify',

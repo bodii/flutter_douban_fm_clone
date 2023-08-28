@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/functions/html_entities_to_string.dart';
 import 'package:flutter_douban_fm_clone/common/request.dart';
-import 'package:flutter_douban_fm_clone/models/artist_detail_model.dart';
+import 'package:flutter_douban_fm_clone/models/artist_model.dart';
 import 'package:go_router/go_router.dart';
 
 import '../widgets/index.dart';
@@ -22,7 +22,7 @@ class ArtistHomePage extends StatelessWidget {
     return Scaffold(
       body: FutureBuilder(
           future: fetchArtistDetail(79436),
-          builder: (context, AsyncSnapshot<ArtistDetail> snapshot) {
+          builder: (context, AsyncSnapshot<Artist> snapshot) {
             if (snapshot.connectionState == ConnectionState.none ||
                 !snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
@@ -33,7 +33,7 @@ class ArtistHomePage extends StatelessWidget {
               );
             }
 
-            ArtistDetail artistDetail = snapshot.data!;
+            Artist artistDetail = snapshot.data!;
 
             return Stack(
               children: [
@@ -192,7 +192,7 @@ class ArtistHomePage extends StatelessWidget {
     );
   }
 
-  List<Widget> getTabViews(ArtistDetail artistData) {
+  List<Widget> getTabViews(Artist artistData) {
     return <Widget>[
       ArtistFeaturedSongsWidget(artistId: artistData.id!),
       ArtistAlbumListWidget(artistId: artistData.id!),

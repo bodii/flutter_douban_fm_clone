@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_douban_fm_clone/common/controllers/auth_provider.dart';
+import 'package:flutter_douban_fm_clone/common/controllers/login.dart';
 import 'package:go_router/go_router.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -11,14 +13,22 @@ class SettingsPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
-            context.pop();
+            context.go('/my');
           },
         ),
         title: const Text('设置'),
         centerTitle: true,
       ),
-      body: const Placeholder(
-        child: Center(child: Text('this is settings page')),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+        child: Column(children: [
+          OutlinedButton(
+              onPressed: () {
+                Login login = context.auth();
+                login.logout();
+              },
+              child: const Text('退出登录'))
+        ]),
       ),
     );
   }

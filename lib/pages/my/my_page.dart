@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_douban_fm_clone/common/controllers/auth_provider.dart';
+import 'package:flutter_douban_fm_clone/common/controllers/login.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
+import 'package:flutter_douban_fm_clone/models/user_model.dart';
 
 import 'package:go_router/go_router.dart';
 
@@ -8,6 +11,8 @@ class MyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Login login = context.auth();
+
     return SingleChildScrollView(
       child: SizedBox(
         width: double.infinity,
@@ -19,15 +24,16 @@ class MyPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Row(children: [
-                    CircleAvatar(
+                  Row(children: [
+                    const CircleAvatar(
                       radius: 26,
                       backgroundColor: CustomColors.paimary,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 28.0),
-                      child: Text('昵称',
-                          style: TextStyle(
+                      padding: const EdgeInsets.only(left: 28.0),
+                      child: Text(
+                          login.isLoggedIn ? login.userInfo!.nickname! : '昵称',
+                          style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           )),
@@ -116,7 +122,7 @@ class MyPage extends StatelessWidget {
                     context.push('/my/history');
                   }, Icons.history, name: '历史'),
                   createIconButtonItem(() {
-                    context.push('/my/settings');
+                    context.go('/my/settings');
                   }, Icons.settings_outlined, name: '设置'),
                 ],
               ),

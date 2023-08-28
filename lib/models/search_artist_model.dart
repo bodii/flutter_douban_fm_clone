@@ -1,4 +1,4 @@
-import 'artist_list_info_model.dart';
+import 'artist_model.dart';
 
 class SearchArtistResult {
   String? total;

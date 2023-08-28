@@ -43,3 +43,12 @@ final class _MusicPlayerTicked extends MusicPlayerEvent {
   const _MusicPlayerTicked({required this.duration});
   final int duration;
 }
+
+final class MusicFileDownloading extends MusicPlayerEvent {
+  const MusicFileDownloading({required this.saveName});
+  final String saveName;
+}
+
+final class MusicFileDownloaded extends MusicPlayerEvent {
+  const MusicFileDownloaded();
+}

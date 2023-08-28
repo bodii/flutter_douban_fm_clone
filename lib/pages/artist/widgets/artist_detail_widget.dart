@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/functions/html_entities_to_string.dart';
-import 'package:flutter_douban_fm_clone/models/artist_detail_model.dart';
+import 'package:flutter_douban_fm_clone/models/artist_model.dart';
 
 class ArtistDetailWidget extends StatelessWidget {
   const ArtistDetailWidget({super.key, required this.artistDetail});
 
-  final ArtistDetail artistDetail;
+  final Artist artistDetail;
 
   Widget getGenreAndStyleWidget() {
     const List<String> genreAndStyle = ['Jazz'];

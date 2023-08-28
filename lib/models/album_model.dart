@@ -1,7 +1,8 @@
 import 'music_info_model.dart';
+import 'package:flutter_douban_fm_clone/common/functions/html_entities_to_string.dart';
 
-class AlbumInfo {
-  late int? playCnt;
+class Album {
+  int? playCnt;
   late String? artist;
   late String? releaseDate;
   late String? album;
@@ -10,13 +11,13 @@ class AlbumInfo {
   late int? artistid;
   late String? pic;
   late int? isstar;
-  late int? total;
+  int? total;
   late String? contentType;
   late String? albuminfo;
   late String? lang;
-  late List<MusicInfo>? musicList;
+  List<MusicInfo>? musicList;
 
-  AlbumInfo(
+  Album(
       {this.playCnt,
       this.artist,
       this.releaseDate,
@@ -32,18 +33,18 @@ class AlbumInfo {
       this.lang,
       this.musicList});
 
-  AlbumInfo.fromJson(Map<String, dynamic> json) {
+  Album.fromJson(Map<String, dynamic> json) {
     if (json["playCnt"] is int) {
       playCnt = json["playCnt"];
     }
     if (json["artist"] is String) {
-      artist = json["artist"];
+      artist = (json["artist"] as String).htmlEntitiesToString();
     }
     if (json["releaseDate"] is String) {
       releaseDate = json["releaseDate"];
     }
     if (json["album"] is String) {
-      album = json["album"];
+      album = (json["album"] as String).htmlEntitiesToString();
     }
     if (json["albumid"] is int) {
       albumid = json["albumid"];
@@ -81,8 +82,8 @@ class AlbumInfo {
     }
   }
 
-  static List<AlbumInfo> fromList(List<Map<String, dynamic>> list) {
-    return list.map((map) => AlbumInfo.fromJson(map)).toList();
+  static List<Album> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => Album.fromJson(map)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -106,7 +107,7 @@ class AlbumInfo {
     return data;
   }
 
-  AlbumInfo copyWith({
+  Album copyWith({
     int? playCnt,
     String? artist,
     String? releaseDate,
@@ -122,7 +123,7 @@ class AlbumInfo {
     String? lang,
     List<MusicInfo>? musicList,
   }) =>
-      AlbumInfo(
+      Album(
         playCnt: playCnt ?? this.playCnt,
         artist: artist ?? this.artist,
         releaseDate: releaseDate ?? this.releaseDate,

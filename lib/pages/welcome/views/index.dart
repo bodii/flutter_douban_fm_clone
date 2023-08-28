@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_douban_fm_clone/common/controllers/auth_provider.dart';
+import 'package:flutter_douban_fm_clone/common/controllers/login.dart';
 import 'package:flutter_douban_fm_clone/pages/welcome/widgets/circular_wave.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -16,14 +19,25 @@ class _WelcomeIndexPageState extends State<WelcomeIndexPage> {
   late Timer _timer;
   final int max = 3;
   late int current;
-  final String redirectUrl = '/home/index/0';
+
+  String redirectUrl = '/user/sign_in/no';
 
   @override
   void initState() {
     current = max;
-    start();
+
+    _start();
 
     super.initState();
+  }
+
+  void _loginChangUrl() {
+    Login login = context.auth();
+    if (login.isLoggedIn) {
+      redirectUrl = '/home/index/0';
+    } else {
+      redirectUrl = '/user/sign_in/no';
+    }
   }
 
   @override
@@ -33,7 +47,7 @@ class _WelcomeIndexPageState extends State<WelcomeIndexPage> {
     super.dispose();
   }
 
-  start() {
+  void _start() {
     _timer = Timer.periodic(Duration(seconds: max), (timer) {
       current--;
 
@@ -48,6 +62,8 @@ class _WelcomeIndexPageState extends State<WelcomeIndexPage> {
 
   @override
   Widget build(BuildContext context) {
+    _loginChangUrl();
+
     return Stack(
       children: [
         Container(

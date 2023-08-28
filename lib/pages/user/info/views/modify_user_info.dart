@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_douban_fm_clone/common/controllers/auth_provider.dart';
+import 'package:flutter_douban_fm_clone/common/controllers/login.dart';
 import 'package:go_router/go_router.dart';
 
 class UserInfoModify extends StatelessWidget {
@@ -6,6 +8,8 @@ class UserInfoModify extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Login login = context.auth();
+    print(login.userInfo!.toJson());
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

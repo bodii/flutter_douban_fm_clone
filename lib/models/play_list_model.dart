@@ -1,19 +1,21 @@
+import 'dart:developer';
+
 import 'music_info_model.dart';
 
 class PlayList {
   late String? img;
-  late String? uPic;
+  String? uPic = '';
   late String? uname;
   late String? img700;
   late String? img300;
   late String? userName;
   late String? img500;
-  late int? isOfficial;
+  int? isOfficial;
   late int? total;
   late String? name;
   late int? listencnt;
   late int? id;
-  late String? tag;
+  String? tag;
   late List<MusicInfo>? musicList;
   late String? desc;
   late String? info;
@@ -78,7 +80,7 @@ class PlayList {
     }
     if (json["musicList"] is List) {
       musicList = json["musicList"] == null
-          ? null
+          ? []
           : (json["musicList"] as List)
               .map((e) => MusicInfo.fromJson(e))
               .toList();

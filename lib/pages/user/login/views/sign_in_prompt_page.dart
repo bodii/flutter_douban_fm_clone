@@ -1,10 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
 import 'package:go_router/go_router.dart';
 
-class LoginPromptPage extends StatelessWidget {
-  const LoginPromptPage({Key? key}) : super(key: key);
+class SignInPromptPage extends StatelessWidget {
+  const SignInPromptPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class LoginPromptPage extends StatelessWidget {
                         style: const TextStyle(color: CustomColors.paimary),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            debugPrint('《豆瓣个人信息保护政策》');
+                            context.push('/user/protection_policy');
                           },
                       ),
                       const TextSpan(
@@ -77,7 +78,7 @@ class LoginPromptPage extends StatelessWidget {
                         shadowColor: Colors.white,
                       ),
                       onPressed: () {
-                        context.push('/user/login/home');
+                        context.push('/user/sign_in');
                       },
                       child: const Text(
                         '同意',
@@ -88,7 +89,7 @@ class LoginPromptPage extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    context.go('/user/login/no_login');
+                    SystemNavigator.pop();
                   },
                   child: const Text(
                     '不同意并退出应用',

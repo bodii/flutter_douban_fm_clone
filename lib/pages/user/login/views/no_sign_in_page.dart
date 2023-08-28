@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
 import 'package:go_router/go_router.dart';
 
-class NoLoginPage extends StatelessWidget {
-  const NoLoginPage({Key? key}) : super(key: key);
+class NoSignInPage extends StatelessWidget {
+  const NoSignInPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class NoLoginPage extends StatelessWidget {
                       foregroundColor: CustomColors.secondary,
                     ),
                     onPressed: () {
-                      context.go('/user/login/prompt');
+                      context.go('/user/sign_in/prompt');
                     },
                     child: const Text(
                       '立即登录',
@@ -58,7 +59,7 @@ class NoLoginPage extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                context.go('/home/index/0');
+                SystemNavigator.pop();
               },
               icon: const Icon(Icons.close, size: 30),
             ),

@@ -33,40 +33,41 @@ class MusicInfo {
   late PayInfo? payInfo;
   late String? tmeMusicianAdtype;
 
-  MusicInfo(
-      {this.musicrid,
-      this.barrage,
-      this.adType,
-      this.artist,
-      this.mvpayinfo,
-      this.pic,
-      this.isstar,
-      this.rid,
-      this.upPcStr,
-      this.duration,
-      this.score100,
-      this.adSubtype,
-      this.contentType,
-      this.mvPlayCnt,
-      this.track,
-      this.hasLossless,
-      this.hasmv,
-      this.releaseDate,
-      this.album,
-      this.albumid,
-      this.pay,
-      this.artistid,
-      this.albumpic,
-      this.originalsongtype,
-      this.songTimeMinutes,
-      this.isListenFee,
-      this.mvUpPcStr,
-      this.pic120,
-      this.albuminfo,
-      this.name,
-      this.online,
-      this.payInfo,
-      this.tmeMusicianAdtype});
+  MusicInfo({
+    this.musicrid,
+    this.barrage,
+    this.adType,
+    this.artist,
+    this.mvpayinfo,
+    this.pic,
+    this.isstar,
+    this.rid,
+    this.upPcStr,
+    this.duration,
+    this.score100,
+    this.adSubtype,
+    this.contentType,
+    this.mvPlayCnt,
+    this.track,
+    this.hasLossless,
+    this.hasmv,
+    this.releaseDate,
+    this.album,
+    this.albumid,
+    this.pay,
+    this.artistid,
+    this.albumpic,
+    this.originalsongtype,
+    this.songTimeMinutes,
+    this.isListenFee,
+    this.mvUpPcStr,
+    this.pic120,
+    this.albuminfo,
+    this.name,
+    this.online,
+    this.payInfo,
+    this.tmeMusicianAdtype,
+  });
 
   MusicInfo.fromJson(Map<String, dynamic> json) {
     if (json["musicrid"] is String) {
@@ -181,7 +182,7 @@ class MusicInfo {
     final Map<String, dynamic> data = <String, dynamic>{};
     data["musicrid"] = musicrid;
     data["barrage"] = barrage;
-    data["ad_type"] = adType;
+    data["ad_type"] = adType ?? '';
     data["artist"] = artist;
     if (mvpayinfo != null) {
       data["mvpayinfo"] = mvpayinfo?.toJson();
@@ -192,7 +193,7 @@ class MusicInfo {
     data["upPcStr"] = upPcStr;
     data["duration"] = duration;
     data["score100"] = score100;
-    data["ad_subtype"] = adSubtype;
+    data["ad_subtype"] = adSubtype ?? '';
     data["content_type"] = contentType;
     data["mvPlayCnt"] = mvPlayCnt;
     data["track"] = track;
@@ -295,7 +296,7 @@ class PayInfo {
   late String? play;
   late String? nplay;
   late String? overseasNplay;
-  late String? localEncrypt;
+  String? localEncrypt;
   late int? limitfree;
   late int? refrainStart;
   late FeeType? feeType;
