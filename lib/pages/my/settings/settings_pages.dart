@@ -13,7 +13,7 @@ class SettingsPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
-            context.go('/my');
+            context.go('/home/index/2');
           },
         ),
         title: const Text('设置'),
