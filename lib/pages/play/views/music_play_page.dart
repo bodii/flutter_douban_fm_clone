@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
 import 'package:flutter_douban_fm_clone/common/functions/string_duration.dart';
 import 'package:flutter_douban_fm_clone/common/request.dart';
+import 'package:flutter_douban_fm_clone/models/music_basic_info_model.dart';
 import 'package:flutter_douban_fm_clone/models/song_info_and_lrc_model.dart';
 import 'package:flutter_douban_fm_clone/pages/play/bloc/music_player_bloc.dart';
 import 'package:flutter_douban_fm_clone/common/functions/stream_ticker.dart';
@@ -69,6 +70,8 @@ class _MegacyclePlayDatail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MusicBasicInfo basicInfo = MusicBasicInfo.copySongInfoWith(songInfo);
+
     return BlocProvider(
       create: (BuildContext context) => MusicPlayerBloc(
         int.parse(songInfo.duration!),
@@ -217,7 +220,12 @@ class _MegacyclePlayDatail extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context
+                            .read<MusicPlayerBloc>()
+                            .add(MusicFavoriteToggle(info: basicInfo));
+                      },
+                      isSelected: state.isFavorite,
                       icon: const Icon(
                         Icons.favorite_border,
                         color: CustomColors.neutral,

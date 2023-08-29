@@ -7,8 +7,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_douban_fm_clone/common/functions/stream_ticker.dart';
 import 'package:flutter_douban_fm_clone/common/handler/file_download.dart';
 import 'package:flutter_douban_fm_clone/common/request.dart';
+import 'package:flutter_douban_fm_clone/database/music/music_basic_db.dart';
+import 'package:flutter_douban_fm_clone/models/music_basic_info_model.dart';
 import 'package:flutter_douban_fm_clone/models/music_play_url_model.dart';
 import 'package:flutter_douban_fm_clone/common/handler/music_background_play.dart';
+import 'package:flutter_douban_fm_clone/models/song_info_and_lrc_model.dart';
 import 'package:just_audio/just_audio.dart';
 
 part 'music_player_event.dart';
@@ -36,6 +39,7 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
     on<MusicPlayerStoped>(_onStoped);
     on<_MusicPlayerTicked>(_onTicked);
     on<MusicFileDownloading>(_onDownloading);
+    on<MusicFavoriteToggle>(_onFavoriteToggle);
   }
 
   @override
@@ -77,15 +81,20 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
       } else if (processingState == ProcessingState.buffering) {
         log('audio play file buffering...');
       } else if (processingState == ProcessingState.ready) {
-        add(const MusicPlayerLoaded());
+        add(MusicPlayerLoaded(musicId: int.parse(event.musicId)));
       } else if (processingState == ProcessingState.completed) {
         add(const MusicPlayerStoped());
       }
     });
   }
 
-  void _onLoaded(MusicPlayerLoaded event, Emitter<MusicPlayerState> emit) {
-    emit(state.copyWith(status: MusicPlayStatus.loaded));
+  void _onLoaded(
+      MusicPlayerLoaded event, Emitter<MusicPlayerState> emit) async {
+    MusicBasicDb musicBasicDb = MusicBasicDb();
+    bool isFavorite = await musicBasicDb.isExists(event.musicId);
+
+    emit(
+        state.copyWith(status: MusicPlayStatus.loaded, isFavorite: isFavorite));
   }
 
   void _onStarted(MusicPlayerStarted event, Emitter<MusicPlayerState> emit) {
@@ -183,4 +192,13 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
 
   void _onDownloaded(
       MusicFileDownloading event, Emitter<MusicPlayerState> emit) {}
+
+  void _onFavoriteToggle(
+      MusicFavoriteToggle event, Emitter<MusicPlayerState> emit) async {
+    MusicBasicDb musicBasicDb = MusicBasicDb();
+    bool result =
+        await musicBasicDb.toggle<MusicBasicInfo>(event.info, state.isFavorite);
+
+    emit(state.copyWith(isFavorite: result));
+  }
 }

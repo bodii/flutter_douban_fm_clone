@@ -34,4 +34,15 @@ class AlbumDb extends DbBase<Album> {
 
     return data != null && data.isNotEmpty ? Album.fromJson(data.first) : null;
   }
+
+  Future<List<Album>> pageQuery([int page = 1, int pageSize = 16]) async {
+    List<Map<String, dynamic>>? data = await super.query(
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
+    );
+
+    List<Album> albumList = data != null ? Album.fromList(data) : [];
+
+    return albumList;
+  }
 }

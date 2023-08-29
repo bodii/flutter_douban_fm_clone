@@ -25,42 +25,29 @@ class _DiscoveryDetailPageState extends State<DiscoveryDetailPage> {
 
     playListDb = PlayListDb();
 
-    checkFavorite(widget.playListId);
+    checkFavorite(int.parse(widget.playListId));
   }
 
-  Future<void> checkFavorite(String playListId) async {
-    PlayList? data = await playListDb.queryOne(playListId);
-
-    isFavorite = data != null;
+  Future<void> checkFavorite(int playListId) async {
+    isFavorite = await playListDb.isExists(playListId);
   }
 
   Future<bool> addDbFavorite(PlayList playList) async {
-    int row = await playListDb
-        .insert(data: playList.toJson(), excludeColums: ['musicList']);
-    return row > 0;
+    bool success = await playListDb.add(playList);
+    return success;
   }
 
   Future<bool> cancelFavorite(int playListId) async {
-    int row = await playListDb.delete(where: 'id = ?', whereArgs: [playListId]);
-    return row > 0;
+    bool success = await playListDb.cancel(playListId);
+    return success;
   }
 
   Future<void> toggleFavorite(PlayList playList) async {
-    if (!isFavorite) {
-      bool success = await addDbFavorite(playList);
-      if (success) {
-        setState(() {
-          isFavorite = true;
-        });
-      }
-    } else {
-      bool success = await cancelFavorite(playList.id!);
-      if (success) {
-        setState(() {
-          isFavorite = false;
-        });
-      }
-    }
+    bool result = await playListDb.toggle(playList, isFavorite);
+
+    setState(() {
+      isFavorite = result;
+    });
   }
 
   @override

@@ -12,6 +12,7 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Login login = context.auth();
+    User userInfo = login.userInfo!;
 
     return SingleChildScrollView(
       child: SizedBox(
@@ -31,8 +32,7 @@ class MyPage extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 28.0),
-                      child: Text(
-                          login.isLoggedIn ? login.userInfo!.nickname! : '昵称',
+                      child: Text(userInfo.nickname!,
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -41,7 +41,7 @@ class MyPage extends StatelessWidget {
                   ]),
                   GestureDetector(
                     onTap: () {
-                      context.push('/user/info/modify');
+                      context.go('/user/info/modify');
                     },
                     child: Container(
                       width: 75,
@@ -169,6 +169,21 @@ class MyPage extends StatelessWidget {
     );
   }
 
+  Widget withNoLoginWidget(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        width: 140,
+        height: 40,
+        child: ElevatedButton(
+          onPressed: () {
+            context.go('/user/sign_in');
+          },
+          child: const Text('去登录'),
+        ),
+      ),
+    );
+  }
+
   Widget createSongListCardItem(
     String? coverSrc,
     String name,
@@ -176,70 +191,72 @@ class MyPage extends StatelessWidget {
     BuildContext context,
   ) {
     String src = coverSrc ?? '';
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 10,
-      ),
-      child: GestureDetector(
-        onTap: () {
-          context.go('/my/songList/$name');
-        },
-        child: SizedBox(
-          width: double.infinity,
-          height: 75,
-          child: Row(
-            children: [
-              SizedBox(
-                width: 120,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        src,
-                        fit: BoxFit.cover,
-                        width: 120,
-                        height: 95,
-                      ),
-                    ),
-                    Opacity(
-                      opacity: 0.25,
-                      child: Container(
-                        width: double.infinity,
-                        height: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(8),
+    return SizedBox(
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 10,
+        ),
+        child: GestureDetector(
+          onTap: () {
+            context.go('/my/songList/$name');
+          },
+          child: SizedBox(
+            height: 75,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 120,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.network(
+                          src,
+                          fit: BoxFit.cover,
+                          width: 120,
+                          height: 95,
                         ),
                       ),
-                    ),
-                    const Icon(
-                      Icons.favorite,
-                      color: CustomColors.neutral,
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 18.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
+                      Opacity(
+                        opacity: 0.25,
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
                       ),
-                    ),
-                    Text('$num首',
-                        style: const TextStyle(color: Colors.black38)),
-                  ],
+                      const Icon(
+                        Icons.favorite,
+                        color: CustomColors.neutral,
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 18.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text('$num首',
+                          style: const TextStyle(color: Colors.black38)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

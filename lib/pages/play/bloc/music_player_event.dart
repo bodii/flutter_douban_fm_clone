@@ -11,7 +11,9 @@ final class MusicPlayerLoading extends MusicPlayerEvent {
 }
 
 final class MusicPlayerLoaded extends MusicPlayerEvent {
-  const MusicPlayerLoaded();
+  const MusicPlayerLoaded({required this.musicId});
+
+  final int musicId;
 }
 
 final class MusicPlayerStarted extends MusicPlayerEvent {
@@ -51,4 +53,10 @@ final class MusicFileDownloading extends MusicPlayerEvent {
 
 final class MusicFileDownloaded extends MusicPlayerEvent {
   const MusicFileDownloaded();
+}
+
+final class MusicFavoriteToggle extends MusicPlayerEvent {
+  const MusicFavoriteToggle({required this.info});
+
+  final MusicBasicInfo info;
 }

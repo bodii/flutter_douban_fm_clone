@@ -12,9 +12,9 @@ class ArtistDb extends DbBase<Artist> {
   String getCreateTableSql() {
     return '''
         create table $tableName(
-          id int prinary key not null,
+          id int primary key not null,
           birthday varchar(30),
-          country varchar(150);
+          country varchar(150),
           artistFans int 
           albumNum int,
           gener varchar(50),
@@ -25,7 +25,7 @@ class ArtistDb extends DbBase<Artist> {
           upPcUrl text,
           musicNum int,
           pic120 text,
-          isStar tintyint,
+          isStar int,
           birthplace varchar(80),
           constellation varchar(50),
           contentType varchar(120),
@@ -34,15 +34,24 @@ class ArtistDb extends DbBase<Artist> {
           pic70 text,
           tall varchar(50),
           pic300 text,
-          info text,
+          info text
         );
         ''';
   }
 
   Future<Artist?> queryOne(int artistId) async {
-    List<Map<String, Object?>>? data =
+    List<Map<String, dynamic>>? data =
         await super.query(where: 'id = ?', whereArgs: [artistId], limit: 1);
 
     return data != null && data.isNotEmpty ? Artist.fromJson(data.first) : null;
+  }
+
+  Future<List<Artist>> pageQuery([int page = 1, int pageSize = 16]) async {
+    List<Map<String, dynamic>>? data = await super.query(
+      offset: (page - 1) * pageSize,
+      limit: pageSize,
+    );
+
+    return data != null ? Artist.fromList(data) : [];
   }
 }

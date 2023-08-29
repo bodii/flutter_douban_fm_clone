@@ -1,37 +1,37 @@
 class MusicInfo {
-  late String? musicrid;
-  late String? barrage;
-  late String? adType;
-  late String? artist;
-  late Mvpayinfo? mvpayinfo;
-  late String? pic;
-  late int? isstar;
-  late int? rid;
+  String? musicrid;
+  String? barrage;
+  String? adType;
+  String? artist;
+  Mvpayinfo? mvpayinfo;
+  String? pic;
+  int? isstar;
+  int? rid;
   String? upPcStr;
-  late int? duration;
-  late String? score100;
-  late String? adSubtype;
-  late String? contentType;
+  int? duration;
+  String? score100;
+  String? adSubtype;
+  String? contentType;
   int? mvPlayCnt;
-  late int? track;
-  late bool? hasLossless;
-  late int? hasmv;
-  late String? releaseDate;
-  late String? album;
-  late int? albumid;
-  late String? pay;
-  late int? artistid;
-  late String? albumpic;
-  late int? originalsongtype;
-  late String? songTimeMinutes;
-  late bool? isListenFee;
+  int? track;
+  bool? hasLossless;
+  int? hasmv;
+  String? releaseDate;
+  String? album;
+  int? albumid;
+  String? pay;
+  int? artistid;
+  String? albumpic;
+  int? originalsongtype;
+  String? songTimeMinutes;
+  bool? isListenFee;
   String? mvUpPcStr;
-  late String? pic120;
+  String? pic120;
   String? albuminfo;
-  late String? name;
-  late int? online;
-  late PayInfo? payInfo;
-  late String? tmeMusicianAdtype;
+  String? name;
+  int? online;
+  PayInfo? payInfo;
+  String? tmeMusicianAdtype;
 
   MusicInfo({
     this.musicrid,
@@ -123,9 +123,13 @@ class MusicInfo {
     if (json["hasmv"] is int) {
       hasmv = json["hasmv"];
     }
-    if (json["releaseDate"] is String) {
+
+    if (json["releaseDate"] != null) {
       releaseDate = json["releaseDate"];
+    } else if (json["releasedate"] != null) {
+      releaseDate = json["releasedate"];
     }
+
     if (json["album"] is String) {
       album = json["album"];
     }
@@ -293,21 +297,22 @@ class MusicInfo {
 }
 
 class PayInfo {
-  late String? play;
-  late String? nplay;
-  late String? overseasNplay;
+  String? play;
+  String? nplay;
+  String? overseasNplay;
   String? localEncrypt;
-  late int? limitfree;
-  late int? refrainStart;
-  late FeeType? feeType;
-  late String? down;
-  late String? ndown;
-  late String? download;
-  late int? cannotDownload;
-  late String? overseasNdown;
-  late int? refrainEnd;
-  late int? cannotOnlinePlay;
-  late Paytagindex? paytagindex;
+  int? limitfree;
+  int? refrainStart;
+  FeeType? feeType;
+  String? down;
+  String? ndown;
+  String? download;
+  int? cannotDownload;
+  String? overseasNdown;
+  int? refrainEnd;
+  int? cannotOnlinePlay;
+  Paytagindex? paytagindex;
+  String? tipsIntercept;
 
   PayInfo(
       {this.play,
@@ -324,7 +329,8 @@ class PayInfo {
       this.overseasNdown,
       this.refrainEnd,
       this.cannotOnlinePlay,
-      this.paytagindex});
+      this.paytagindex,
+      this.tipsIntercept});
 
   PayInfo.fromJson(Map<String, dynamic> json) {
     if (json["play"] is String) {
@@ -349,13 +355,13 @@ class PayInfo {
       feeType =
           json["feeType"] == null ? null : FeeType.fromJson(json["feeType"]);
     }
-    if (json["down"] is String) {
+    if (json["down"] != null) {
       down = json["down"];
     }
     if (json["ndown"] is String) {
       ndown = json["ndown"];
     }
-    if (json["download"] is String) {
+    if (json["download"] != null) {
       download = json["download"];
     }
     if (json["cannotDownload"] is int) {
@@ -374,6 +380,9 @@ class PayInfo {
       paytagindex = json["paytagindex"] == null
           ? null
           : Paytagindex.fromJson(json["paytagindex"]);
+    }
+    if (json["tips_intercept"] is String) {
+      tipsIntercept = json["tips_intercept"];
     }
   }
 
@@ -402,6 +411,7 @@ class PayInfo {
     if (paytagindex != null) {
       data["paytagindex"] = paytagindex?.toJson();
     }
+    data["tips_intercept"] = tipsIntercept;
     return data;
   }
 
@@ -421,6 +431,7 @@ class PayInfo {
     int? refrainEnd,
     int? cannotOnlinePlay,
     Paytagindex? paytagindex,
+    String? tipsIntercept,
   }) =>
       PayInfo(
         play: play ?? this.play,
@@ -438,21 +449,22 @@ class PayInfo {
         refrainEnd: refrainEnd ?? this.refrainEnd,
         cannotOnlinePlay: cannotOnlinePlay ?? this.cannotOnlinePlay,
         paytagindex: paytagindex ?? this.paytagindex,
+        tipsIntercept: tipsIntercept ?? this.tipsIntercept,
       );
 }
 
 class Paytagindex {
-  late int? s;
-  late int? f;
-  late int? zp;
-  late int? h;
-  late int? zpga201;
-  late int? zply;
-  late int? hr;
-  late int? l;
-  late int? zpga501;
-  late int? db;
-  late int? ar501;
+  int? s;
+  int? f;
+  int? zp;
+  int? h;
+  int? zpga201;
+  int? zply;
+  int? hr;
+  int? l;
+  int? zpga501;
+  int? db;
+  int? ar501;
 
   Paytagindex(
       {this.s,
@@ -553,16 +565,24 @@ class Paytagindex {
 
 class FeeType {
   String? song;
-  late String? vip;
+  String? album;
+  String? vip;
+  String? bookvip;
 
-  FeeType({this.song, this.vip});
+  FeeType({this.song, this.album, this.vip, this.bookvip});
 
   FeeType.fromJson(Map<String, dynamic> json) {
     if (json["song"] is String) {
       song = json["song"];
     }
+    if (json["album"] is String) {
+      album = json["album"];
+    }
     if (json["vip"] is String) {
       vip = json["vip"];
+    }
+    if (json["bookvip"] is String) {
+      bookvip = json["bookvip"];
     }
   }
 
@@ -573,26 +593,32 @@ class FeeType {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data["song"] = song;
+    data["album"] = album;
     data["vip"] = vip;
+    data["bookvip"] = bookvip;
     return data;
   }
 
   FeeType copyWith({
     String? song,
+    String? album,
     String? vip,
+    String? bookvip,
   }) =>
       FeeType(
         song: song ?? this.song,
+        album: album ?? this.album,
         vip: vip ?? this.vip,
+        bookvip: bookvip ?? this.bookvip,
       );
 }
 
 class Mvpayinfo {
-  late int? play;
-  late int? vid;
-  late int? down;
+  int? play;
+  int? vid;
+  String? download;
 
-  Mvpayinfo({this.play, this.vid, this.down});
+  Mvpayinfo({this.play, this.vid, this.download});
 
   Mvpayinfo.fromJson(Map<String, dynamic> json) {
     if (json["play"] is int) {
@@ -601,8 +627,12 @@ class Mvpayinfo {
     if (json["vid"] is int) {
       vid = json["vid"];
     }
-    if (json["down"] is int) {
-      down = json["down"];
+    if (json["down"] is int || json['download'] is String) {
+      if (json['down'] != null) {
+        download = json['down'].toString();
+      } else if (json['download'] != null) {
+        download = json['download'];
+      }
     }
   }
 
@@ -614,18 +644,19 @@ class Mvpayinfo {
     final Map<String, dynamic> data = <String, dynamic>{};
     data["play"] = play;
     data["vid"] = vid;
-    data["down"] = down;
+    data["down"] = download;
+    data["download"] = download;
     return data;
   }
 
   Mvpayinfo copyWith({
     int? play,
     int? vid,
-    int? down,
+    String? download,
   }) =>
       Mvpayinfo(
         play: play ?? this.play,
         vid: vid ?? this.vid,
-        down: down ?? this.down,
+        download: download ?? this.download,
       );
 }

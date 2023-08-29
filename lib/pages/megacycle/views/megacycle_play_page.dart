@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
 import 'package:flutter_douban_fm_clone/common/request.dart';
-import 'package:flutter_douban_fm_clone/database/music/music_db.dart';
+import 'package:flutter_douban_fm_clone/database/music/music_basic_db.dart';
 import 'package:flutter_douban_fm_clone/models/music_info_model.dart';
 import 'package:flutter_douban_fm_clone/models/play_list_model.dart';
 import 'package:go_router/go_router.dart';
@@ -19,7 +17,7 @@ class MegacyclePlayPage extends StatefulWidget {
 
 class _MegacyclePlayPageState extends State<MegacyclePlayPage> {
   late PageController pageCon;
-  late MusicDb musicDb;
+  late MusicBasicDb musicBasicDb;
 
   int index = 0;
   bool isFavorite = false;
@@ -30,7 +28,7 @@ class _MegacyclePlayPageState extends State<MegacyclePlayPage> {
 
     pageCon = PageController();
 
-    musicDb = MusicDb();
+    musicBasicDb = MusicBasicDb();
   }
 
   @override
@@ -40,41 +38,22 @@ class _MegacyclePlayPageState extends State<MegacyclePlayPage> {
   }
 
   Future<void> checkFavorite(int musicId) async {
-    try {
-      MusicInfo? info = await musicDb.queryOne(musicId);
-
-      isFavorite = info != null;
-    } catch (e) {
-      log(e.toString(), name: 'error');
-    }
+    isFavorite = await musicBasicDb.isExists(musicId);
   }
 
   Future<bool> addDbFavorite(MusicInfo musicInfo) async {
-    int row = await musicDb.insert(data: musicInfo.toJson());
-    return row > 0;
+    return await musicBasicDb.add<MusicInfo>(musicInfo);
   }
 
   Future<bool> cancelFavorite(int musicId) async {
-    int row = await musicDb.delete(where: 'rid = ?', whereArgs: [musicId]);
-    return row > 0;
+    return await musicBasicDb.cancel(musicId);
   }
 
   Future<void> toggleFavorite(MusicInfo musicInfo) async {
-    if (!isFavorite) {
-      bool success = await addDbFavorite(musicInfo);
-      if (success) {
-        setState(() {
-          isFavorite = true;
-        });
-      }
-    } else {
-      bool success = await cancelFavorite(musicInfo.rid!);
-      if (success) {
-        setState(() {
-          isFavorite = false;
-        });
-      }
-    }
+    await musicBasicDb.toggle<MusicInfo>(musicInfo, isFavorite);
+    setState(() {
+      isFavorite = !isFavorite;
+    });
   }
 
   @override

@@ -1,50 +1,64 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/database/play_list/play_list_db.dart';
 import 'package:flutter_douban_fm_clone/models/play_list_model.dart';
+import 'package:go_router/go_router.dart';
 
 class CollectPlayListWidget extends StatelessWidget {
   const CollectPlayListWidget({super.key});
 
-  Future<List<PlayList>> getList() async {
+  Future<List<PlayList>> getPlayListData() async {
     PlayListDb playListDb = PlayListDb();
-    List<Map<String, dynamic>>? dataList = await playListDb.query(limit: 10);
-    log(dataList.toString());
+    List<PlayList> playList = await playListDb.pageQuery();
 
-    if (dataList == null || dataList.isEmpty) {
-      return [];
-    }
-
-    return PlayList.fromList(dataList);
+    return playList;
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: getList(),
-        builder: (context, AsyncSnapshot<List<PlayList>> snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text(snapshot.error.toString()),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      child: FutureBuilder(
+          future: getPlayListData(),
+          builder: (context, AsyncSnapshot<List<PlayList>> snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(snapshot.error.toString()),
+              );
+            }
+
+            if (snapshot.connectionState != ConnectionState.done) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            List<PlayList>? playlists = snapshot.data;
+            if (playlists == null || playlists.isEmpty) {
+              return ofNotData();
+            }
+
+            return ListView.builder(
+              itemCount: playlists.length,
+              itemBuilder: (context, index) {
+                PlayList playList = playlists[index];
+
+                return ListTile(
+                  onTap: () {
+                    context.push('/home/index/discovery/detail/${playList.id}');
+                  },
+                  leading: Image.network(
+                    playList.img300!,
+                  ),
+                  title: Text(
+                    playList.name!,
+                    maxLines: 2,
+                    overflow: TextOverflow.fade,
+                  ),
+                );
+              },
             );
-          }
-
-          if (snapshot.connectionState != ConnectionState.done) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          List<PlayList>? playlists = snapshot.data;
-          if (playlists == null || playlists.isEmpty) {
-            return ofNotData();
-          }
-
-          return Center(
-            child: Text(playlists.first.name!),
-          );
-        });
+          }),
+    );
   }
 
   Widget ofNotData() {

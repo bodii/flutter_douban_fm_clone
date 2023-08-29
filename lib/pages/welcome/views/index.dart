@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/controllers/auth_provider.dart';
@@ -24,11 +23,10 @@ class _WelcomeIndexPageState extends State<WelcomeIndexPage> {
 
   @override
   void initState() {
+    super.initState();
     current = max;
 
     _start();
-
-    super.initState();
   }
 
   void _loginChangUrl() {
@@ -53,6 +51,9 @@ class _WelcomeIndexPageState extends State<WelcomeIndexPage> {
 
       if (current == 0) {
         timer.cancel();
+
+        _loginChangUrl();
+
         context.go(redirectUrl);
       }
 
@@ -62,8 +63,6 @@ class _WelcomeIndexPageState extends State<WelcomeIndexPage> {
 
   @override
   Widget build(BuildContext context) {
-    _loginChangUrl();
-
     return Stack(
       children: [
         Container(
@@ -86,6 +85,7 @@ class _WelcomeIndexPageState extends State<WelcomeIndexPage> {
           right: 10,
           child: GestureDetector(
             onTap: () {
+              _loginChangUrl();
               context.go(redirectUrl);
             },
             child: Container(

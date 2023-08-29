@@ -43,44 +43,40 @@ class CollectIndexPage extends StatelessWidget {
       body: DefaultTabController(
         length: tabs.length,
         initialIndex: indexNum,
-        child: SizedBox(
-          width: double.infinity,
-          height: 500,
-          child: Column(
-            children: [
-              SizedBox(
-                width: double.infinity,
-                child: TabBar(
-                  tabs: tabs,
-                  indicator: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.transparent,
-                  ),
-                  labelColor: Colors.black,
-                  unselectedLabelColor: Colors.black38,
-                  indicatorPadding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: -20),
-                  labelPadding: const EdgeInsets.all(0),
-                  indicatorSize: TabBarIndicatorSize.label,
-                  overlayColor:
-                      const MaterialStatePropertyAll(Colors.transparent),
-                  dividerColor: Colors.transparent,
+        child: Column(
+          children: [
+            SizedBox(
+              width: double.infinity,
+              child: TabBar(
+                tabs: tabs,
+                indicator: BoxDecoration(
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.transparent,
                 ),
+                labelColor: Colors.black,
+                unselectedLabelColor: Colors.black38,
+                indicatorPadding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: -20),
+                labelPadding: const EdgeInsets.all(0),
+                indicatorSize: TabBarIndicatorSize.label,
+                overlayColor:
+                    const MaterialStatePropertyAll(Colors.transparent),
+                dividerColor: Colors.transparent,
               ),
-              const SizedBox(height: 20),
-              const Expanded(
-                child: TabBarView(
-                  children: [
-                    CollectPlayListWidget(),
-                    CollectArtistWidget(),
-                    CollectAlbumWidget(),
-                    CollectEditWidget(),
-                  ],
-                ),
+            ),
+            const SizedBox(height: 20),
+            const Expanded(
+              child: TabBarView(
+                children: [
+                  CollectPlayListWidget(),
+                  CollectArtistWidget(),
+                  CollectAlbumWidget(),
+                  CollectEditWidget(),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

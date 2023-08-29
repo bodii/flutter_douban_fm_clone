@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/request.dart';
 import 'package:flutter_douban_fm_clone/models/artist_featured_songs_model.dart';
 import 'package:flutter_douban_fm_clone/common/controllers/selecter.dart';
+import 'package:flutter_douban_fm_clone/models/music_info_model.dart';
 
 class ArtistFeaturedSongsWidget extends StatelessWidget {
   const ArtistFeaturedSongsWidget({super.key, required this.artistId});
@@ -39,7 +40,7 @@ class ArtistFeaturedSongsWidget extends StatelessWidget {
     );
   }
 
-  Widget _generateSongItem(int index, Song song) {
+  Widget _generateSongItem(int index, MusicInfo music) {
     BatchSelector selecter = BatchSelector();
     return ListTile(
       onTap: () {
@@ -59,11 +60,11 @@ class ArtistFeaturedSongsWidget extends StatelessWidget {
         height: 70,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(5),
-          child: Image.network(song.pic!, fit: BoxFit.cover),
+          child: Image.network(music.pic!, fit: BoxFit.cover),
         ),
       ),
       title: Text(
-        song.name!,
+        music.name!,
         style: const TextStyle(
           fontSize: 17,
           fontWeight: FontWeight.w400,
@@ -73,7 +74,7 @@ class ArtistFeaturedSongsWidget extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
       ),
       subtitle: Text(
-        song.artist!,
+        music.artist!,
         style: const TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w200,
