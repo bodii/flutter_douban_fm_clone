@@ -8,12 +8,12 @@ import 'package:flutter_douban_fm_clone/models/recommended_play_list_model.dart'
 import 'package:go_router/go_router.dart';
 
 class DiscoveryPage extends StatelessWidget {
-  const DiscoveryPage({Key? key}) : super(key: key);
+  const DiscoveryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    DateTime date = DateTime.now();
+    final Size size = MediaQuery.sizeOf(context);
+    final DateTime date = DateTime.now();
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -87,15 +87,20 @@ class DiscoveryPage extends StatelessWidget {
             )
           ],
         ),
-        toPlayList(),
+        const PlayListWidget(),
       ],
     );
   }
+}
 
-  Widget toPlayList() {
+class PlayListWidget extends StatelessWidget {
+  const PlayListWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return FutureBuilder(
-      future: fetchRecommendedPlayList(),
-      builder: (context, AsyncSnapshot<RecommendedPlayList> snapshot) {
+      future: findPlayLists(),
+      builder: (context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -105,25 +110,25 @@ class DiscoveryPage extends StatelessWidget {
           );
         }
 
-        List<PlayList> playLists = snapshot.data!.list!;
+        List<Map<String, dynamic>> playLists = snapshot.data!;
         playLists = playLists.sublist(1);
-        // for (var element in playLists) {
-        //   print(element.toJson());
-        // }
+        // Map<int, bool> allExists;
+        // findPlayListsExists(playLists).then((value) => allExists = value);
 
-        return SingleChildScrollView(
-          child: SizedBox(
-            width: double.infinity,
-            height: 650,
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
-              child: ListView.builder(
-                itemCount: playLists.length,
-                itemBuilder: (context, index) {
-                  return toPlayListItem(playLists[index], context);
-                },
-              ),
+        return Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: ListView.builder(
+              itemCount: playLists.length,
+              itemBuilder: (context, index) {
+                bool isFavorite = false;
+                // allExists[playLists[index].id!];
+                return toPlayListItem(
+                  playLists[index],
+                  context,
+                  isFavorite,
+                );
+              },
             ),
           ),
         );
@@ -131,10 +136,28 @@ class DiscoveryPage extends StatelessWidget {
     );
   }
 
-  Widget toPlayListItem(PlayList playList, BuildContext context) {
+  Future<List<Map<String, dynamic>>> findPlayLists() async {
+    RecommendedPlayList recommendedPlayList = await fetchRecommendedPlayList();
+    List<PlayList> playLists = recommendedPlayList.list!;
+
+    PlayListDb playListDb = PlayListDb();
+    Map<int, bool> allExists = await playListDb.isAllExists(playLists);
+
+    List<Map<String, dynamic>> playListMapList = [];
+    for (PlayList p in playLists) {
+      Map<String, dynamic> pMap = p.toJson();
+      pMap.addAll({'isFavorite': allExists[p.id]});
+      playListMapList.add(pMap);
+    }
+
+    return playListMapList;
+  }
+
+  Widget toPlayListItem(
+      Map<String, dynamic> playList, BuildContext context, bool isFavorite) {
     return GestureDetector(
       onTap: () {
-        context.push('/home/index/discovery/detail/${playList.id}');
+        context.push('/home/index/discovery/detail/${playList['id']}');
       },
       child: SizedBox(
         width: double.infinity,
@@ -149,7 +172,7 @@ class DiscoveryPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(playList.name!.trim(),
+                    Text(playList['name'].trim(),
                         style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
@@ -162,7 +185,7 @@ class DiscoveryPage extends StatelessWidget {
                           children: [
                             const TextSpan(text: '来自 '),
                             TextSpan(
-                                text: playList.uname!.replaceAll('kuwo', ''),
+                                text: playList['uname'].replaceAll('kuwo', ''),
                                 style: TextStyle(
                                   color: Colors.black.withOpacity(0.7),
                                 )),
@@ -183,7 +206,7 @@ class DiscoveryPage extends StatelessWidget {
                       topLeft: Radius.circular(8),
                       topRight: Radius.circular(8)),
                   child: Image.network(
-                    playList.img700!,
+                    playList['img700'],
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: 230,
@@ -207,7 +230,7 @@ class DiscoveryPage extends StatelessWidget {
                         child: IconButton(
                           onPressed: () {
                             debugPrint(
-                                'hearing -> playlist id: ${playList.id}');
+                                'hearing -> playlist id: ${playList['id']}');
                           },
                           icon: Container(
                             width: 45,
@@ -232,7 +255,7 @@ class DiscoveryPage extends StatelessWidget {
                               IconButton(
                                 onPressed: () {
                                   debugPrint(
-                                      'share -> playlist id: ${playList.id}');
+                                      'share -> playlist id: ${playList['id']}');
                                 },
                                 icon: Container(
                                   width: 38,
@@ -258,9 +281,9 @@ class DiscoveryPage extends StatelessWidget {
                                 child: IconButton(
                                   onPressed: () {
                                     debugPrint(
-                                        'favorite -> playlist id: ${playList.id}');
+                                        'favorite -> playlist id: ${playList['id']}');
                                   },
-                                  isSelected: false,
+                                  isSelected: playList['isFavorite'],
                                   icon: const Icon(
                                     Icons.favorite_border_outlined,
                                     color: CustomColors.neutral,

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 import 'dart:isolate';
@@ -67,7 +68,7 @@ class FileDownlaod with WidgetsBindingObserver {
   late bool _permissionReady;
   late bool _saveInPublicStorage;
   late String _localPath;
-  final ReceivePort _port = ReceivePort();
+  final ReceivePort _port = ReceivePort('test_download');
 
   T? _ambiguate<T>(T? value) => value;
 
@@ -176,15 +177,15 @@ class FileDownlaod with WidgetsBindingObserver {
       return;
     }
 
-    print('bindBackgroundIsolate: start port.listen');
+    log('bindBackgroundIsolate: start port.listen');
     _port.listen((dynamic data) {
-      print('bindBackgroundIsolate: port data content:');
+      log('bindBackgroundIsolate: port data content:');
       print(data);
       final taskId = (data as List<dynamic>)[0] as String;
       final status = DownloadTaskStatus.fromInt(data[1] as int);
       final progress = data[2] as int;
 
-      print(
+      log(
         'Callback on UI isolate: '
         'task ($taskId) is in status ($status) and process ($progress)',
       );
@@ -197,6 +198,7 @@ class FileDownlaod with WidgetsBindingObserver {
   }
 
   void _unbindBackgroundIsolate() {
+    log('remove old port');
     IsolateNameServer.removePortNameMapping('downloader_send_port');
   }
 
@@ -229,9 +231,14 @@ class FileDownlaod with WidgetsBindingObserver {
     _task.taskId = await FlutterDownloader.enqueue(
       url: _task.link!,
       // headers: {'auth': 'test_for_sql_encoding'},
+      showNotification: true,
       savedDir: _localPath,
       saveInPublicStorage: _saveInPublicStorage,
+      openFileFromNotification: true,
     );
+    log('taskid: ${_task.taskId}', name: 'download');
+    log('task status: ${_task.status}', name: 'download');
+    log('task name: ${_task.name}', name: 'download');
   }
 
   Future<void> pause() async {

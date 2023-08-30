@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
+import 'package:flutter_douban_fm_clone/database/music/music_basic_db.dart';
+import 'package:flutter_douban_fm_clone/models/music_basic_info_model.dart';
 import 'package:go_router/go_router.dart';
 
 class MySongListPage extends StatelessWidget {
@@ -9,6 +11,13 @@ class MySongListPage extends StatelessWidget {
   });
 
   final String songListName;
+
+  Future<List<MusicBasicInfo>> fetchMusicBasicData() async {
+    MusicBasicDb musicBasicDb = MusicBasicDb();
+    List<MusicBasicInfo> infoList = await musicBasicDb.pageQuery();
+
+    return infoList;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +37,15 @@ class MySongListPage extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
+      body: SizedBox(
+        width: double.infinity,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Column(
             children: [
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                width: double.infinity,
+                margin:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 height: 40,
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.02),
@@ -58,7 +68,8 @@ class MySongListPage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 18),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -90,15 +101,30 @@ class MySongListPage extends StatelessWidget {
                   ],
                 ),
               ),
-              Column(
-                children: [
-                  createSongListCardItem(
-                    'https://img4.kuwo.cn/star/albumcover/500/1/29/1934979845.jpg',
-                    '向云端',
-                    '小霞&海洋Bo',
-                    context,
-                  ),
-                ],
+              Expanded(
+                child: FutureBuilder(
+                  future: fetchMusicBasicData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.none ||
+                        !snapshot.hasData) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if (snapshot.hasError || snapshot.data!.isEmpty) {
+                      return const Center(
+                        child: Text('not data!'),
+                      );
+                    }
+
+                    List<MusicBasicInfo> infoList = snapshot.data!;
+
+                    return ListView.builder(
+                      itemCount: infoList.length,
+                      itemBuilder: (context, index) {
+                        return createSongListCardItem(infoList[index], context);
+                      },
+                    );
+                  },
+                ),
               ),
             ],
           ),
@@ -108,88 +134,60 @@ class MySongListPage extends StatelessWidget {
   }
 
   Widget createSongListCardItem(
-    String? coverSrc,
-    String songName,
-    String artist,
+    MusicBasicInfo info,
     BuildContext context,
   ) {
-    String src = coverSrc ?? '';
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 10,
-      ),
-      child: GestureDetector(
-        onTap: () {
-          debugPrint(songName);
-        },
-        child: SizedBox(
-          width: double.infinity,
-          height: 65,
-          child: Row(
-            children: [
-              SizedBox(
-                width: 65,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.network(
-                    src,
-                    fit: BoxFit.cover,
-                    width: 65,
-                    height: 65,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 18.0),
-                child: SizedBox(
-                  width: 250,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            songName,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 7.0),
-                            child: Icon(
-                              Icons.favorite,
-                              color: CustomColors.neutral,
-                              size: 17,
-                            ),
-                          )
-                        ],
-                      ),
-                      Text(
-                        artist,
-                        style: const TextStyle(
-                          color: Colors.black38,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              GestureDetector(
-                child: const Icon(
-                  Icons.more_horiz,
-                  color: Colors.black54,
-                ),
-                onTap: () {
-                  debugPrint('...');
-                },
-              ),
-            ],
+    return ListTile(
+      onTap: () {
+        context.push('/play/music/${info.id}');
+      },
+      leading: SizedBox(
+        width: 60,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.network(
+            info.pic!,
+            fit: BoxFit.cover,
+            width: 70,
+            height: 70,
           ),
         ),
+      ),
+      title: Row(
+        children: [
+          Text(
+            info.name!,
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 7.0),
+            child: Icon(
+              Icons.favorite,
+              color: CustomColors.neutral,
+              size: 17,
+            ),
+          )
+        ],
+      ),
+      subtitle: Text(
+        info.artist!,
+        style: const TextStyle(
+          color: Colors.black38,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+      trailing: GestureDetector(
+        child: const Icon(
+          Icons.more_horiz,
+          color: Colors.black54,
+        ),
+        onTap: () {
+          debugPrint('...');
+        },
       ),
     );
   }

@@ -43,41 +43,45 @@ class HomePage extends StatelessWidget {
               },
             ),
           ),
-          title: Row(
-            children: [
-              SizedBox(
-                width: 250,
-                child: Center(
-                  child: TabBar(
-                    tabs: tabs,
-                    overlayColor: const MaterialStatePropertyAll(Colors.white),
-                    isScrollable: true,
-                    indicatorPadding: const EdgeInsets.only(top: 10),
-                    indicatorWeight: 2.0,
-                    dividerColor: Colors.white,
-                    unselectedLabelColor: Colors.black38,
-                    unselectedLabelStyle: const TextStyle(
-                      fontSize: 20,
-                    ),
-                    indicator: MyUnderlineTabIndicator(
-                      borderSide: const BorderSide(
-                        width: 3.0,
-                        color: CustomColors.paimary,
+          title: SizedBox(
+            height: 500,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 250,
+                  child: Center(
+                    child: TabBar(
+                      tabs: tabs,
+                      overlayColor:
+                          const MaterialStatePropertyAll(Colors.white),
+                      isScrollable: true,
+                      indicatorPadding: const EdgeInsets.only(top: 10),
+                      indicatorWeight: 2.0,
+                      dividerColor: Colors.white,
+                      unselectedLabelColor: Colors.black38,
+                      unselectedLabelStyle: const TextStyle(
+                        fontSize: 20,
                       ),
-                      borderRadius: BorderRadius.circular(10),
-                      width: 15,
+                      indicator: MyUnderlineTabIndicator(
+                        borderSide: const BorderSide(
+                          width: 3.0,
+                          color: CustomColors.paimary,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                        width: 15,
+                      ),
+                      indicatorSize: TabBarIndicatorSize.label,
+                      labelStyle: const TextStyle(
+                        fontSize: 20,
+                        // backgroundColor: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      labelColor: Colors.black87,
                     ),
-                    indicatorSize: TabBarIndicatorSize.label,
-                    labelStyle: const TextStyle(
-                      fontSize: 20,
-                      // backgroundColor: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    labelColor: Colors.black87,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           actions: [
             Padding(

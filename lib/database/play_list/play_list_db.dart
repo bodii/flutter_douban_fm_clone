@@ -55,6 +55,25 @@ class PlayListDb extends DbBase<PlayList> {
     return info != null;
   }
 
+  Future<Map<int, bool>> isAllExists(List<PlayList> playLists) async {
+    List<int> playListIds = playLists.map((e) => e.id!).toList();
+    List<Map<String, dynamic>>? list = await query(
+      where: 'id in (?)',
+      whereArgs: [playListIds.join(',')],
+      columns: ['id'],
+    );
+
+    List<PlayList> findPlayLists = PlayList.fromList(list!);
+    List<int> findPlayListIds = findPlayLists.map((e) => e.id!).toList();
+
+    Map<int, bool> result = {};
+    for (int id in playListIds) {
+      result.addAll({id: findPlayListIds.contains(id)});
+    }
+
+    return result;
+  }
+
   Future<bool> add(PlayList playList) async {
     int row =
         await insert(data: playList.toJson(), excludeColums: ['musicList']);
