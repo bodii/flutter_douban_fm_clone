@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_douban_fm_clone/common/controllers/auth_provider.dart';
+import 'package:flutter_douban_fm_clone/common/controllers/login.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
 import 'package:flutter_douban_fm_clone/common/functions/string_duration.dart';
 import 'package:flutter_douban_fm_clone/common/request.dart';
-import 'package:flutter_douban_fm_clone/models/music_basic_info_model.dart';
 import 'package:flutter_douban_fm_clone/models/song_info_and_lrc_model.dart';
 import 'package:flutter_douban_fm_clone/pages/play/bloc/music_player_bloc.dart';
 import 'package:flutter_douban_fm_clone/common/functions/stream_ticker.dart';
@@ -19,6 +20,8 @@ class MusicPlayPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Login login = context.auth();
+
     return Scaffold(
       appBar: AppBar(
           surfaceTintColor: Colors.white,
@@ -52,7 +55,11 @@ class MusicPlayPage extends StatelessWidget {
           SongInfo songInfo = songInfoAndLrc.songInfo!;
           List<LrcInfo> lrcList = songInfoAndLrc.lrclist ?? [];
 
-          return _MegacyclePlayDatail(songInfo: songInfo, lrcList: lrcList);
+          return _MegacyclePlayDatail(
+            songInfo: songInfo,
+            lrcList: lrcList,
+            loginInfo: login,
+          );
         },
       ),
     );
@@ -63,20 +70,26 @@ class _MegacyclePlayDatail extends StatelessWidget {
   const _MegacyclePlayDatail({
     required this.songInfo,
     required this.lrcList,
+    required this.loginInfo,
   });
 
   final SongInfo songInfo;
   final List<LrcInfo> lrcList;
+  final Login loginInfo;
 
   @override
   Widget build(BuildContext context) {
-    MusicBasicInfo basicInfo = MusicBasicInfo.copySongInfoWith(songInfo);
+    // MusicBasicInfo basicInfo = MusicBasicInfo.copySongInfoWith(
+    //     songInfo: songInfo, userId: loginInfo.userInfo!.id!, mySongListId: 1);
 
     return BlocProvider(
       create: (BuildContext context) => MusicPlayerBloc(
         int.parse(songInfo.duration!),
         ticker: const StreamTicker(),
-      )..add(MusicPlayerLoading(musicId: songInfo.id!)),
+      )..add(MusicPlayerLoading(
+          musicId: songInfo.id!,
+          userId: loginInfo.userInfo!.id!,
+        )),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
         child: BlocBuilder<MusicPlayerBloc, MusicPlayerState>(
@@ -221,9 +234,11 @@ class _MegacyclePlayDatail extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () {
-                        context
-                            .read<MusicPlayerBloc>()
-                            .add(MusicFavoriteToggle(info: basicInfo));
+                        int mySongListId = 1;
+                        context.read<MusicPlayerBloc>().add(MusicFavoriteToggle(
+                              info: songInfo,
+                              mySongListId: mySongListId,
+                            ));
                       },
                       isSelected: state.isFavorite,
                       icon: const Icon(

@@ -5,9 +5,10 @@ sealed class MusicPlayerEvent {
 }
 
 final class MusicPlayerLoading extends MusicPlayerEvent {
-  const MusicPlayerLoading({required this.musicId});
+  const MusicPlayerLoading({required this.musicId, required this.userId});
 
   final String musicId;
+  final int userId;
 }
 
 final class MusicPlayerLoaded extends MusicPlayerEvent {
@@ -55,8 +56,9 @@ final class MusicFileDownloaded extends MusicPlayerEvent {
   const MusicFileDownloaded();
 }
 
-final class MusicFavoriteToggle extends MusicPlayerEvent {
-  const MusicFavoriteToggle({required this.info});
+final class MusicFavoriteToggle<T> extends MusicPlayerEvent {
+  const MusicFavoriteToggle({required this.info, required this.mySongListId});
 
-  final MusicBasicInfo info;
+  final T info;
+  final int mySongListId;
 }

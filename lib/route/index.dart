@@ -1,6 +1,3 @@
-import 'package:flutter_douban_fm_clone/common/controllers/login.dart';
-import 'package:flutter_douban_fm_clone/database/user/login_account_db.dart';
-import 'package:flutter_douban_fm_clone/models/user_model.dart';
 import 'package:flutter_douban_fm_clone/pages/discovery/views/discovery_detail_page.dart';
 import 'package:flutter_douban_fm_clone/pages/discovery/views/discovery_page.dart';
 import 'package:flutter_douban_fm_clone/pages/error/views/error_page.dart';

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/gestures.dart';
@@ -9,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_douban_fm_clone/common/controllers/auth_provider.dart';
 import 'package:flutter_douban_fm_clone/common/controllers/login.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
-import 'package:flutter_douban_fm_clone/database/user/login_account_db.dart';
 import 'package:flutter_douban_fm_clone/database/user/user_db.dart';
 import 'package:flutter_douban_fm_clone/models/user_model.dart';
 import 'package:go_router/go_router.dart';
@@ -52,7 +50,7 @@ class _SignInPageState extends State<SignInPage> {
         RegExp(r'([\d\w]+@[\d\w]+[.][\d\w]+)|(1[3-9]\d{9})');
     RegExp hasPhoneRegexp = RegExp(r'1[3-9]\d+');
     RegExp passwdRegexp = RegExp(
-        r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,15}$');
+        r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&\.]{8,15}$');
     String errorMeg = '';
 
     if (hasPhoneRegexp.hasMatch(username)) {

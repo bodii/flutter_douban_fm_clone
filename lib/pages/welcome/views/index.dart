@@ -32,7 +32,7 @@ class _WelcomeIndexPageState extends State<WelcomeIndexPage> {
   void _loginChangUrl() {
     Login login = context.auth();
     if (login.isLoggedIn) {
-      redirectUrl = '/home/index/0';
+      redirectUrl = '/home/index/2';
     } else {
       redirectUrl = '/user/sign_in/no';
     }

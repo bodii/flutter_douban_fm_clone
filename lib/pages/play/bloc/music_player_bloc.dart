@@ -8,7 +8,6 @@ import 'package:flutter_douban_fm_clone/common/functions/stream_ticker.dart';
 import 'package:flutter_douban_fm_clone/common/handler/file_download.dart';
 import 'package:flutter_douban_fm_clone/common/request.dart';
 import 'package:flutter_douban_fm_clone/database/music/music_basic_db.dart';
-import 'package:flutter_douban_fm_clone/models/music_basic_info_model.dart';
 import 'package:flutter_douban_fm_clone/models/music_play_url_model.dart';
 import 'package:flutter_douban_fm_clone/common/handler/music_background_play.dart';
 import 'package:flutter_douban_fm_clone/models/song_info_and_lrc_model.dart';
@@ -58,8 +57,13 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
 
     // add url path
     if (musicPlayUrl.url!.isNotEmpty) {
-      emit(state.copyWith(musicUrl: musicPlayUrl.url));
+      emit(state.copyWith(musicUrl: musicPlayUrl.url, userId: event.userId));
     }
+
+    MusicBasicDb musicBasicDb = MusicBasicDb();
+    bool isFavorite = await musicBasicDb.hasExists(
+        musicId: int.parse(event.musicId), userId: event.userId);
+    emit(state.copyWith(isFavorite: isFavorite));
 
     // create background play object
     _backgroundMusic = MusicBackgroundPlay(sourceAddr: musicPlayUrl.url!);
@@ -91,7 +95,8 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
   void _onLoaded(
       MusicPlayerLoaded event, Emitter<MusicPlayerState> emit) async {
     MusicBasicDb musicBasicDb = MusicBasicDb();
-    bool isFavorite = await musicBasicDb.isExists(event.musicId);
+    bool isFavorite = await musicBasicDb.hasExists(
+        musicId: event.musicId, userId: state.userId);
 
     emit(
         state.copyWith(status: MusicPlayStatus.loaded, isFavorite: isFavorite));
@@ -193,11 +198,13 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent, MusicPlayerState> {
   void _onDownloaded(
       MusicFileDownloading event, Emitter<MusicPlayerState> emit) {}
 
-  void _onFavoriteToggle(
-      MusicFavoriteToggle event, Emitter<MusicPlayerState> emit) async {
+  void _onFavoriteToggle<T>(
+      MusicFavoriteToggle<T> event, Emitter<MusicPlayerState> emit) async {
     MusicBasicDb musicBasicDb = MusicBasicDb();
-    bool result =
-        await musicBasicDb.toggle<MusicBasicInfo>(event.info, state.isFavorite);
+    bool result = await musicBasicDb.toggle<T>(
+        info: event.info,
+        mySongListId: event.mySongListId,
+        userId: state.userId);
 
     emit(state.copyWith(isFavorite: result));
   }

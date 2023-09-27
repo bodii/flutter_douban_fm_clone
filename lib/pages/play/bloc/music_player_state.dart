@@ -18,6 +18,7 @@ final class MusicPlayerState extends Equatable {
     this.status = MusicPlayStatus.stop,
     this.musicUrl = '',
     this.isFavorite = false,
+    this.userId = 0,
   });
 
   final int totalDuration;
@@ -25,22 +26,26 @@ final class MusicPlayerState extends Equatable {
   final MusicPlayStatus status;
   final String musicUrl;
   final bool isFavorite;
+  final int userId;
 
-  MusicPlayerState copyWith(
-          {int? totalDuration,
-          int? duration,
-          MusicPlayStatus? status,
-          String? musicUrl,
-          bool? isFavorite}) =>
+  MusicPlayerState copyWith({
+    int? totalDuration,
+    int? duration,
+    MusicPlayStatus? status,
+    String? musicUrl,
+    bool? isFavorite,
+    int? userId,
+  }) =>
       MusicPlayerState(
         totalDuration: totalDuration ?? this.totalDuration,
         duration: duration ?? this.duration,
         status: status ?? this.status,
         musicUrl: musicUrl ?? this.musicUrl,
         isFavorite: isFavorite ?? this.isFavorite,
+        userId: userId ?? this.userId,
       );
 
   @override
   List<Object> get props =>
-      [totalDuration, duration, status, musicUrl, isFavorite];
+      [totalDuration, duration, status, musicUrl, isFavorite, userId];
 }

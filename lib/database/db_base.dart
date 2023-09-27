@@ -5,9 +5,10 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DbBase<T> {
-  Database? database;
+  late Database db;
   final String tableName = '';
   final String dbName = '';
+  bool _isOpen = false;
 
   String getCreateTableSql() => '';
 
@@ -16,53 +17,60 @@ class DbBase<T> {
     return dbPath;
   }
 
-  Future<bool> open() async {
+  Future<bool> _open() async {
+    log('exec sqlite open func: $tableName');
     WidgetsFlutterBinding.ensureInitialized();
 
     final String dbPath = await getDbPath();
 
-    database = await openDatabase(
+    db = await openDatabase(
       dbPath,
       onCreate: (db, version) {
-        log(getCreateTableSql());
+        log(getCreateTableSql(), name: 'exec create $tableName sql');
         return db.execute(getCreateTableSql());
       },
       version: 1,
     );
 
-    return database != null && database!.isOpen;
+    _isOpen = db.isOpen;
+
+    return _isOpen;
+  }
+
+  Future close() async {
+    await hasOpen();
+
+    db.close();
+  }
+
+  Future<bool> hasOpen() async {
+    if (!_isOpen) {
+      return await _open();
+    }
+
+    return true;
   }
 
   Future<void> createTable() async {
-    database?.execute(getCreateTableSql());
+    db.execute(getCreateTableSql());
   }
 
   Future<void> deleteDb() async {
     final String dbPath = await getDbPath();
     await deleteDatabase(dbPath);
-  }
-
-  Future<void> deleteTable() async {
-    database?.execute('''
-      drop table $tableName;
-    ''');
+    _isOpen = false;
   }
 
   Future<void> truncateAllData() async {
-    database?.execute('''
+    await hasOpen();
+
+    await db.execute('''
       truncate table $tableName;
     ''');
   }
 
-  // Future<void> _execute(Database db, int version, String sql,
-  //     [List<Object?>? arguments]) async {
-  //   await db.execute(sql, arguments);
-  // }
-
   Future<int> insert(
       {required Map<String, dynamic> data, List<String>? excludeColums}) async {
-    await open();
-
     data.updateAll((key, value) => value ?? '');
 
     if (excludeColums != null) {
@@ -73,13 +81,15 @@ class DbBase<T> {
       }
     }
 
-    int? rows = await database?.insert(
+    await hasOpen();
+
+    int rows = await db.insert(
       tableName,
       data,
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 
-    return rows ?? 0;
+    return rows;
   }
 
   /// This is a helper to query a table and return the items found. All optional
@@ -128,9 +138,9 @@ class DbBase<T> {
     int? limit,
     int? offset,
   }) async {
-    await open();
+    await hasOpen();
 
-    List<Map<String, Object?>>? maps = await database?.query(
+    List<Map<String, Object?>> maps = await db.query(
       tableName,
       where: where,
       limit: limit,
@@ -151,30 +161,46 @@ class DbBase<T> {
     String? where,
     List<Object?>? whereArgs,
   }) async {
-    await open();
+    await hasOpen();
 
-    int? rows = await database?.update(
+    int? rows = await db.update(
       tableName,
       values,
       where: where,
       whereArgs: whereArgs,
     );
 
-    return rows ?? 0;
+    return rows;
+  }
+
+  Future<int> rawUpdate(
+    String setValSql,
+    List<dynamic> setValArgs, {
+    String whereSql = '1=1',
+    List<dynamic>? whereArgs,
+  }) async {
+    await hasOpen();
+
+    int? rows = await db.rawUpdate(
+      'UPDATE $tableName set $setValSql WHERE $whereSql;',
+      [...setValArgs, ...whereArgs!],
+    );
+
+    return rows;
   }
 
   Future<int> delete({
     String? where,
     List<Object?>? whereArgs,
   }) async {
-    await open();
+    await hasOpen();
 
-    int? rows = await database?.delete(
+    int? rows = await db.delete(
       tableName,
       where: where,
       whereArgs: whereArgs,
     );
 
-    return rows ?? 0;
+    return rows;
   }
 }

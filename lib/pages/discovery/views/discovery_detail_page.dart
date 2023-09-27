@@ -255,6 +255,9 @@ class _DiscoveryDetailPageState extends State<DiscoveryDetailPage> {
                     itemBuilder: (context, index) {
                       MusicInfo musicInfo = musicList[index];
                       return ListTile(
+                        onTap: () {
+                          context.push('/play/music/${musicInfo.rid}');
+                        },
                         leading: Text('${index + 1}',
                             style: const TextStyle(
                               color: Colors.black26,

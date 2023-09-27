@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/controllers/auth_provider.dart';
 import 'package:flutter_douban_fm_clone/common/controllers/login.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
+import 'package:flutter_douban_fm_clone/database/my_song_list/my_song_list_db.dart';
+import 'package:flutter_douban_fm_clone/models/my_song_list_model.dart';
 import 'package:flutter_douban_fm_clone/models/user_model.dart';
 
 import 'package:go_router/go_router.dart';
@@ -12,10 +14,9 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Login login = context.auth();
-    User userInfo = login.userInfo!;
 
     return login.isLoggedIn
-        ? withLoginWidget(context, userInfo)
+        ? withLoginWidget(context, login.userInfo!)
         : withNoLoginWidget(context);
   }
 
@@ -165,45 +166,45 @@ class MyPage extends StatelessWidget {
             ],
           ),
           Expanded(
-            child: ListView(
-              itemExtent: 100,
-              children: [
-                createSongListCardItem(
-                  'https://d.musicapp.migu.cn/prod/playlist-service/playListimg/ed9196b6-c663-4339-adc5-5e5a86958c1e.jpg',
-                  '我的红心歌曲',
-                  7,
-                  context,
-                ),
-                createSongListCardItem(
-                  'https://d.musicapp.migu.cn/prod/playlist-service/playListimg/ed9196b6-c663-4339-adc5-5e5a86958c1e.jpg',
-                  '我的红心歌曲',
-                  7,
-                  context,
-                ),
-                createSongListCardItem(
-                  'https://d.musicapp.migu.cn/prod/playlist-service/playListimg/ed9196b6-c663-4339-adc5-5e5a86958c1e.jpg',
-                  '我的红心歌曲',
-                  7,
-                  context,
-                ),
-                createSongListCardItem(
-                  'https://d.musicapp.migu.cn/prod/playlist-service/playListimg/ed9196b6-c663-4339-adc5-5e5a86958c1e.jpg',
-                  '我的红心歌曲',
-                  7,
-                  context,
-                ),
-                createSongListCardItem(
-                  'https://d.musicapp.migu.cn/prod/playlist-service/playListimg/ed9196b6-c663-4339-adc5-5e5a86958c1e.jpg',
-                  '我的红心歌曲',
-                  7,
-                  context,
-                ),
-              ],
-            ),
-          ),
+              child: FutureBuilder(
+            future: fetchMySongList(userInfo.id!),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) {
+                return const Center(
+                  child: Text('not data!'),
+                );
+              }
+
+              List<MySongList> list = snapshot.data!;
+              print(list.length);
+
+              return ListView.builder(
+                itemCount: list.length,
+                itemExtent: 100,
+                itemBuilder: (context, index) {
+                  MySongList info = list[index];
+                  return createSongListCardItem(
+                    info.cover,
+                    info.name,
+                    info.songNum,
+                    context,
+                  );
+                },
+              );
+            },
+          )),
         ],
       ),
     );
+  }
+
+  Future<List<MySongList>> fetchMySongList(int userId) async {
+    MySongListDb mySongListDb = MySongListDb();
+
+    return await mySongListDb.pageQuery(userId: userId);
   }
 
   Widget createSongListCardItem2(

@@ -20,9 +20,8 @@ class LoginAccountDb extends DbBase<LoginAccount> {
           user_id int default 0,
           token varchar(150) default '',
           is_logining int default 0,
-          expiration_time int default 0,
+          expiration_time int default 0
         );
-        insert into $tableName(user_id) values(0);
         ''';
   }
 
@@ -49,6 +48,7 @@ class LoginAccountDb extends DbBase<LoginAccount> {
     log(data.toString(), name: 'login_accout');
 
     if (data == null || data.isEmpty) {
+      await insert(data: {'user_id': 0});
       return null;
     }
 
