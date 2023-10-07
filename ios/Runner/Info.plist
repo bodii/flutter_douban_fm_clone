@@ -75,4 +75,8 @@
 <integer>5</integer>
 <key>FDAllFilesDownloadedMessage</key>
 <string>All files have been downloaded</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>App需要您的同意,才能访问相册用于上传评价图片</string>
+<key>NSCameraUsageDescription</key>
+<string>App需要您的同意,才能访问相机上传评价图片</string>
 </plist>

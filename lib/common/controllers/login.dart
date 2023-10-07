@@ -13,11 +13,17 @@ class Login extends ChangeNotifier {
   User? get userInfo => _userInfo;
   User? _userInfo;
 
+  void upInfo(User info) async {
+    _userInfo = info;
+
+    notifyListeners();
+  }
+
   /// Whether a user has logged in.
-  bool get isLoggedIn => _userInfo != null && _userInfo!.id != null;
+  bool get isLoggedIn => _userInfo != null && _userInfo!.id != 0;
 
   /// Whether a user has logouted.
-  bool get isLogOut => _userInfo == null || _userInfo!.id == null;
+  bool get isLogOut => _userInfo == null || _userInfo!.id == 0;
 
   /// Logs in a user.
   void login(User userInfo) async {

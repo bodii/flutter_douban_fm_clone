@@ -1,22 +1,33 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_douban_fm_clone/common/controllers/auth_provider.dart';
 import 'package:flutter_douban_fm_clone/common/controllers/login.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
 import 'package:flutter_douban_fm_clone/database/my_song_list/my_song_list_db.dart';
+import 'package:flutter_douban_fm_clone/database/user/user_db.dart';
 import 'package:flutter_douban_fm_clone/models/my_song_list_model.dart';
 import 'package:flutter_douban_fm_clone/models/user_model.dart';
 
 import 'package:go_router/go_router.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
-class MyPage extends StatelessWidget {
+class MyPage extends StatefulWidget {
   const MyPage({super.key});
 
+  @override
+  State<MyPage> createState() => _MyPageState();
+}
+
+class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
     Login login = context.auth();
 
     return login.isLoggedIn
-        ? withLoginWidget(context, login.userInfo!)
+        ? withLoginWidget(context, login)
         : withNoLoginWidget(context);
   }
 
@@ -35,7 +46,8 @@ class MyPage extends StatelessWidget {
     );
   }
 
-  Widget withLoginWidget(BuildContext context, User userInfo) {
+  Widget withLoginWidget(BuildContext context, Login login) {
+    User userInfo = login.userInfo!;
     return Padding(
       padding: const EdgeInsets.only(left: 28.0, top: 45, right: 28.0),
       child: Column(
@@ -46,13 +58,51 @@ class MyPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(children: [
-                const CircleAvatar(
-                  radius: 26,
-                  backgroundColor: CustomColors.paimary,
+                GestureDetector(
+                  onTap: () async {
+                    // 打开相册，并选择照片
+                    final XFile? pickedFile = await ImagePicker()
+                        .pickImage(source: ImageSource.gallery);
+                    if (pickedFile == null) return;
+
+                    // 裁切
+                    final CroppedFile? croppedFile =
+                        await ImageCropper().cropImage(
+                      sourcePath: pickedFile.path,
+                      aspectRatioPresets: [CropAspectRatioPreset.square],
+                      cropStyle: CropStyle.circle,
+                    );
+                    if (croppedFile == null) return;
+
+                    // 保存到数据
+                    userInfo.avatar = croppedFile.path;
+                    // 更新登录信息
+                    login.upInfo(userInfo);
+
+                    // 保存到数据库
+                    UserDb userdb = UserDb();
+                    final int row = await userdb.update(
+                        {"avatar": croppedFile.path},
+                        where: "id = ?",
+                        whereArgs: [userInfo.id]);
+                    log("avatar save result: ${row > 0}");
+
+                    // 更新状态
+                    setState(() {});
+                  },
+                  child: SizedBox(
+                    width: 55,
+                    height: 55,
+                    child: ClipOval(
+                      child: (userInfo.avatar != "")
+                          ? Image.file(File(userInfo.avatar))
+                          : Container(color: CustomColors.paimary),
+                    ),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 28.0),
-                  child: Text(userInfo.nickname ?? '昵称',
+                  child: Text(userInfo.nickname,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -167,7 +217,7 @@ class MyPage extends StatelessWidget {
           ),
           Expanded(
               child: FutureBuilder(
-            future: fetchMySongList(userInfo.id!),
+            future: fetchMySongList(userInfo.id),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return const Center(child: CircularProgressIndicator());

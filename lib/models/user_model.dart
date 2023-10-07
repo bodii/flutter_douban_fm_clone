@@ -1,24 +1,24 @@
 class User {
-  int? id;
-  String? username;
-  String? nickname;
-  String? avatar;
-  String? phone;
-  String? password;
-  String? token;
-  String? signUpDate;
-  String? signInLateDate;
+  late int id;
+  late String username;
+  late String nickname;
+  late String avatar;
+  late String phone;
+  late String password;
+  late String token;
+  late String signUpDate;
+  late String signInLateDate;
 
   User(
-      {this.id,
-      this.username,
-      this.nickname,
-      this.avatar,
-      this.phone,
-      this.password,
-      this.token,
-      this.signUpDate,
-      this.signInLateDate});
+      {required this.id,
+      required this.username,
+      required this.nickname,
+      required this.avatar,
+      required this.phone,
+      required this.password,
+      required this.token,
+      required this.signUpDate,
+      required this.signInLateDate});
 
   User.fromJson(Map<String, dynamic> json) {
     if (json["id"] is int) {

@@ -88,7 +88,7 @@ class _MegacyclePlayDatail extends StatelessWidget {
         ticker: const StreamTicker(),
       )..add(MusicPlayerLoading(
           musicId: songInfo.id!,
-          userId: loginInfo.userInfo!.id!,
+          userId: loginInfo.userInfo!.id,
         )),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 40),

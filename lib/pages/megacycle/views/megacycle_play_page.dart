@@ -83,7 +83,7 @@ class MegacyclePlayPage extends StatelessWidget {
       BuildContext context, MusicInfo musicInfo) {
     Size size = MediaQuery.sizeOf(context);
     final Login login = context.auth();
-    checkFavorite(musicInfo.rid!, login.userInfo!.id!);
+    checkFavorite(musicInfo.rid!, login.userInfo!.id);
 
     return BlocProvider(
       create: (BuildContext context) => MusicPlayerBloc(
@@ -91,7 +91,7 @@ class MegacyclePlayPage extends StatelessWidget {
         ticker: const StreamTicker(),
       )..add(MusicPlayerLoading(
           musicId: "${musicInfo.rid!}",
-          userId: login.userInfo!.id!,
+          userId: login.userInfo!.id,
         )),
       child: BlocBuilder<MusicPlayerBloc, MusicPlayerState>(
           builder: (context, state) {
