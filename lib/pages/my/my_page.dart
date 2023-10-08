@@ -95,7 +95,11 @@ class _MyPageState extends State<MyPage> {
                     height: 55,
                     child: ClipOval(
                       child: (userInfo.avatar != "")
-                          ? Image.file(File(userInfo.avatar))
+                          ? Image.file(
+                              File(userInfo.avatar),
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Container(color: CustomColors.paimary),
+                            )
                           : Container(color: CustomColors.paimary),
                     ),
                   ),

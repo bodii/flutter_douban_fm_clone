@@ -7,6 +7,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_douban_fm_clone/common/custom_color.dart';
+import 'package:flutter_douban_fm_clone/common/handler/utils.dart';
 import 'package:flutter_douban_fm_clone/database/user/user_db.dart';
 import 'package:go_router/go_router.dart';
 
@@ -25,6 +26,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
   String username = '';
   String password = '';
+  bool visibilityPassword = false;
+  bool visibilityRepassword = false;
   String repassword = '';
   String verifyCode = '';
   String apiVerifyCode = '';
@@ -244,20 +247,31 @@ class _SignUpPageState extends State<SignUpPage> {
                             color: Colors.white,
                           ),
                           child: TextFormField(
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: '密码',
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                 backgroundColor: Colors.white,
                                 fontSize: 14,
                                 color: Colors.grey,
                                 height: 2.2,
                               ),
-                              contentPadding: EdgeInsets.symmetric(
+                              contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 5),
                               disabledBorder: null,
                               enabledBorder: null,
                               fillColor: Colors.white,
+                              suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      visibilityPassword = !visibilityPassword;
+                                    });
+                                  },
+                                  icon: Icon(
+                                      visibilityPassword
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      size: 20)),
                             ),
                             obscureText: true,
                             onSaved: (value) => password = value!,
@@ -275,20 +289,32 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                           child: TextFormField(
                             keyboardType: TextInputType.visiblePassword,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: '确认密码',
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                 backgroundColor: Colors.white,
                                 fontSize: 14,
                                 color: Colors.grey,
                                 height: 2.2,
                               ),
-                              contentPadding: EdgeInsets.symmetric(
+                              contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 5),
                               disabledBorder: null,
                               enabledBorder: null,
                               fillColor: Colors.white,
+                              suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      visibilityRepassword =
+                                          !visibilityRepassword;
+                                    });
+                                  },
+                                  icon: Icon(
+                                      visibilityRepassword
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      size: 20)),
                             ),
                             obscureText: true,
                             onSaved: (value) => repassword = value!,
@@ -368,7 +394,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(6)
                                 ],
-                                enabled: !isCountDown,
+                                enabled: true,
                               ),
                             ),
                             Padding(
@@ -512,7 +538,7 @@ class _SignUpPageState extends State<SignUpPage> {
       'nickname': _generateRandomString(8),
       'avatar': '',
       'phone': RegExp(r'1[3-9]\d{9}').hasMatch(username) ? username : '',
-      'token': md5.convert(utf8.encode(password)).toString(),
+      'token': Utils.generateToken(password),
       'signUpDate': DateTime.now().toString(),
       'signInLateDate': DateTime.now().toString(),
     };

@@ -12,6 +12,9 @@ import 'package:flutter_douban_fm_clone/pages/my/settings/settings_pages.dart';
 import 'package:flutter_douban_fm_clone/pages/my/song_list/views/my_song_list_batch_operation_page.dart';
 import 'package:flutter_douban_fm_clone/pages/album/views/best_album_song_list_page.dart';
 import 'package:flutter_douban_fm_clone/pages/my/song_list/views/my_song_list_page.dart';
+import 'package:flutter_douban_fm_clone/pages/user/info/views/modify_nickname.dart';
+import 'package:flutter_douban_fm_clone/pages/user/info/views/modify_password.dart';
+import 'package:flutter_douban_fm_clone/pages/user/info/views/modify_phone.dart';
 import 'package:flutter_douban_fm_clone/pages/user/info/views/modify_user_info.dart';
 import 'package:flutter_douban_fm_clone/pages/user/login/views/forgot_password_page.dart';
 import 'package:flutter_douban_fm_clone/pages/user/login/views/no_sign_in_page.dart';
@@ -63,6 +66,18 @@ class AppRoute {
       GoRoute(
         path: '/user/info/modify',
         builder: (context, state) => const UserInfoModify(),
+      ),
+      GoRoute(
+        path: '/user/modify/nickname',
+        builder: (context, state) => const ModifyNickname(),
+      ),
+      GoRoute(
+        path: '/user/modify/phone',
+        builder: (context, state) => const ModifyPhone(),
+      ),
+      GoRoute(
+        path: '/user/modify/password',
+        builder: (context, state) => const ModifyPassword(),
       ),
       GoRoute(
         path: '/home/index/:index',

@@ -102,7 +102,7 @@ class _SignInPageState extends State<SignInPage> {
 
     UserDb userDb = UserDb();
     User? userInfo = await userDb.signIn(username);
-    if (userInfo == null || userInfo.id == null) {
+    if (userInfo == null || userInfo.id == 0) {
       _toast('用户信息不存在');
       return;
     }
@@ -114,7 +114,7 @@ class _SignInPageState extends State<SignInPage> {
     }
 
     // 登录成功后记录最后登录时间
-    await userDb.signInSuccessToRecord(userInfo.id!);
+    await userDb.signInSuccessToRecord(userInfo.id);
 
     // 登录账户
     Login login = context.auth();
