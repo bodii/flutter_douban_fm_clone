@@ -115,7 +115,7 @@ class _MyPageState extends State<MyPage> {
               ]),
               GestureDetector(
                 onTap: () {
-                  context.go('/user/info/modify');
+                  context.go('/user/modify');
                 },
                 child: Container(
                   width: 75,

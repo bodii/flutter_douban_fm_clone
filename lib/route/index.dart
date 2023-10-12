@@ -64,20 +64,22 @@ class AppRoute {
         builder: (context, state) => const ProtectionPolicyPage(),
       ),
       GoRoute(
-        path: '/user/info/modify',
+        path: '/user/modify',
         builder: (context, state) => const UserInfoModify(),
-      ),
-      GoRoute(
-        path: '/user/modify/nickname',
-        builder: (context, state) => const ModifyNickname(),
-      ),
-      GoRoute(
-        path: '/user/modify/phone',
-        builder: (context, state) => const ModifyPhone(),
-      ),
-      GoRoute(
-        path: '/user/modify/password',
-        builder: (context, state) => const ModifyPassword(),
+        routes: [
+          GoRoute(
+            path: 'nickname',
+            builder: (context, state) => const ModifyNickname(),
+          ),
+          GoRoute(
+            path: 'phone',
+            builder: (context, state) => const ModifyPhone(),
+          ),
+          GoRoute(
+            path: 'password',
+            builder: (context, state) => const ModifyPassword(),
+          ),
+        ],
       ),
       GoRoute(
         path: '/home/index/:index',

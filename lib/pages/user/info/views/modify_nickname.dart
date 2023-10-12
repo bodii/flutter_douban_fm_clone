@@ -29,7 +29,9 @@ class _ModifyNicknameState extends State<ModifyNickname> {
             ),
             title: const Text("修改昵称")),
         body: SafeArea(
+          minimum: const EdgeInsets.symmetric(vertical: 48.0, horizontal: 20.0),
           child: Column(children: [
+            const SizedBox(width: double.infinity, child: Text("新昵称：")),
             Container(
               width: size.width * 0.95,
               height: 40.0,
@@ -62,6 +64,7 @@ class _ModifyNicknameState extends State<ModifyNickname> {
                 },
               ),
             ),
+            const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () async {
                 if (newNickname == null) return;
