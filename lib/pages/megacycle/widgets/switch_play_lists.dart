@@ -64,31 +64,41 @@ class _SwitchPlayListsState extends State<SwitchPlayLists> {
                 background(height: 250),
                 // 两者堆叠在一起。通过PageView滑动的Controller来控制当前显示的page
                 // CardScrollWidget(currentPage.floor()),
-                Positioned.fill(
-                  child: PageView.builder(
-                    // itemCount: images.length,
-                    controller: controller,
-                    reverse: false,
-                    scrollDirection: Axis.vertical,
-                    itemBuilder: (context, index) {
-                      double dd = (index - currentPage).abs();
-                      if (dd > 1.0 && dd < 0.51) {
-                        return background();
-                      }
-
-                      return SizedBox(
-                        width: 100,
-                        height: 250,
-                        child: Image.network(playList.img300!),
-                      );
-                      // });
-                    },
-                  ),
+                Draggable(
+                  feedback: background(height: 220),
+                  child: content(playList),
                 ),
               ],
             ),
           );
         });
+  }
+
+  Widget content(PlayList playList) {
+    return SizedBox(
+      width: 220,
+      child: Positioned.fill(
+        child: PageView.builder(
+          // itemCount: images.length,
+          controller: controller,
+          reverse: false,
+          scrollDirection: Axis.vertical,
+          itemBuilder: (context, index) {
+            double dd = (index - currentPage).abs();
+            if (dd > 1.0 && dd < 0.51) {
+              return background();
+            }
+
+            return SizedBox(
+              width: 100,
+              height: 250,
+              child: Image.network(playList.img300!),
+            );
+            // });
+          },
+        ),
+      ),
+    );
   }
 
   Widget background({double height = 270}) {
@@ -126,87 +136,3 @@ class _SwitchPlayListsState extends State<SwitchPlayLists> {
     );
   }
 }
-
-// class CardScrollWidget extends StatelessWidget {
-//   const CardScrollWidget(this.currentPage, {super.key});
-
-//   final int currentPage;
-//   final double padding = 20.0;
-//   final double verticalInset = 20.0;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       width: 220,
-//       height: 220,
-//       // aspectRatio: (12.0 / 16.0) * 1.2,
-//       child: Positioned.directional(
-//         // top: padding + verticalInset * max(-leftPage, 0.0),
-//         // bottom: padding + verticalInset * max(-leftPage, 0.0),
-//         // start: start,
-//         textDirection: TextDirection.rtl,
-//         child: ClipRRect(
-//           borderRadius: BorderRadius.circular(10.0),
-//           child: SizedBox(
-//             width: 220,
-//             height: 220,
-//             child: AspectRatio(
-//               aspectRatio: 12 / 16,
-//               child: Stack(
-//                 fit: StackFit.expand,
-//                 children: [
-//                   SizedBox(
-//                     width: 200,
-//                     height: 200,
-//                     child: 
-//                     // Image.network(
-//                     //   images[currentPage],
-//                     //   // fit: BoxFit.fill,
-//                     // ),
-//                   // ),
-//                   // Align(
-//                   //   alignment: Alignment.bottomLeft,
-//                   //   child: Column(
-//                   //     mainAxisSize: MainAxisSize.min,
-//                   //     crossAxisAlignment: CrossAxisAlignment.start,
-//                   //     children: [
-//                   // 设置标题
-//                   // Padding(
-//                   //   padding: const EdgeInsets.symmetric(
-//                   //       horizontal: 16, vertical: 8),
-//                   //   child: Text(
-//                   //     title[i],
-//                   //     style: const TextStyle(
-//                   //       color: Colors.white,
-//                   //       fontSize: 25,
-//                   //     ),
-//                   //   ),
-//                   // ),
-//                   // const SizedBox(
-//                   //   height: 10,
-//                   // ),
-//                   // 设置ReaderLater
-//                   // Padding(
-//                   //   padding: const EdgeInsets.only(left: 12, bottom: 12),
-//                   //   child: Container(
-//                   //     padding: const EdgeInsets.symmetric(
-//                   //         horizontal: 22.0, vertical: 6.0),
-//                   //     decoration: BoxDecoration(
-//                   //         color: Colors.blueAccent,
-//                   //         borderRadius: BorderRadius.circular(20.0)),
-//                   //     child: const Text("点击查看",
-//                   //         style: TextStyle(color: Colors.white)),
-//                   //   ),
-//                   // )
-//                   // ],
-//                   // ),
-//                   // )
-//                 // ],
-//               // ),
-//             // ),
-//           // ),
-//         // ),
-//       // ),
-//     );
-//   }
-// }
